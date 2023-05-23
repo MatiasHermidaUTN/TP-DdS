@@ -1,0 +1,46 @@
+package ar.edu.utn.frba.dds.serviciosPublicos;
+
+import lombok.Getter;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Getter
+public class Entidad {
+    private String nombre;
+    private Localizacion localizacion;
+    private List<Establecimiento> establecimientos;
+    private Map<String,String> atributosVariables;
+
+    // private Boolean servicioPublico;
+
+    public List<Servicio> servicios() {
+        return this.establecimientos.stream().
+                map(establecimiento -> establecimiento.getServicios()).
+                flatMap(List::stream).
+                collect(Collectors.toList());
+    }
+
+    public Entidad(String nombre, Localizacion localizacion) {
+        this.nombre = nombre;
+        this.localizacion = localizacion;
+        this.establecimientos = new ArrayList<>();
+        this.atributosVariables = new HashMap<String, String>();
+    }
+
+    public void agregarEstablecimientos(Establecimiento ... establecimientos) {
+        Collections.addAll(this.establecimientos, establecimientos);
+    }
+
+    public void eliminarEstablecimiento(Establecimiento establecimiento){
+        this.establecimientos.remove(establecimiento);
+    }
+
+    public void agregarAtributoVar(String nombre, String valor) {
+        this.atributosVariables.put(nombre, valor);
+    }
+
+    public void eliminarAtributoVar(String nombre){
+        this.atributosVariables.remove(nombre);
+    }
+}
