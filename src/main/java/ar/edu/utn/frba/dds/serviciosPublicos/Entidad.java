@@ -1,6 +1,8 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
+import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -8,6 +10,8 @@ import java.util.stream.Collectors;
 @Getter
 public class Entidad {
     private String nombre;
+
+    @Setter
     private Localizacion localizacion;
     private List<Establecimiento> establecimientos;
     private Map<String,String> atributosVariables;
@@ -21,11 +25,11 @@ public class Entidad {
                 collect(Collectors.toList());
     }
 
-    public Entidad(String nombre, Localizacion localizacion) {
+    public Entidad(String nombre) {
         this.nombre = nombre;
-        this.localizacion = localizacion;
         this.establecimientos = new ArrayList<>();
         this.atributosVariables = new HashMap<String, String>();
+        RepoEntidad.getInstancia().agregarEntidad(this);
     }
 
     public void agregarEstablecimientos(Establecimiento ... establecimientos) {
@@ -43,4 +47,5 @@ public class Entidad {
     public void eliminarAtributoVar(String nombre){
         this.atributosVariables.remove(nombre);
     }
+
 }

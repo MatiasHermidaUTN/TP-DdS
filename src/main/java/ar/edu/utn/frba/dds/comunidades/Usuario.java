@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.comunidades;
 
+import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Localizacion;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -31,5 +32,6 @@ public class Usuario {
         this.localizacion = localizacion;
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
+        RepoUsuario.getInstancia().agregarUsuario(this);
     }
 }
