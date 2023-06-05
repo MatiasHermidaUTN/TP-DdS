@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
-import ar.edu.utn.frba.dds.serviciosPublicos.Localizacion;
+import ar.edu.utn.frba.dds.serviciosPublicos.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;

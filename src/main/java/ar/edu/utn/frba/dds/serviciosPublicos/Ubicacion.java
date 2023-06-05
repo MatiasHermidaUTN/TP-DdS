@@ -13,4 +13,12 @@ public class Ubicacion {
         this.latitud = latitud;
         this.longitud = longitud;
     }
+
+    @Override
+    public String toString() {
+        return "Ubicacion{" +
+                "latitud=" + latitud +
+                ", longitud=" + longitud +
+                '}';
+    }
 }

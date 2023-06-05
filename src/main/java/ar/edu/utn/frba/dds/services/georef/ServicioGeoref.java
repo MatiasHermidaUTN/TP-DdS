@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.services.georef.entities;
+package ar.edu.utn.frba.dds.services.georef;
 
 import ar.edu.utn.frba.dds.services.georef.entities.*;
 import org.jetbrains.annotations.NotNull;
