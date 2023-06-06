@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.validador.reglas;
 
 import ar.edu.utn.frba.dds.validador.Resultado;
 
-public class tieneMayus implements Regla {
+public class TieneMayus implements Regla {
 
     public Resultado cumple(String usuario, String contrasenia) {
         for (int i = 0; i < contrasenia.length(); i++) {

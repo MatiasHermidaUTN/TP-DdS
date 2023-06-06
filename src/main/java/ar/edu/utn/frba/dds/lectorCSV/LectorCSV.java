@@ -15,8 +15,8 @@ public class LectorCSV {
 
     // Variables temporales
     private String nombre;
-    private Map<String,String> atributosVariables;
-    private List<Establecimiento> establecimientos;
+    // private Map<String,String> atributosVariables;
+    // private List<Establecimiento> establecimientos;
 
     String rutaArchivo = "src\\main\\java\\ar\\edu\\utn\\frba\\dds\\lectorCSV\\entidades_organismos.csv";
 

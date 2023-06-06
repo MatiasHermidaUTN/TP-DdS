@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.validador.reglas;
 
 import ar.edu.utn.frba.dds.validador.Resultado;
 
-public class noRepiteCaracteres implements Regla {
+public class NoRepiteCaracteres implements Regla {
 
     public Resultado cumple(String usuario, String contrasenia) {
         if(contrasenia.matches(".*(.)\\1{2,}.*")) {

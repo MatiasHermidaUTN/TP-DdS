@@ -22,11 +22,11 @@ public class validadorTest {
         validador.agregarRegla(new EsFuerte(),
                 new CredencialesPorDefecto(),
                 new Longitud(8,64),
-                new tieneMayus(),
-                new tieneMinus(),
-                new tieneNumero(),
-                new tieneCaracEspeciales(),
-                new noRepiteCaracteres()
+                new TieneMayus(),
+                new TieneMinus(),
+                new TieneNumero(),
+                new TieneCaracEspeciales(),
+                new NoRepiteCaracteres()
         );
 
     }

@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
+import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class Entidad {
     private Localizacion localizacion;
     private List<Establecimiento> establecimientos;
     private Map<String,String> atributosVariables;
+    private List<Usuario> usuariosAsignados;
 
     // private Boolean servicioPublico;
 
@@ -29,6 +31,7 @@ public class Entidad {
         this.nombre = nombre;
         this.establecimientos = new ArrayList<>();
         this.atributosVariables = new HashMap<String, String>();
+        this.usuariosAsignados = new ArrayList<>();
         RepoEntidad.getInstancia().agregarEntidad(this);
     }
 
@@ -47,5 +50,7 @@ public class Entidad {
     public void eliminarAtributoVar(String nombre){
         this.atributosVariables.remove(nombre);
     }
+
+    public void avisar_a_usuarios() {}
 
 }

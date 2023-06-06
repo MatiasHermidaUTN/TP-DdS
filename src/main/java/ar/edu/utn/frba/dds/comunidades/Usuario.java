@@ -23,6 +23,7 @@ public class Usuario {
     private Localizacion localizacion;
     private List<Entidad> entidadesInteres;
     private List<Servicio> serviciosInteres;
+    private TipoUsuario tipoUsuario;
 
     public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {
         this.email = email;
@@ -33,5 +34,21 @@ public class Usuario {
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
         RepoUsuario.getInstancia().agregarUsuario(this);
+    }
+
+    public void agregarEntidadInteres(Entidad entidad){
+        this.entidadesInteres.add(entidad);
+    }
+
+    public void eliminarEntidadInteres(Entidad entidad){
+        this.entidadesInteres.remove(entidad);
+    }
+
+    public void agregarServicioInteres(Servicio servicio){
+        this.serviciosInteres.add(servicio);
+    }
+
+    public void eliminarServicioInteres(Servicio servicio){
+        this.serviciosInteres.remove(servicio);
     }
 }

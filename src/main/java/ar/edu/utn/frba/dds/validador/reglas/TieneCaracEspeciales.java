@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class tieneCaracEspeciales implements Regla {
+public class TieneCaracEspeciales implements Regla {
 
     private List<Character> caracteresEspeciales = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class tieneCaracEspeciales implements Regla {
 
     }
 
-    public tieneCaracEspeciales() {
+    public TieneCaracEspeciales() {
         this.caracteresEspeciales = Arrays.asList('@','$','!','%','?','&');
     }
 
