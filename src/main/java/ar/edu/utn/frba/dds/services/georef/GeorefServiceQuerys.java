@@ -11,12 +11,12 @@ public interface GeorefServiceQuerys {
     /*@GET("ubicacion")
     Call<ListadoDeProvincias> ubicacion(@Query("lat") Float lat, @Query("lon") Float lon);*/
 
-    @GET("provincias")
-    Call<ListadoDeProvincias> provincias(@Query("campos") String campos, @Query("orden") String orden);
+    @GET("provincias?orden=nombre")
+    Call<ListadoDeProvincias> provincias(@Query("campos") String campos);
 
-    @GET("municipios")
-    Call<ListadoDeMunicipios> municipios(@Query("provincia") int idProvincia, @Query("campos") String campos, @Query("max") int max, @Query("orden") String orden);
+    @GET("municipios?max=200&orden=nombre")
+    Call<ListadoDeMunicipios> municipios(@Query("provincia") int idProvincia, @Query("campos") String campos);
 
-    @GET("departamentos")
-    Call<ListadoDeDepartamentos> departamentos(@Query("provincia") int idProvincia, @Query("campos") String campos, @Query("max") int max, @Query("orden") String orden);
+    @GET("departamentos?max=200&orden=nombre")
+    Call<ListadoDeDepartamentos> departamentos(@Query("provincia") int idProvincia, @Query("campos") String campos);
 }

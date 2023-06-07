@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.services;
 import ar.edu.utn.frba.dds.services.georef.AdapterGeoref;
 import ar.edu.utn.frba.dds.services.georef.GeorefServiceRetrofit;
 import ar.edu.utn.frba.dds.services.georef.entities.*;
+import ar.edu.utn.frba.dds.serviciosPublicos.Ubicacion;
 import ar.edu.utn.frba.dds.serviciosPublicos.localizacion.Localizacion;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +28,7 @@ public class EjemploDeUso {
         }
 
         Scanner entradaEscaner = new Scanner(System.in);
-        System.out.print("\n\nelegir provincia: ");
+        System.out.print("\n\nelegir provincia (nombre exacto): ");
         String provinciaElegida = entradaEscaner.nextLine();
 
         if(!provinciaElegida.isEmpty()) {
@@ -50,7 +51,8 @@ public class EjemploDeUso {
         System.out.print("\nelegir departamento: ");
         String departamentoElegido = entradaEscaner.nextLine();
 
-        Localizacion unaLocalizacion = new Localizacion(provinciaElegida, departamentoElegido, municipioElegido, adapterGeoref.obtenerUbicacion(provinciaElegida, departamentoElegido, municipioElegido));
+        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion(provinciaElegida, departamentoElegido, municipioElegido);
+        Localizacion unaLocalizacion = new Localizacion(provinciaElegida, departamentoElegido, municipioElegido, unaUbicacion);
 
         System.out.println("\n\nunaLocalizacion = " + unaLocalizacion);
     }
