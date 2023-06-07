@@ -10,6 +10,12 @@ public class ListadoDeMunicipios {
     public Parametro parametros;
     public List<Municipio> municipios;
 
+    public Municipio municipioDeNombre(String nombre){
+        return this.municipios.stream()
+                .filter(m -> m.nombre.toLowerCase().equals(nombre.toLowerCase()))
+                .findFirst().get();
+    }
+
     private class Parametro {
         public List<String> campos;
         public int max;

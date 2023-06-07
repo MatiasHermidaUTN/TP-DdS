@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
+import ar.edu.utn.frba.dds.serviciosPublicos.localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,6 +47,10 @@ public class Entidad {
 
     public void eliminarAtributoVar(String nombre){
         this.atributosVariables.remove(nombre);
+    }
+
+    public void avisarAUsuairos(){
+        //TODO
     }
 
 }
