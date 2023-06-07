@@ -49,4 +49,8 @@ public class Entidad {
         this.atributosVariables.remove(nombre);
     }
 
+    public void avisarAUsuairos(){
+        //TODO
+    }
+
 }

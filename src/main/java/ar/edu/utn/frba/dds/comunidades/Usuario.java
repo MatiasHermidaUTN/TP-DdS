@@ -23,8 +23,10 @@ public class Usuario {
     private Localizacion localizacion;
     private List<Entidad> entidadesInteres;
     private List<Servicio> serviciosInteres;
+    @Setter
+    private TipoUsuario tipoUsuario;
 
-    public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {
+    public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion, TipoUsuario tipoUsuario) {
         this.email = email;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
@@ -32,6 +34,7 @@ public class Usuario {
         this.localizacion = localizacion;
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
+        this.tipoUsuario = tipoUsuario;
         RepoUsuario.getInstancia().agregarUsuario(this);
     }
 }

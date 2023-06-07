@@ -1,6 +1,5 @@
 package ar.edu.utn.frba.dds.serviciosPublicos.localizacion;
 
-import ar.edu.utn.frba.dds.serviciosPublicos.Ubicacion;
 import lombok.Getter;
 
 @Getter

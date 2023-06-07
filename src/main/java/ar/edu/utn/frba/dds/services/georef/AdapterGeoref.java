@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds.services.georef;
 
-import ar.edu.utn.frba.dds.serviciosPublicos.Ubicacion;
+import ar.edu.utn.frba.dds.serviciosPublicos.localizacion.Ubicacion;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.serviciosPublicos;
+package ar.edu.utn.frba.dds.serviciosPublicos.localizacion;
 
 import lombok.Getter;
 import lombok.Setter;
