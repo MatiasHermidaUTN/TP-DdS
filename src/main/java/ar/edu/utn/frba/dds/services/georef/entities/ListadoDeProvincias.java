@@ -16,6 +16,12 @@ public class ListadoDeProvincias {
                 .findFirst();
     }
 
+    public Provincia provinciaDeNombre(String nombre){
+        return this.provincias.stream()
+                .filter(p -> p.nombre.toLowerCase().equals(nombre.toLowerCase()))
+                .findFirst().get();
+    }
+
     private class Parametro {
         public List<String> campos;
         public int max;

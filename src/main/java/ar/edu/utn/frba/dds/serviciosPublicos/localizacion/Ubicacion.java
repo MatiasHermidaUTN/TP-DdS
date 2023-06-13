@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.serviciosPublicos;
+package ar.edu.utn.frba.dds.serviciosPublicos.localizacion;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +12,13 @@ public class Ubicacion {
     public Ubicacion(Float latitud, Float longitud) {
         this.latitud = latitud;
         this.longitud = longitud;
+    }
+
+    @Override
+    public String toString() {
+        return "Ubicacion{" +
+                "latitud=" + latitud +
+                ", longitud=" + longitud +
+                '}';
     }
 }
