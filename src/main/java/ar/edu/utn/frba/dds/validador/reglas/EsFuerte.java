@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class EsFuerte implements Regla {
 
-    private String rutaArchivo = "src\\main\\java\\ar\\edu\\utn\\frba\\dds\\validador\\top_10000_peores_contrasenias.txt";
+    private String rutaArchivo = "src\\main\\properties\\top_10000_peores_contrasenias.txt";
 
     public Resultado cumple(String usuario, String contrasenia) {
         try {

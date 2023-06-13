@@ -1,24 +1,23 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.lectorCSV.DatosCSV;
 import ar.edu.utn.frba.dds.lectorCSV.LectorCSV;
-import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
-import ar.edu.utn.frba.dds.repositorios.RepoOrganismo;
 import org.junit.jupiter.api.Test;
 
 
 public class CSVtest {
 
     LectorCSV lectorCSV = new LectorCSV();
-
+    DatosCSV datosCSV = new DatosCSV();
 
     @Test
     public void testCSVMostrar() throws Exception {
-        lectorCSV.cargarCSV();
+        datosCSV = lectorCSV.leerCSV();
 
         System.out.println("Entidades: ");
-        RepoEntidad.getInstancia().mostrarEntidades();
+        datosCSV.mostrarEntidades();
 
         System.out.println("\nOrganismos: ");
-        RepoOrganismo.getInstancia().mostrarOrganismos();
+        datosCSV.mostrarOrganismos();
     }
 }

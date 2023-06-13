@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
-import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +31,6 @@ public class Entidad {
         this.establecimientos = new ArrayList<>();
         this.atributosVariables = new HashMap<String, String>();
         this.usuariosAsignados = new ArrayList<>();
-        RepoEntidad.getInstancia().agregarEntidad(this);
     }
 
     public void agregarEstablecimientos(Establecimiento ... establecimientos) {

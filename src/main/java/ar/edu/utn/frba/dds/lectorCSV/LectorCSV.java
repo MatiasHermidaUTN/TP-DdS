@@ -13,14 +13,13 @@ import java.util.Objects;
 
 public class LectorCSV {
 
-    // Variables temporales
     private String nombre;
-    // private Map<String,String> atributosVariables;
-    // private List<Establecimiento> establecimientos;
+    private DatosCSV datosCSV;
 
-    String rutaArchivo = "src\\main\\java\\ar\\edu\\utn\\frba\\dds\\lectorCSV\\entidades_organismos.csv";
 
-    public void cargarCSV() throws Exception {
+    String rutaArchivo = "src\\main\\properties\\entidades_organismos.csv";
+
+    public DatosCSV leerCSV() throws Exception {
 
         try {
             // Abre el archivo de texto para leerlo
@@ -43,9 +42,9 @@ public class LectorCSV {
 
                 // instancia la clase correspondiente
                 if(Objects.equals(celdas[0], "entidad")){
-                    new Entidad(nombre);
+                    datosCSV.agregarEntidad(new Entidad(nombre));
                 } else if (Objects.equals(celdas[0], "organismo")) {
-                    new Organismo(nombre);
+                    datosCSV.agregarOrganismo(new Organismo(nombre));
                 }
                 else
                     System.out.print("No corresponde el tipo. ");
@@ -61,9 +60,12 @@ public class LectorCSV {
         catch (IOException e) {
             System.out.println("Error al leer el archivo: " + e.getMessage());
         }
+        return datosCSV;
     }
 
-    public LectorCSV() {}
+    public LectorCSV() {
+        datosCSV = new DatosCSV();
+    }
 }
 
 
