@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.comunidades;
 
+import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +16,13 @@ public class Comunidad {
     private String nombre;
     private List<Perfil> miembros;
     private List<Servicio> serviciosDeComunidad;
+    private List<Incidente> incidentes;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.miembros = new ArrayList<>();
         this.serviciosDeComunidad = new ArrayList<>();
+        this.incidentes = new ArrayList<>();
     }
 
     public void agregarMiembros(Perfil ... perfiles){

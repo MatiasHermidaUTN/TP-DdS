@@ -2,8 +2,8 @@ package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
-import ar.edu.utn.frba.dds.serviciosPublicos.Localizacion;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
+import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +18,8 @@ public class Usuario {
     private String usuario;
     @Setter
     private String contrasenia;
+    @Setter
+    private Integer telefono;
     private List<Perfil> perfiles;
     @Setter
     private Localizacion localizacion;

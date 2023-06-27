@@ -1,5 +1,7 @@
 package ar.edu.utn.frba.dds.services.georef.entities;
 
+import ar.edu.utn.frba.dds.localizacion.Provincia;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,10 +12,10 @@ public class ListadoDeProvincias {
     public Parametro parametros;
     public List<Provincia> provincias;
 
-    public Optional<Provincia> provinciaDeId(int id){
+    public Provincia provinciaDeId(int id){
         return this.provincias.stream()
                 .filter(p -> p.id == id)
-                .findFirst();
+                .findFirst().get();
     }
 
     public Provincia provinciaDeNombre(String nombre){

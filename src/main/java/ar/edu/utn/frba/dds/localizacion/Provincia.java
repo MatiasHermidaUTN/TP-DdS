@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.serviciosPublicos.localizacion;
+package ar.edu.utn.frba.dds.localizacion;
 
 public class Provincia {
     public int id;

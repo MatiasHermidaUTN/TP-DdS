@@ -1,7 +1,8 @@
 package ar.edu.utn.frba.dds.services.georef.entities;
 
+import ar.edu.utn.frba.dds.localizacion.Departamento;
+
 import java.util.List;
-import java.util.Optional;
 
 public class ListadoDeDepartamentos {
     public int cantidad;

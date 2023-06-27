@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.serviciosPublicos.localizacion.Ubicacion;
-import ar.edu.utn.frba.dds.serviciosPublicos.localizacion.Localizacion;
+import ar.edu.utn.frba.dds.localizacion.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ar.edu.utn.frba.dds.services.georef.AdapterGeoref;
@@ -19,37 +18,47 @@ public class GeoRefTest {
 
     @Test
     public void obtenerProvincias() throws Exception {
-        List<String> nombresProvincias  = adapterGeoref.obtenerListadoProvincias();
-        for(String unaProvincia : nombresProvincias){
-            System.out.print(unaProvincia + " - ");
-        }
-    }
-    @Test
-    public void obtenerMunicipios() throws Exception {
-        String provinciaElegida = "misiones";
-        List<String> nombresMunicipios = adapterGeoref.obtenerListadoMunicipios(provinciaElegida);
-        System.out.println("\n\nLos municipios de la provincia " + provinciaElegida + " son:");
-        for (String unMunicipio : nombresMunicipios) {
-            System.out.print(unMunicipio + " - ");
+        List<Provincia> provincias  = adapterGeoref.obtenerListadoProvincias();
+        for(Provincia unaProvincia : provincias){
+            System.out.print(unaProvincia.nombre + " - ");
         }
     }
     @Test
     public void obtenerDepartamentos() throws Exception {
-        String provinciaElegida = "misiones";
-        List<String> nombresDepartamentos = adapterGeoref.obtenerListadoDepartamentos(provinciaElegida);
+        Provincia provinciaElegida = new Provincia();
+        provinciaElegida.id = 54;
+        List<Departamento> departamentos = adapterGeoref.obtenerListadoDepartamentos(provinciaElegida);
         System.out.println("\n\nLos departamentos de la provincia " + provinciaElegida + " son:");
-        for (String unDepartamento : nombresDepartamentos) {
-            System.out.print(unDepartamento + " - ");
+        for (Departamento unDepartamento : departamentos) {
+            System.out.print(unDepartamento.nombre + " - ");
+        }
+    }
+    @Test
+    public void obtenerLocalidades() throws Exception {
+        Departamento departamentoElegido = new Departamento();
+        departamentoElegido.id = 54063;
+        List<Localidad> localidades = adapterGeoref.obtenerListadoLocalidades(departamentoElegido);
+        System.out.println("\n\nLas localidades del departamento " + departamentoElegido + " son:");
+        for (Localidad unaLocalidad : localidades) {
+            System.out.print(unaLocalidad.nombre + " - ");
+        }
+    }
+    @Test
+    public void obtenerLocalizacion() throws Exception {
+        Departamento departamentoElegido = new Departamento();
+        departamentoElegido.id = 54063;
+        List<Localidad> localidades = adapterGeoref.obtenerListadoLocalidades(departamentoElegido);
+        System.out.println("\n\nLas localidades del departamento " + departamentoElegido + " son:");
+        for (Localidad unaLocalidad : localidades) {
+            System.out.print(unaLocalidad.nombre + " - ");
         }
     }
     @Test
     public void obtenerUbicacion() throws Exception {
-        String provinciaElegida = "misiones";
-        String departamentoElegido = "Iguazú";
-        String municipioElegido = "Iguazú";
-        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion(provinciaElegida, departamentoElegido, municipioElegido);
-        Localizacion unaLocalizacion = new Localizacion(provinciaElegida, departamentoElegido, municipioElegido, unaUbicacion);
+        Localidad localidadElegida = new Localidad();
+        localidadElegida.id = 54063;
+        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion(localidadElegida);
 
-        System.out.println("\n\nunaLocalizacion = " + unaLocalizacion);
+        System.out.println("\n\nunaUbicacion = " + unaUbicacion);
     }
 }

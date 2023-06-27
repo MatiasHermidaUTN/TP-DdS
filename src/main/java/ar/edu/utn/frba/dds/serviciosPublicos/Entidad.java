@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
+import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
 

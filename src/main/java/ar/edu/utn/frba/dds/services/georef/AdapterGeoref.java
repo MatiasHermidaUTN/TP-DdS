@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds.services.georef;
 
-import ar.edu.utn.frba.dds.serviciosPublicos.localizacion.Ubicacion;
+import ar.edu.utn.frba.dds.localizacion.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,31 +20,23 @@ public class AdapterGeoref {
         return instancia;
     }
 
-    public List<String> obtenerListadoProvincias() throws IOException {
-        return georefServiceRetrofit.listadoDeProvincias().provincias.stream().map(provincia -> provincia.nombre).toList();
+    public List<Provincia> obtenerListadoProvincias() throws IOException {
+        return georefServiceRetrofit.listadoDeProvincias().provincias;
     }
 
-    public List<String> obtenerListadoMunicipios(String nombreProvincia) throws IOException {
-        return georefServiceRetrofit.listadoDeMunicipiosDeProvincia(nombreProvincia).municipios.stream().map(municipio -> municipio.nombre).toList();
+    public List<Departamento> obtenerListadoDepartamentos(Provincia provincia) throws IOException {
+        return georefServiceRetrofit.listadoDeDepartamentosDeProvincia(provincia).departamentos;
     }
 
-    public List<String> obtenerListadoDepartamentos(String nombreProvincia) throws IOException {
-        return georefServiceRetrofit.listadoDeDepartamentosDeProvincia(nombreProvincia).departamentos.stream().map(departamento -> departamento.nombre).toList();
+    public List<Localidad> obtenerListadoLocalidades(Departamento departamento) throws IOException {
+        return georefServiceRetrofit.listadoDeLocalidadesDeDepartamento(departamento).localidades;
     }
 
-    public Ubicacion obtenerUbicacion(String nombreProvincia, String nombreDepartamento, String nombreMunicipio) throws IOException {
-        Float latitud = null;
-        Float longitud = null;
-        if (!nombreDepartamento.isEmpty()){
-            latitud = georefServiceRetrofit.listadoDeDepartamentosDeProvincia(nombreProvincia).departamentoDeNombre(nombreDepartamento).centroide.lat;
-            longitud = georefServiceRetrofit.listadoDeDepartamentosDeProvincia(nombreProvincia).departamentoDeNombre(nombreDepartamento).centroide.lon;
-        } else if (!nombreMunicipio.isEmpty()) {
-            latitud = georefServiceRetrofit.listadoDeMunicipiosDeProvincia(nombreProvincia).municipioDeNombre(nombreMunicipio).centroide.lat;
-            longitud = georefServiceRetrofit.listadoDeMunicipiosDeProvincia(nombreProvincia).municipioDeNombre(nombreMunicipio).centroide.lon;
-        } else {
-            latitud = georefServiceRetrofit.listadoDeProvincias().provinciaDeNombre(nombreProvincia).centroide.lat;
-            longitud = georefServiceRetrofit.listadoDeProvincias().provinciaDeNombre(nombreProvincia).centroide.lon;
-        }
-        return new Ubicacion(latitud, longitud);
+    public Localizacion obtenerLocalizacion(Ubicacion ubicacion) throws IOException {
+        return new Localizacion(new Provincia(), new Departamento(), new Localidad(), new Ubicacion(1.1F, 1.1F));
+    }
+
+    public Ubicacion obtenerUbicacion(Localidad localidad) throws IOException {
+        return localidad.centroide;
     }
 }

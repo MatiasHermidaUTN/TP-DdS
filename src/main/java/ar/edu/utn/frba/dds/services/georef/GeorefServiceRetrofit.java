@@ -1,6 +1,10 @@
 package ar.edu.utn.frba.dds.services.georef;
 
-import ar.edu.utn.frba.dds.services.georef.entities.*;
+import ar.edu.utn.frba.dds.localizacion.Provincia;
+import ar.edu.utn.frba.dds.localizacion.Departamento;
+import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeProvincias;
+import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeDepartamentos;
+import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeLocalidades;
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -33,7 +37,7 @@ public class GeorefServiceRetrofit {
         Response<ListadoDeProvincias> responseListadoDeProvincias = null;
         while (requestConError) {
             GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-            Call<ListadoDeProvincias> requestProvinciasArgentinas = georefServiceQuerys.provincias("id,nombre,centroide");
+            Call<ListadoDeProvincias> requestProvinciasArgentinas = georefServiceQuerys.provincias();
             responseListadoDeProvincias = requestProvinciasArgentinas.execute();
             if (!responseListadoDeProvincias.isSuccessful()) {
                 //throw new IOException("GeoRef: " + responseListadoDeProvincias.message());
@@ -45,29 +49,37 @@ public class GeorefServiceRetrofit {
         return responseListadoDeProvincias.body();
     }
 
-    private Provincia obtenerProvinciaPorNombre(String nombreProvincia) throws IOException {
-        return this.listadoDeProvincias().provinciaDeNombre(nombreProvincia);
-    }
-
-    public ListadoDeMunicipios listadoDeMunicipiosDeProvincia(@NotNull String nombreProvincia) throws IOException {
-        Provincia provincia = this.obtenerProvinciaPorNombre(nombreProvincia);
-        GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-        Call<ListadoDeMunicipios> requestListadoDeMunicipios = georefServiceQuerys.municipios(provincia.id, "id,nombre,centroide");
-        Response<ListadoDeMunicipios> responseListadoDeMunicipios = requestListadoDeMunicipios.execute();
-        if (!responseListadoDeMunicipios.isSuccessful()){
-            throw new IOException("GeoRef: " + responseListadoDeMunicipios.message());
-        }
-        return responseListadoDeMunicipios.body();
-    }
-
-    public ListadoDeDepartamentos listadoDeDepartamentosDeProvincia(@NotNull String nombreProvincia) throws IOException {
-        Provincia provincia = this.obtenerProvinciaPorNombre(nombreProvincia);
-        GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-        Call<ListadoDeDepartamentos> requestListadoDeDepartamentos = georefServiceQuerys.departamentos(provincia.id, "id,nombre,centroide");
-        Response<ListadoDeDepartamentos> responseListadoDeDepartamentos = requestListadoDeDepartamentos.execute();
-        if (!responseListadoDeDepartamentos.isSuccessful()){
-            throw new IOException("GeoRef: " + responseListadoDeDepartamentos.message());
+    public ListadoDeDepartamentos listadoDeDepartamentosDeProvincia(@NotNull Provincia provincia) throws IOException {
+        Boolean requestConError = true;
+        Response<ListadoDeDepartamentos> responseListadoDeDepartamentos = null;
+        while(requestConError){
+            GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
+            Call<ListadoDeDepartamentos> requestListadoDeDepartamentos = georefServiceQuerys.departamentos(provincia.id, "id,nombre,centroide");
+            responseListadoDeDepartamentos = requestListadoDeDepartamentos.execute();
+            if (!responseListadoDeDepartamentos.isSuccessful()) {
+                //throw new IOException("GeoRef: " + responseListadoDeDepartamentos.message());
+                System.out.println("GeoRef: " + responseListadoDeDepartamentos.message());
+            } else {
+                requestConError = false;
+            }
         }
         return responseListadoDeDepartamentos.body();
+    }
+
+    public ListadoDeLocalidades listadoDeLocalidadesDeDepartamento(@NotNull Departamento departamento) throws IOException {
+        Boolean requestConError = true;
+        Response<ListadoDeLocalidades> responseListadoDeLocalidades = null;
+        while(requestConError){
+            GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
+            Call<ListadoDeLocalidades> requestListadoDeLocalidades = georefServiceQuerys.localidades(departamento.id, "id,nombre,centroide");
+            responseListadoDeLocalidades = requestListadoDeLocalidades.execute();
+            if (!responseListadoDeLocalidades.isSuccessful()) {
+                //throw new IOException("GeoRef: " + responseListadoDeDepartamentos.message());
+                System.out.println("GeoRef: " + responseListadoDeLocalidades.message());
+            } else {
+                requestConError = false;
+            }
+        }
+        return responseListadoDeLocalidades.body();
     }
 }
