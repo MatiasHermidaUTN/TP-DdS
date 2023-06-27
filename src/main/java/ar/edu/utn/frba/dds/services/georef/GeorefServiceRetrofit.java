@@ -5,6 +5,7 @@ import ar.edu.utn.frba.dds.localizacion.Departamento;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeProvincias;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeDepartamentos;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeLocalidades;
+import ar.edu.utn.frba.dds.services.georef.entities.RtaUbicacion;
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -32,16 +33,39 @@ public class GeorefServiceRetrofit {
         return instancia;
     }
 
+    public RtaUbicacion dptoYProvDeUbicacion(double lat, double lon) throws IOException {
+        Boolean requestConError = true;
+        int intentos = 0;
+        Response<RtaUbicacion> responseUbicacion = null;
+        while (requestConError) {
+            GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
+            Call<RtaUbicacion> requestUbicacion = georefServiceQuerys.ubicacion(lat, lon);
+            responseUbicacion = requestUbicacion.execute();
+            intentos++;
+            if (!responseUbicacion.isSuccessful() && intentos < 15) {
+                System.out.println("GeoRef: " + responseUbicacion.message());
+            } else if (intentos >= 15) {
+                throw new IOException("GeoRef: " + responseUbicacion.message());
+            } else {
+                requestConError = false;
+            }
+        }
+        return responseUbicacion.body();
+    }
+
     public ListadoDeProvincias listadoDeProvincias() throws IOException {
         Boolean requestConError = true;
+        int intentos = 0;
         Response<ListadoDeProvincias> responseListadoDeProvincias = null;
         while (requestConError) {
             GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-            Call<ListadoDeProvincias> requestProvinciasArgentinas = georefServiceQuerys.provincias();
-            responseListadoDeProvincias = requestProvinciasArgentinas.execute();
-            if (!responseListadoDeProvincias.isSuccessful()) {
-                //throw new IOException("GeoRef: " + responseListadoDeProvincias.message());
+            Call<ListadoDeProvincias> requestProvincias = georefServiceQuerys.provincias();
+            responseListadoDeProvincias = requestProvincias.execute();
+            intentos++;
+            if (!responseListadoDeProvincias.isSuccessful() && intentos < 15) {
                 System.out.println("GeoRef: " + responseListadoDeProvincias.message());
+            } else if (intentos >= 15) {
+                throw new IOException("GeoRef: " + responseListadoDeProvincias.message());
             } else {
                 requestConError = false;
             }
@@ -51,14 +75,17 @@ public class GeorefServiceRetrofit {
 
     public ListadoDeDepartamentos listadoDeDepartamentosDeProvincia(@NotNull Provincia provincia) throws IOException {
         Boolean requestConError = true;
+        int intentos = 0;
         Response<ListadoDeDepartamentos> responseListadoDeDepartamentos = null;
         while(requestConError){
             GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-            Call<ListadoDeDepartamentos> requestListadoDeDepartamentos = georefServiceQuerys.departamentos(provincia.id, "id,nombre,centroide");
+            Call<ListadoDeDepartamentos> requestListadoDeDepartamentos = georefServiceQuerys.departamentos(provincia.id, "id,nombre,centroide,provincia");
             responseListadoDeDepartamentos = requestListadoDeDepartamentos.execute();
-            if (!responseListadoDeDepartamentos.isSuccessful()) {
-                //throw new IOException("GeoRef: " + responseListadoDeDepartamentos.message());
+            intentos++;
+            if (!responseListadoDeDepartamentos.isSuccessful() && intentos < 15) {
                 System.out.println("GeoRef: " + responseListadoDeDepartamentos.message());
+            } else if (intentos >= 15) {
+                throw new IOException("GeoRef: " + responseListadoDeDepartamentos.message());
             } else {
                 requestConError = false;
             }
@@ -68,14 +95,17 @@ public class GeorefServiceRetrofit {
 
     public ListadoDeLocalidades listadoDeLocalidadesDeDepartamento(@NotNull Departamento departamento) throws IOException {
         Boolean requestConError = true;
+        int intentos = 0;
         Response<ListadoDeLocalidades> responseListadoDeLocalidades = null;
         while(requestConError){
             GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-            Call<ListadoDeLocalidades> requestListadoDeLocalidades = georefServiceQuerys.localidades(departamento.id, "id,nombre,centroide");
+            Call<ListadoDeLocalidades> requestListadoDeLocalidades = georefServiceQuerys.localidades(departamento.id, "id,nombre,centroide,departamento");
             responseListadoDeLocalidades = requestListadoDeLocalidades.execute();
-            if (!responseListadoDeLocalidades.isSuccessful()) {
-                //throw new IOException("GeoRef: " + responseListadoDeDepartamentos.message());
+            intentos++;
+            if (!responseListadoDeLocalidades.isSuccessful() && intentos < 15) {
                 System.out.println("GeoRef: " + responseListadoDeLocalidades.message());
+            } else if (intentos >= 15) {
+                throw new IOException("GeoRef: " + responseListadoDeLocalidades.message());
             } else {
                 requestConError = false;
             }

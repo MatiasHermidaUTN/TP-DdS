@@ -3,13 +3,14 @@ package ar.edu.utn.frba.dds.services.georef;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeDepartamentos;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeLocalidades;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeProvincias;
+import ar.edu.utn.frba.dds.services.georef.entities.RtaUbicacion;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface GeorefServiceQuerys {
-    /*@GET("ubicacion")
-    Call<ListadoDeProvincias> ubicacion(@Query("lat") Float lat, @Query("lon") Float lon);*/
+    @GET("ubicacion")
+    Call<RtaUbicacion> ubicacion(@Query("lat") double lat, @Query("lon") double lon);
 
     @GET("provincias?orden=nombre")
     Call<ListadoDeProvincias> provincias();
@@ -18,11 +19,14 @@ public interface GeorefServiceQuerys {
     Call<ListadoDeProvincias> provincias(@Query("campos") String campos);
 
     @GET("departamentos?max=200&orden=nombre")
-    Call<ListadoDeDepartamentos> departamentos(@Query("provincia") int idProvincia, @Query("campos") String campos);
+    Call<ListadoDeDepartamentos> departamentos(@Query("provincia") String idProvincia);
+
+    @GET("departamentos?max=200&orden=nombre")
+    Call<ListadoDeDepartamentos> departamentos(@Query("provincia") String idProvincia, @Query("campos") String campos);
 
     @GET("localidades?max=200&orden=nombre")
-    Call<ListadoDeLocalidades> localidades(@Query("departamento") int idDepartamento, @Query("campos") String campos);
+    Call<ListadoDeLocalidades> localidades(@Query("departamento") String idDepartamento);
 
-    @GET("localidades?max=200&orden=nombre")
-    Call<ListadoDeLocalidades> localidades2(@Query("departamento") int idDepartamento, @Query("campos") String campos);
+    @GET("localidades?max=5&orden=nombre")
+    Call<ListadoDeLocalidades> localidades(@Query("departamento") String idDepartamento, @Query("campos") String campos);
 }
