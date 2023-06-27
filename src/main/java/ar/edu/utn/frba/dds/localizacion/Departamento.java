@@ -1,8 +1,8 @@
-package ar.edu.utn.frba.dds.services.georef.entities;
+package ar.edu.utn.frba.dds.serviciosPublicos.localizacion;
 
 public class Departamento {
     public int id;
     public String nombre;
-    public Centroide centroide;
+    public Ubicacion centroide;
     public Provincia provincia;
 }
