@@ -23,5 +23,7 @@ public class Perfil {
         this.comunidad = comunidad;
         this.tipoPerfil = tipoPerfil;
     }
+    public Perfil() {
+    }
 
 }

@@ -37,6 +37,8 @@ public class Usuario {
         this.serviciosInteres = new ArrayList<>();
         RepoUsuario.getInstancia().agregarUsuario(this);
     }
+    public Usuario() {
+    }
 
     public void agregarEntidadInteres(Entidad entidad){
         this.entidadesInteres.add(entidad);

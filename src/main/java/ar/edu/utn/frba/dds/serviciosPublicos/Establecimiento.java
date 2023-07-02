@@ -2,12 +2,14 @@ package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Getter
+@Setter
 public class Establecimiento {
     private String nombre;
     private Localizacion localizacion;
@@ -24,6 +26,9 @@ public class Establecimiento {
         this.nombre = nombre;
         this.localizacion = localizacion;
         this.servicios = new ArrayList<>();
+    }
+
+    public Establecimiento() {
     }
 
     public void agregarServicios(Servicio ... servicios){

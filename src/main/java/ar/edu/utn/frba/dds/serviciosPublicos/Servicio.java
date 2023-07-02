@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@Setter
 public class Servicio {
     private String nombre;
     private Map<String,String> atributosVariables;
 
-    @Setter
     private EstadoServicio estado;
     private RegistroDeCambio registro;
 
@@ -23,6 +23,9 @@ public class Servicio {
         this.registro = new RegistroDeCambio();
         // guardamos fecha de creacion del servicio
         this.registro.registrarCambio(EstadoServicio.DISPONIBLE, LocalDateTime.now());
+    }
+
+    public Servicio() {
     }
 
     public void agregarAtributoVar(String nombre, String valor) {
