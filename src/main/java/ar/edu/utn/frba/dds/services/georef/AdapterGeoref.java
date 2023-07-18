@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.services.georef;
 
 import ar.edu.utn.frba.dds.localizacion.*;
+import ar.edu.utn.frba.dds.services.georef.entities.Direccion;
 import ar.edu.utn.frba.dds.services.georef.entities.RtaUbicacion;
 
 import java.io.IOException;
@@ -37,15 +38,16 @@ public class AdapterGeoref {
         RtaUbicacion rta = georefServiceRetrofit.dptoYProvDeUbicacion(latitud, longitud);
         Provincia provincia = rta.ubicacion.provincia;
         Departamento departamento = rta.ubicacion.departamento;
+        departamento.provincia = provincia;
         Localidad localidad = new Localidad();
-        localidad.nombre = "Localidad Mockeada pq no se puede obtener de la API";   //TODO: ver si se puede obtener de la API, de la forma normal no se puede
+        localidad.nombre = "Localidad Hardcodeada pq no se puede obtener de la API";   //TODO: no se puede obtener a partir de lat y lon, hay que hacerlo con listado de localidades
         localidad.id = "0";
         localidad.departamento = departamento;
         localidad.centroide = new Ubicacion(latitud, longitud);
-        return new Localizacion(provincia, departamento, localidad, new Ubicacion(latitud, longitud));
+        return new Localizacion(localidad, new Ubicacion(latitud, longitud));
     }
 
-    public Ubicacion obtenerUbicacion(Localidad localidad) throws IOException {
-        return localidad.centroide;
+    public Ubicacion obtenerUbicacion(String direccion, Localidad localidad) throws IOException {
+        return georefServiceRetrofit.listadoDeDirecciones(direccion, localidad).direcciones.get(0).ubicacion;
     }
 }

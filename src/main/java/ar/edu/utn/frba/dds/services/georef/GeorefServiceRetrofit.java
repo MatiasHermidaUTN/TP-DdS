@@ -1,11 +1,13 @@
 package ar.edu.utn.frba.dds.services.georef;
 
+import ar.edu.utn.frba.dds.localizacion.Localidad;
 import ar.edu.utn.frba.dds.localizacion.Provincia;
 import ar.edu.utn.frba.dds.localizacion.Departamento;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeProvincias;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeDepartamentos;
 import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeLocalidades;
 import ar.edu.utn.frba.dds.services.georef.entities.RtaUbicacion;
+import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeDirecciones;
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -111,5 +113,25 @@ public class GeorefServiceRetrofit {
             }
         }
         return responseListadoDeLocalidades.body();
+    }
+
+    public ListadoDeDirecciones listadoDeDirecciones(String direccion, Localidad localidad) throws IOException {
+        Boolean requestConError = true;
+        int intentos = 0;
+        Response<ListadoDeDirecciones> responseListadoDeDirecciones = null;
+        while(requestConError){
+            GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
+            Call<ListadoDeDirecciones> requestListadoDeDirecciones = georefServiceQuerys.direcciones(direccion, localidad.nombre);
+            responseListadoDeDirecciones = requestListadoDeDirecciones.execute();
+            intentos++;
+            if (!responseListadoDeDirecciones.isSuccessful() && intentos < 15) {
+                System.out.println("GeoRef: " + responseListadoDeDirecciones.message());
+            } else if (intentos >= 15) {
+                throw new IOException("GeoRef: " + responseListadoDeDirecciones.message());
+            } else {
+                requestConError = false;
+            }
+        }
+        return responseListadoDeDirecciones.body();
     }
 }

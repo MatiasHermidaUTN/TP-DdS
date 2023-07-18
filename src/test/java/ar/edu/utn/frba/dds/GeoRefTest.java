@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds;
 
 import ar.edu.utn.frba.dds.localizacion.*;
+import ar.edu.utn.frba.dds.services.georef.entities.Direccion;
 import ar.edu.utn.frba.dds.services.georef.entities.RtaUbicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ public class GeoRefTest {
         List<Provincia> provincias  = adapterGeoref.obtenerListadoProvincias();
         for(Provincia unaProvincia : provincias){
             System.out.print(unaProvincia.id + ") ");
+            System.out.print(unaProvincia.centroide.toString() + "_");
             System.out.print(unaProvincia.nombre + " - ");
         }
     }
@@ -60,8 +62,16 @@ public class GeoRefTest {
     @Test
     public void obtenerUbicacion() throws Exception {
         Localidad localidadElegida = new Localidad();
-        localidadElegida.id = "54063";
-        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion(localidadElegida);
-        System.out.println("\n\nunaUbicacion = " + unaUbicacion);
+        localidadElegida.nombre = "san nicolas";
+        String direccion = "av corrientes 1050";
+        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion(direccion, localidadElegida);
+        System.out.println("\n\nunaUbicacion = " + unaUbicacion.toString());
+    }
+    @Test
+    public void estanCerca2Localizaciones() throws Exception {
+        Localizacion localizacion1 = new Localizacion(new Ubicacion(-34.60806241126338, -58.39352197717003));
+        Localizacion localizacion2 = new Localizacion(new Ubicacion(-34.60846183769753, -58.39895013198136));
+        Boolean estanCerca = AdapterCercaniaLocalizacion.estaCerca(localizacion1, localizacion2);
+        System.out.println("\n\nestanCerca = " + estanCerca);
     }
 }
