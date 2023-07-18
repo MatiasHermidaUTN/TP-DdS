@@ -33,13 +33,17 @@ public class Comunidad {
         this.miembros.remove(perfil);
     }
 
-    public void agregarServicios(Servicio ... servicios){
-
+    public void agregarServicios(Servicio servicio, Servicio ... servicios){
+        this.serviciosDeComunidad.add(servicio);
         Collections.addAll(this.serviciosDeComunidad, servicios);
     }
 
     public void eliminarServicio(Servicio servicio){
 
         this.serviciosDeComunidad.remove(servicio);
+    }
+
+    public void agregarIncidente(Incidente incidente) {
+        this.incidentes.add(incidente);
     }
 }
