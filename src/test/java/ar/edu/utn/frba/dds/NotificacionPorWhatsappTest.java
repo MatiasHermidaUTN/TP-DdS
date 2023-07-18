@@ -33,10 +33,13 @@ public class NotificacionPorWhatsappTest {
 
     @Test
     public void enviarNotificacionPorWhatsapp() {
-        // el mockeo tira error
-        // when(whatsappSender.mandarNotificacion(incidente, perfil)).thenReturn(Boolean.TRUE);
-        System.out.println("Enviando mensaje de whatsapp\n");
-        whatsappSender.mandarNotificacion(incidente, perfil);
-        System.out.println("Mensaje whatsapp enviado\n");
+        when(whatsappSender.mandarNotificacion(incidente, perfil)).thenReturn(Boolean.TRUE);
+        System.out.println("Enviando mensaje de whatsapp \n");
+
+        if(whatsappSender.mandarNotificacion(incidente, perfil))
+            System.out.println("Mensaje whatsapp enviado \n");
+        else
+            System.out.println("Error al enviar el mensaje de whatsapp \n");
+
     }
 }
