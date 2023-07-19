@@ -15,6 +15,10 @@ public class Establecimiento {
     private Localizacion localizacion;
     private List<Servicio> servicios;
 
+    public Establecimiento(String nombre) {
+        this.nombre = nombre;
+    }
+
     public EstadoServicio estadoServicio(Servicio servicio) {
         return servicio.getEstado();
     }
@@ -31,8 +35,9 @@ public class Establecimiento {
     public Establecimiento() {
     }
 
-    public void agregarServicios(Servicio ... servicios){
-        Collections.addAll(this.servicios, servicios);
+    public void agregarServicios(Servicio servio1, Servicio ... servicios){
+        this.servicios.add(servio1);
+        this.servicios.addAll(List.of(servicios));
     }
 
     public void eliminarServicio(Servicio servicio){

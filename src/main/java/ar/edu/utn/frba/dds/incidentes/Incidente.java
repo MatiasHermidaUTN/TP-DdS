@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Incidente {
+    private int id;
     private Establecimiento establecimiento;
     private Servicio servicio;
     private Usuario usuarioApertura;
@@ -18,6 +19,30 @@ public class Incidente {
     private LocalDateTime horarioCierre;
     private EstadoIncidente estado;
 
-    public Incidente() {
+
+    public Incidente(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura, LocalDateTime horarioApartura) {
+        this.establecimiento = establecimiento;
+        this.servicio = servicio;
+        this.usuarioApertura = usuarioApertura;
+        this.horarioApartura = horarioApartura;
+        this.estado = EstadoIncidente.ABIERTO;
     }
+
+    public Incidente() {
+
+    }
+
+    public void crear() {
+        usuarioApertura.getPerfiles()
+                .stream()
+                .map(perfil -> perfil.getComunidad())
+                .forEach(comunidad -> comunidad.agregarIncidente(this));
+    }
+
+    public void cerrar(Usuario usuarioCierre, LocalDateTime horarioCierre) {
+        this.usuarioCierre = usuarioCierre;
+        this.horarioCierre = horarioCierre;
+        this.estado = EstadoIncidente.RESUELTO;
+    }
+
 }

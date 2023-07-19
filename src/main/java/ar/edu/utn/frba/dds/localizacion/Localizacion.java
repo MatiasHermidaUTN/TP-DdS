@@ -15,6 +15,9 @@ public class Localizacion {
         this.ubicacion = ubicacion;
     }
 
+    public Localizacion() {
+    }
+
     @Override
     public String toString() {
         return "Localizacion{" +

@@ -40,6 +40,16 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(String mail, String usuario, String contrasenia) {
+        this.email = mail;
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+    }
+
+    public void agregarPerfil(Perfil perfil){
+        this.perfiles.add(perfil);
+    }
+
     public void agregarEntidadInteres(Entidad entidad){
         this.entidadesInteres.add(entidad);
     }
