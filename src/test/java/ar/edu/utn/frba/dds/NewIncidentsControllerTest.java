@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 
 public class NewIncidentsControllerTest {
@@ -21,37 +22,45 @@ public class NewIncidentsControllerTest {
 
 
     public void crear(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura) {
+        Incidente Incidente;
         usuarioApertura.getPerfiles()
                 .stream()
                 .map(perfil -> perfil.getComunidad())
-                .forEach(comunidad -> comunidad.agregarIncidente(
-                        new Incidente(establecimiento, comunidad.getNombre(), servicio, usuarioApertura)
-                        ));
+                .forEach(comunidad ->
+                                incidente = new Incidente(establecimiento, comunidad.getNombre(), servicio, usuarioApertura),
+                        comunidad.agregarIncidente(incidente),
+                        crear_o_agregar_prestacion(establecimiento, servicio, incidente));
 
-        // agregar incidente a la prestacion (no se si va acá pero ustedes confien)
-        crear_o_agregar_prestacion(establecimiento, servicio);
-    }
-
-    // Si el servicio del establecimiento tiene la prestacion ya creada
-    public void crear_o_agregar_prestacion(Establecimiento establecimiento, Servicio servicio) {
-        if(buscar_prestacion_por_establecimiento(establecimiento.getNombre()))
-        {
-            Prestacion prestacion = new Prestacion(establecimiento, servicio);
-            prestacion.agregarIncidente(new Incidente());
-        }
-        else {
-
-        }
 
     }
 
-    public Boolean buscar_prestacion_por_establecimiento_y_servicio(String nombreEstablecimiento, String nombreServicio){
+    // buscar_prestacion_por_establecimiento_y_servicio
+    public void crear_o_agregar_prestacion(Establecimiento establecimiento, Servicio servicio_a_buscar, Incidente incidente){
         List<Prestacion> listaPrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
         for(Prestacion prestacion : listaPrestaciones){
-            if(prestacion.getEstablecimiento().getNombre() == nombreEstablecimiento){
+            if(Objects.equals(prestacion.getEstablecimiento().getNombre(), establecimiento.getNombre())){
+
                 // si lo encuentro en el establecimiento, lo busco en los servicios del mismo
-                for( : )
+                for(Servicio servicio : prestacion.getEstablecimiento().getServicios()){
+
+                    if(Objects.equals(servicio.getNombre(), servicio_a_buscar.getNombre()))
+                        // Ya hay una prestacion creada, solo agrego el incidente a la misma
+                        prestacion.agregarIncidente(incidente);
+
+                    else{
+                        // si no hay prestacion asociada al servicio del establecimiento
+                        Prestacion nuevaPrestacion = new Prestacion(establecimiento, servicio_a_buscar);
+                        nuevaPrestacion.agregarIncidente(incidente);
+                    }
+                }
             }
+
+            else{
+                // si no hay prestacion del establecimiento
+                Prestacion nuevaPrestacion = new Prestacion(establecimiento, servicio_a_buscar);
+                nuevaPrestacion.agregarIncidente(incidente);
+            }
+
         }
     }
 
