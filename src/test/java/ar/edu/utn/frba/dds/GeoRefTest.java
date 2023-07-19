@@ -1,8 +1,6 @@
 package ar.edu.utn.frba.dds;
 
 import ar.edu.utn.frba.dds.localizacion.*;
-import ar.edu.utn.frba.dds.services.georef.entities.Direccion;
-import ar.edu.utn.frba.dds.services.georef.entities.RtaUbicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ar.edu.utn.frba.dds.services.georef.AdapterGeoref;
@@ -54,9 +52,14 @@ public class GeoRefTest {
         }
     }
     @Test
-    public void obtenerLocalizacion() throws Exception {
-        Localizacion localizacion = adapterGeoref.obtenerLocalizacion(-34.603722, -58.381592);
+    public void obtenerLocalizacionDeLatLon() throws Exception {
+        Localizacion localizacion = adapterGeoref.obtenerLocalizacionDeLatLon(-34.603722, -58.381592);
         System.out.println("\n\nLa localizacion de la lat " + -34.603722 + " y long " + -58.381592 + " es:");
+        System.out.print(localizacion.toString());
+    }
+    @Test
+    public void obtenerLocalizacion() throws Exception {
+        Localizacion localizacion = adapterGeoref.obtenerLocalizacion("ciudad autonoma de buenos aires", "comuna 10", "floresta", "rivadavia 8000");
         System.out.print(localizacion.toString());
     }
     @Test

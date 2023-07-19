@@ -5,7 +5,6 @@ import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,13 +32,24 @@ public class Comunidad {
         this.miembros.remove(perfil);
     }
 
-    public void agregarServicios(Servicio ... servicios){
-
+    public void agregarServicios(Servicio servicio, Servicio ... servicios){
+        this.serviciosDeComunidad.add(servicio);
         Collections.addAll(this.serviciosDeComunidad, servicios);
     }
 
     public void eliminarServicio(Servicio servicio){
 
         this.serviciosDeComunidad.remove(servicio);
+    }
+
+    public void agregarIncidente(Incidente incidente) {
+        this.incidentes.add(incidente);
+    }
+
+    public Incidente getIncidenteFromId(Integer idIncidente) {
+        return incidentes.stream()
+                .filter(incidente -> incidente.getIdIncidente().equals(idIncidente))
+                .toList()
+                .get(0);
     }
 }

@@ -15,11 +15,14 @@ public class Localizacion {
         this.ubicacion = ubicacion;
     }
 
+    public Localizacion() {
+    }
+
     @Override
     public String toString() {
         return "Localizacion{" +
                 "ubicacion=" + ubicacion.toString() +
-                ", localidad='" + localidad.nombre + '\'' +
+                ", localidad='" + localidad.toString() + '\'' +
                 '}';
     }
 }
