@@ -6,6 +6,8 @@ import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,15 @@ public class Prestacion {
     }
     public void eliminarIncidente(Incidente incidente){
         this.incidentes.remove(incidente);
+    }
+
+public double getPromedioCierre(){
+        return incidentes.stream().mapToDouble(incidente -> {
+            LocalDateTime fechaCierre = incidente.getHorarioCierre();
+            LocalDateTime fechaApertura = incidente.getHorarioApertura();
+
+            return ChronoUnit.MINUTES.between(fechaApertura, fechaCierre);
+        }).sum() / incidentes.size();
     }
 }
 

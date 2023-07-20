@@ -1,25 +1,31 @@
 package ar.edu.utn.frba.dds.ranking;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
+import ar.edu.utn.frba.dds.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class MayorPromedioCierre implements Ranking{
-
-    @Override
-    public void generarRanking(List<Incidente> listaDeIncidentes) {
-        // sumMap(incidente  -> incidente.diferenciaCierreAper()) / listaDeIncidentes.size()
+public class MayorPromedioCierre {
 
 
-        // mayor promedio de tiempo de cierre de incidentes, diff entre cierre y apertura en la semana.
-        // por cada incidente de cada entidad
-        // hacer el promedio de la diferencia entre el cierre y la apertura del incidente
-        // calculo para tiempo pasado -> +(hora cierre) -(hora apertura) +(dias pasados * 24(horas)) -> todo expresado en minutos
-        //
+    public List<Prestacion> generarRanking() {
+        List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+
+        listaDePrestaciones.sort((prestacion1, prestacion2) -> {
+            if (prestacion1.getPromedioCierre() > prestacion2.getPromedioCierre()) {
+                return 1;
+            } else if (prestacion1.getPromedioCierre() < prestacion2.getPromedioCierre()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        return listaDePrestaciones;
     }
-
 }
 
 
