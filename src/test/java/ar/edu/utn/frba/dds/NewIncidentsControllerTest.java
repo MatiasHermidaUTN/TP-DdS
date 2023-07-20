@@ -23,53 +23,17 @@ public class NewIncidentsControllerTest {
 
 
     public void crear(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura) {
-        Incidente Incidente;
-        usuarioApertura.getPerfiles()
+        List<Comunidad> comunidades = usuarioApertura.getPerfiles()
                 .stream()
-                .map(perfil -> perfil.getComunidad())
-                .forEach(comunidad ->
-                                incidente = new Incidente(establecimiento, comunidad.getNombre(), servicio, usuarioApertura),
-                        comunidad.agregarIncidente(incidente),
-                        crear_o_agregar_prestacion(establecimiento, servicio, incidente));
+                .map(perfil -> perfil.getComunidad()).toList();
 
-
-    }
-
-    // buscar_prestacion_por_establecimiento_y_servicio
-    // Esto esta mal en la parte de buscar servicio
-    /*
-    public void crear_o_agregar_prestacion(Establecimiento establecimiento, Servicio servicio_a_buscar, Incidente incidente){
-        List<Prestacion> listaPrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
-        for(Prestacion prestacion : listaPrestaciones){
-            if(Objects.equals(prestacion.getEstablecimiento().getNombre(), establecimiento.getNombre())){
-
-                // si lo encuentro en el establecimiento, lo busco en los servicios del mismo
-                for(Servicio servicio : prestacion.getEstablecimiento().getServicios()){
-
-                    if(Objects.equals(servicio.getNombre(), servicio_a_buscar.getNombre()))
-                        // Ya hay una prestacion creada, solo agrego el incidente a la misma
-                        prestacion.agregarIncidente(incidente);
-
-                    else{
-                        // si no hay prestacion asociada al servicio del establecimiento
-                        Prestacion nuevaPrestacion = new Prestacion(establecimiento, servicio_a_buscar);
-                        nuevaPrestacion.agregarIncidente(incidente);
-                    }
-                }
-            }
-
-            else{
-                // si no hay prestacion del establecimiento
-                Prestacion nuevaPrestacion = new Prestacion(establecimiento, servicio_a_buscar);
-                nuevaPrestacion.agregarIncidente(incidente);
-            }
-
+        for(Comunidad unaComundidad : comunidades) {
+            Incidente incidente = new Incidente(establecimiento, unaComundidad.getNombre(), servicio, usuarioApertura);
+            unaComundidad.agregarIncidente(incidente);
+            crear_o_agregar_prestacion(establecimiento, servicio, incidente);
         }
     }
-    */
 
-
-    // Lo voy a hacer con un filter
     public void crear_o_agregar_prestacion(Establecimiento establecimiento_a_buscar, Servicio servicio_a_buscar, Incidente incidente){
 
         List<Prestacion> listaPrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
@@ -81,16 +45,18 @@ public class NewIncidentsControllerTest {
         if(listaPrestacionesDelEstablecimiento == null){
             Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
             nuevaPrestacion.agregarIncidente(incidente);
+            RepoPrestacion.agregarPrestacion(nuevaPrestacion);
         }
         else {
-            Prestacion prestacionDelServicioDelEstablecimiento =  listaPrestacionesDelEstablecimiento.stream().
-                    filter(prestacion -> prestacion.getServicio().getNombre() == servicio_a_buscar.getNombre())
+            Prestacion prestacionDelServicioDelEstablecimiento =  listaPrestacionesDelEstablecimiento.stream()
+                    .filter(prestacion -> prestacion.getServicio().getNombre() == servicio_a_buscar.getNombre())
                     .findAny()
                     .orElse(null);
 
             if(prestacionDelServicioDelEstablecimiento == null){
                 Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
                 nuevaPrestacion.agregarIncidente(incidente);
+                RepoPrestacion.agregarPrestacion(nuevaPrestacion);
             }
             else {
                 prestacionDelServicioDelEstablecimiento.agregarIncidente(incidente);

@@ -12,7 +12,7 @@ public class RepoPrestacion {
     @Getter
     private static List<Prestacion> listaPrestaciones;
 
-    public static void agregarUsuario(Prestacion prestacion) {
+    public static void agregarPrestacion(Prestacion prestacion) {
         listaPrestaciones.add(prestacion);
     }
 
