@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 public class NewIncidentsControllerTest {
@@ -35,6 +36,8 @@ public class NewIncidentsControllerTest {
     }
 
     // buscar_prestacion_por_establecimiento_y_servicio
+    // Esto esta mal en la parte de buscar servicio
+    /*
     public void crear_o_agregar_prestacion(Establecimiento establecimiento, Servicio servicio_a_buscar, Incidente incidente){
         List<Prestacion> listaPrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
         for(Prestacion prestacion : listaPrestaciones){
@@ -63,6 +66,38 @@ public class NewIncidentsControllerTest {
 
         }
     }
+    */
+
+
+    // Lo voy a hacer con un filter
+    public void crear_o_agregar_prestacion(Establecimiento establecimiento_a_buscar, Servicio servicio_a_buscar, Incidente incidente){
+
+        List<Prestacion> listaPrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+
+        List <Prestacion> listaPrestacionesDelEstablecimiento = listaPrestaciones.stream()
+                .filter(prestacion -> prestacion.getEstablecimiento().getNombre() == establecimiento_a_buscar.getNombre())
+                .collect(Collectors.toList());
+
+        if(listaPrestacionesDelEstablecimiento == null){
+            Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
+            nuevaPrestacion.agregarIncidente(incidente);
+        }
+        else {
+            Prestacion prestacionDelServicioDelEstablecimiento =  listaPrestacionesDelEstablecimiento.stream().
+                    filter(prestacion -> prestacion.getServicio().getNombre() == servicio_a_buscar.getNombre())
+                    .findAny()
+                    .orElse(null);
+
+            if(prestacionDelServicioDelEstablecimiento == null){
+                Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
+                nuevaPrestacion.agregarIncidente(incidente);
+            }
+            else {
+                prestacionDelServicioDelEstablecimiento.agregarIncidente(incidente);
+            }
+        }
+    }
+
 
     public void cerrarEnComunidad(Integer idIncidente, Perfil perfilCierre, LocalDateTime horarioCierre) {
         Incidente incidenteACerrar = perfilCierre.getComunidad().getIncidenteFromId(idIncidente);
