@@ -12,6 +12,7 @@ import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,7 @@ public class NewIncidentsControllerTest {
                                 .contains(establecimiento.getEntidad())
                 )
                 // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
-                .forEach(usuario -> usuario.getPerfiles().get(0).getUsuario().
+                .forEach(usuario -> usuario.
                         recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, "Servicio Interes Particular", servicio, usuarioApertura)));
     }
 
@@ -101,7 +102,11 @@ public class NewIncidentsControllerTest {
     public void controladorIncidentesTest() throws Exception {
         Establecimiento mcDonalds = new Establecimiento("McDonalds");
 
-        Servicio banio = new Servicio("banio");
+        Entidad entidadMcDonalds = new Entidad("entidad de mcdonalds?");
+        entidadMcDonalds.agregarEstablecimientos(mcDonalds);
+        mcDonalds.setEntidad(entidadMcDonalds);
+
+        Servicio banio = new Servicio("baño");
         Servicio escalera = new Servicio("escalera");
         Servicio wifi = new Servicio("wifi");
 
@@ -117,6 +122,8 @@ public class NewIncidentsControllerTest {
         comunidad2.agregarMiembros(perfil2);
 
         Usuario julianPolaco = new Usuario("adalessandro@frba.utn.edu.ar", "julianPolaco", "1234");
+        julianPolaco.agregarEntidadInteres(entidadMcDonalds);
+        julianPolaco.agregarServicioInteres(banio);
         ConfiguracionNotificacion configuracionNotificacion = new CuandoSucede(julianPolaco);
         configuracionNotificacion.setNotificador(new AdapterMailSender());
         julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);

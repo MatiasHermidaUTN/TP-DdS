@@ -45,6 +45,7 @@ public class Usuario {
         this.perfiles = new ArrayList<>();
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
+        RepoUsuario.getInstancia().agregarUsuario(this);
     }
 
     public Usuario(String mail, String usuario, String contrasenia) {
@@ -54,6 +55,7 @@ public class Usuario {
         this.perfiles = new ArrayList<>();
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
+        RepoUsuario.getInstancia().agregarUsuario(this);
     }
 
     public void agregarPerfil(Perfil perfil){
