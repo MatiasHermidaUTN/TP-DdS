@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
-import ar.edu.utn.frba.dds.notificaciones.Notificador;
+import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +13,7 @@ public class Perfil {
     private Comunidad comunidad;
     private TipoPerfil tipoPerfil;
     private TipoMiembro tipoMiembro;
-    private TipoNotificacion tipoNotificacion;
-    private Notificador medioComPreferido;
+    private ConfiguracionNotificacion configuracionNotificacion;
     private Usuario usuario;
 
 
@@ -25,5 +24,19 @@ public class Perfil {
     }
     public Perfil() {
     }
+
+    public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
+
+        configuracionNotificacion.notificarIncidenteNuevo(incidente);
+
+    }
+
+    public void recibirNotificacionDeCierreDeIncidente(Incidente incidente) {
+
+        configuracionNotificacion.notificarConclusionDeIncidente(incidente);
+
+    }
+
+
 
 }

@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.notificaciones.cron;
 
+import ar.edu.utn.frba.dds.notificaciones.SinApuros;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -15,19 +16,15 @@ public class Cron {
         }
     }
 
-    JobDetail job = JobBuilder.newJob(EnviarNotificaciones.class)
+    JobDetail job = JobBuilder.newJob(EnviarNotificacionesDeIncidentes.class)
             .withIdentity("enviarNotificacion")
             .build();
 
-    Trigger triggerD = TriggerBuilder.newTrigger()
-            .withIdentity("trigger")
-            .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
-            .build();
-
-    public void enviar() {
+    public void enviarConfigurable(DiaSemana diaDeLaSemana, String hora, String minuto, SinApuros sinApuros) {
         try {
+            job.getJobDataMap().put("sinApuros", sinApuros);
             scheduler.start();
-            scheduler.scheduleJob(job, triggerD);
+            scheduler.scheduleJob(job, FactoryTriggerConfigurable.crearTriggerConfigurable(diaDeLaSemana, hora, minuto));
         } catch (SchedulerException e) {
             System.out.print("Error al ejecutar scheduler");
         }

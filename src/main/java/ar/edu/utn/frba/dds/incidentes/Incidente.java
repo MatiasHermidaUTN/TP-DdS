@@ -14,7 +14,7 @@ public class Incidente {
     private Servicio servicio;
     private Usuario usuarioApertura;
     private Usuario usuarioCierre;
-    private LocalDateTime horarioApartura;
+    private LocalDateTime horarioApertura;
     private LocalDateTime horarioCierre;
     private EstadoIncidente estado;
 
