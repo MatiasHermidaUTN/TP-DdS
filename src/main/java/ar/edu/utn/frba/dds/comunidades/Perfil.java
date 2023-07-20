@@ -24,7 +24,7 @@ public class Perfil {
     public Perfil() {
     }
 
-    public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
+    /*public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
 
         usuario.getConfiguracionNotificacion().notificarIncidenteNuevo(incidente);
 
@@ -34,7 +34,7 @@ public class Perfil {
 
         usuario.getConfiguracionNotificacion().notificarConclusionDeIncidente(incidente);
 
-    }
+    }*/
 
 
 

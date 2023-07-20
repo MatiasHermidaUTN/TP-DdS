@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.comunidades;
 
+import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
@@ -74,4 +75,17 @@ public class Usuario {
     public void eliminarServicioInteres(Servicio servicio){
         this.serviciosInteres.remove(servicio);
     }
+
+    public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
+
+        configuracionNotificacion.notificarIncidenteNuevo(incidente);
+
+    }
+
+    public void recibirNotificacionDeCierreDeIncidente(Incidente incidente) {
+
+        configuracionNotificacion.notificarConclusionDeIncidente(incidente);
+
+    }
+
 }

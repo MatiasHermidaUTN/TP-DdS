@@ -8,6 +8,7 @@ import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
+import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
@@ -37,7 +38,7 @@ public class NewIncidentsControllerTest {
             
             // notificar a cada miembro
             unaComunidad.getMiembros()
-                    .forEach(perfil -> perfil.recibirNotificacionDeAperturaDeIncidente(incidente));
+                    .forEach(perfil -> perfil.getUsuario().recibirNotificacionDeAperturaDeIncidente(incidente));
         }
 
         List<Usuario> usuarioList = RepoUsuario.getListaUsuarios(); //TODO este RepoUsuario se deberia hacer con Hibernate
@@ -48,7 +49,7 @@ public class NewIncidentsControllerTest {
                                 .contains(establecimiento.getEntidad())
                 )
                 // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
-                .forEach(usuario -> usuario.getPerfiles().get(0).
+                .forEach(usuario -> usuario.getPerfiles().get(0).getUsuario().
                         recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, "Servicio Interes Particular", servicio, usuarioApertura)));
     }
 
@@ -93,7 +94,7 @@ public class NewIncidentsControllerTest {
         
         // notificar a cada miembro
         unaComunidad.getMiembros()
-                .forEach(perfil -> perfil.recibirNotificacionDeCierreDeIncidente(incidenteACerrar));
+                .forEach(perfil -> perfil.getUsuario().recibirNotificacionDeCierreDeIncidente(incidenteACerrar));
     }
 
     @Test
@@ -116,15 +117,15 @@ public class NewIncidentsControllerTest {
         comunidad2.agregarMiembros(perfil2);
 
         Usuario julianPolaco = new Usuario("adalessandro@frba.utn.edu.ar", "julianPolaco", "1234");
-        julianPolaco.setConfiguracionNotificacion(new CuandoSucede(julianPolaco));
+        ConfiguracionNotificacion configuracionNotificacion = new CuandoSucede(julianPolaco);
+        configuracionNotificacion.setNotificador(new AdapterMailSender());
+        julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
+
         julianPolaco.agregarPerfil(perfil1);
         julianPolaco.agregarPerfil(perfil2);
 
         perfil1.setUsuario(julianPolaco);
         perfil2.setUsuario(julianPolaco);
-
-        julianPolaco.setConfiguracionNotificacion(new CuandoSucede(julianPolaco));
-        julianPolaco.setConfiguracionNotificacion(new CuandoSucede(julianPolaco));
 
 
 
