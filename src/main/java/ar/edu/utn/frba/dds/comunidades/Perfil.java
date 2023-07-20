@@ -13,7 +13,6 @@ public class Perfil {
     private Comunidad comunidad;
     private TipoPerfil tipoPerfil;
     private TipoMiembro tipoMiembro;
-    private ConfiguracionNotificacion configuracionNotificacion;
     private Usuario usuario;
 
 
@@ -27,13 +26,13 @@ public class Perfil {
 
     public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
 
-        configuracionNotificacion.notificarIncidenteNuevo(incidente);
+        usuario.getConfiguracionNotificacion().notificarIncidenteNuevo(incidente);
 
     }
 
     public void recibirNotificacionDeCierreDeIncidente(Incidente incidente) {
 
-        configuracionNotificacion.notificarConclusionDeIncidente(incidente);
+        usuario.getConfiguracionNotificacion().notificarConclusionDeIncidente(incidente);
 
     }
 

@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.comunidades;
 
+import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -26,6 +27,8 @@ public class Usuario {
     private List<Entidad> entidadesInteres;
     private List<Servicio> serviciosInteres;
     private TipoUsuario tipoUsuario;
+    @Setter
+    private ConfiguracionNotificacion configuracionNotificacion;
 
     public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {
         this.email = email;
@@ -38,12 +41,18 @@ public class Usuario {
         RepoUsuario.getInstancia().agregarUsuario(this);
     }
     public Usuario() {
+        this.perfiles = new ArrayList<>();
+        this.entidadesInteres = new ArrayList<>();
+        this.serviciosInteres = new ArrayList<>();
     }
 
     public Usuario(String mail, String usuario, String contrasenia) {
         this.email = mail;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
+        this.perfiles = new ArrayList<>();
+        this.entidadesInteres = new ArrayList<>();
+        this.serviciosInteres = new ArrayList<>();
     }
 
     public void agregarPerfil(Perfil perfil){

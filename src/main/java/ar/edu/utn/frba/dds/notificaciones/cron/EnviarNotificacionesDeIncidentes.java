@@ -29,7 +29,7 @@ public class EnviarNotificacionesDeIncidentes implements Job {
             sinApuros.getNotificador().mandarResumenDeIncidentes(
                     incidentesAbiertosEnLapsoDeVeinticuatroHs,
                     sinApuros.getIncidentesConcluidos(),
-                    sinApuros.getPerfil());
+                    sinApuros.getUsuario());
 
             sinApuros.incidentesNotificados();
 

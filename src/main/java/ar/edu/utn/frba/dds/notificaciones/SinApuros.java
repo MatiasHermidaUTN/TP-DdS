@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.notificaciones;
 
 import ar.edu.utn.frba.dds.comunidades.Perfil;
+import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.notificaciones.cron.Cron;
 import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
@@ -15,7 +16,7 @@ public class SinApuros implements ConfiguracionNotificacion{
     @Getter @Setter
     Notificador notificador = null;
     @Getter @Setter
-    Perfil perfil = null;
+    Usuario usuario = null;
 
     List<Cron> crones = new ArrayList<Cron>();
     @Getter

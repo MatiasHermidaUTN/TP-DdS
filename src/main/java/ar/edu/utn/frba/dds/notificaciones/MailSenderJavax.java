@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.notificaciones;
 
 import ar.edu.utn.frba.dds.comunidades.Perfil;
+import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 
 import javax.mail.*;
@@ -12,7 +13,7 @@ import java.util.Properties;
 public class MailSenderJavax {
 
 
-    public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Perfil perfil) {
+    public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Usuario usuario) {
 
 
         Properties properties = new Properties();
@@ -31,10 +32,10 @@ public class MailSenderJavax {
         MimeMessage email = new MimeMessage(session);
         String _body = "Ocurrió un incidente con el/la " + incidente.getServicio().getNombre()
                 + " de " + incidente.getEstablecimiento().getNombre() + ". El/la " + incidente.getServicio().getNombre()
-                + " ahora no se encuentra disponible.";
+                + " ahora no se encuentra disponible. Origen: " + incidente.getNombreComunidad();
 
         try {
-            email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(perfil.getUsuario().getEmail(), true));
+            email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(usuario.getEmail(), true));
             email.setSubject("Incidente en " + incidente.getEstablecimiento().getNombre());
             email.setText(_body, "utf-8", "html");
             System.out.print("Mandando email\n");
@@ -48,7 +49,7 @@ public class MailSenderJavax {
 
     }
 
-    public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Perfil perfil) {
+    public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Usuario usuario) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host","smtp.gmail.com");
@@ -66,10 +67,10 @@ public class MailSenderJavax {
         MimeMessage email = new MimeMessage(session);
         String _body = "El incidente con el/la " + incidente.getServicio().getNombre()
                 + " de " + incidente.getEstablecimiento().getNombre() + " ya fue resuelto. El/la " + incidente.getServicio().getNombre()
-                + " ahora se encuentra disponible.";
+                + " ahora se encuentra disponible. Origen: " + incidente.getNombreComunidad();
 
         try {
-            email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(perfil.getUsuario().getEmail(), true));
+            email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(usuario.getEmail(), true));
             email.setSubject("Resolución de incidente en " + incidente.getEstablecimiento().getNombre());
             email.setText(_body, "utf-8", "html");
             System.out.print("Mandando email");
@@ -83,7 +84,7 @@ public class MailSenderJavax {
 
     }
 
-    public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Perfil perfil) {
+    public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Usuario usuario) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host","smtp.gmail.com");
@@ -103,17 +104,17 @@ public class MailSenderJavax {
         str.append("Ocurrieron los siguientes incidentes:<ul>");
         if(!incidentesNuevos.isEmpty()) {
             incidentesNuevos.stream().forEach(i -> str.append("<li>El/la " + i.getServicio().getNombre()
-                    + " de " + i.getEstablecimiento().getNombre() + " no se encuentra disponible</li>"));
+                    + " de " + i.getEstablecimiento().getNombre() + " no se encuentra disponible. Origen: "+ i.getNombreComunidad() + "</li>"));
         }
         if(!incidentesConcluidos.isEmpty()) {
             incidentesConcluidos.stream().forEach(i -> str.append("<li>El/la " + i.getServicio().getNombre()
-                    + " de " + i.getEstablecimiento().getNombre() + " ya se encuentra disponible</li>"));
+                    + " de " + i.getEstablecimiento().getNombre() + " ya se encuentra disponible. Origen: "+ i.getNombreComunidad() + "</li>"));
         }
         str.append("</ul>Eso es todo. Lo mantendremos informado en sus horarios elegidos.");
         String _body = str.toString();
 
         try {
-            email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(perfil.getUsuario().getEmail(), true));
+            email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(usuario.getEmail(), true));
             email.setSubject("Incidentes");
             email.setText(_body, "utf-8", "html");
             System.out.print("Mandando email");

@@ -33,10 +33,10 @@ public class NotificacionPorWhatsappTest {
 
     @Test
     public void enviarNotificacionPorWhatsapp() {
-        when(whatsappSender.mandarNotificacion(incidente, perfil)).thenReturn(Boolean.TRUE);
+        when(whatsappSender.mandarNotificacionDeIncidenteNuevo(incidente, usuario)).thenReturn(Boolean.TRUE);
         System.out.println("Enviando mensaje de whatsapp \n");
 
-        if(whatsappSender.mandarNotificacion(incidente, perfil))
+        if(whatsappSender.mandarNotificacionDeIncidenteNuevo(incidente, usuario))
             System.out.println("Mensaje whatsapp enviado \n");
         else
             System.out.println("Error al enviar el mensaje de whatsapp \n");

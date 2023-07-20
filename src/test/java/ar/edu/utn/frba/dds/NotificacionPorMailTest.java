@@ -28,7 +28,6 @@ public class NotificacionPorMailTest {
 
     @BeforeEach
     public void init(){
-
         this.usuario.setEmail("adalessandro@frba.utn.edu.ar"); //email que recibe la notificación
         this.perfil.setUsuario(usuario);
         this.establecimientoA.setNombre("Estación A");
@@ -42,12 +41,11 @@ public class NotificacionPorMailTest {
         this.incidenteB.setServicio(servicioB);
         this.incidenteC.setEstablecimiento(establecimientoB);
         this.incidenteC.setServicio(servicioC);
-
     }
 
     @Test
     public void enviarMailSobreIncidente() throws Exception {
-        mailSender.mandarNotificacionDeIncidenteNuevo(incidenteA, perfil);
+        mailSender.mandarNotificacionDeIncidenteNuevo(incidenteA, usuario);
     }
 
     @Test
@@ -57,6 +55,6 @@ public class NotificacionPorMailTest {
         incidentesNuevos.add(incidenteA);
         incidentesNuevos.add(incidenteB);
         incidentesConcluidos.add(incidenteC);
-        mailSender.mandarResumenDeIncidentes(incidentesNuevos, incidentesConcluidos, perfil);
+        mailSender.mandarResumenDeIncidentes(incidentesNuevos, incidentesConcluidos, usuario);
     }
 }

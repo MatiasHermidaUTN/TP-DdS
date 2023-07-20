@@ -17,8 +17,17 @@ public class Establecimiento {
     private Localizacion localizacion;
     private List<Servicio> servicios;
 
+    public Establecimiento() {this.servicios = new ArrayList<Servicio>();}
+
     public Establecimiento(String nombre) {
         this.nombre = nombre;
+        this.servicios = new ArrayList<Servicio>();
+    }
+
+    public Establecimiento(String nombre, Localizacion localizacion) {
+        this.nombre = nombre;
+        this.localizacion = localizacion;
+        this.servicios = new ArrayList<Servicio>();
     }
 
     public EstadoServicio estadoServicio(Servicio servicio) {
@@ -28,17 +37,8 @@ public class Establecimiento {
         return this.servicios.contains(servicio);
     }
 
-    public Establecimiento(String nombre, Localizacion localizacion) {
-        this.nombre = nombre;
-        this.localizacion = localizacion;
-        this.servicios = new ArrayList<>();
-    }
-
-    public Establecimiento() {
-    }
-
-    public void agregarServicios(Servicio servio1, Servicio ... servicios){
-        this.servicios.add(servio1);
+    public void agregarServicios(Servicio servicio1, Servicio ... servicios){
+        this.servicios.add(servicio1);
         this.servicios.addAll(List.of(servicios));
     }
 
