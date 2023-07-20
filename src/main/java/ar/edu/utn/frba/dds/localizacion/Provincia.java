@@ -1,7 +1,10 @@
 package ar.edu.utn.frba.dds.localizacion;
 
+import lombok.Getter;
+
 public class Provincia {
     public String id;
+    @Getter
     public String nombre;
     public Ubicacion centroide;
 

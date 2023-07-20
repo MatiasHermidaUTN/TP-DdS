@@ -29,7 +29,7 @@ public class NotificacionPorMailTest {
     @BeforeEach
     public void init(){
 
-        this.usuario.setEmail("leofierens@frba.utn.edu.ar");//email que recibe la notificación
+        this.usuario.setEmail("adalessandro@frba.utn.edu.ar"); //email que recibe la notificación
         this.perfil.setUsuario(usuario);
         this.establecimientoA.setNombre("Estación A");
         this.establecimientoB.setNombre("Estación B");

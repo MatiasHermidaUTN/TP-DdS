@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface Notificador {
 
-    public void mandarNotificacionDeIncidenteNuevo(Incidente incidente, Perfil perfil);
 
-    public void mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Perfil perfil);
+    public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Perfil perfil);
 
-    public void mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Perfil perfil);
+    public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Perfil perfil);
+
+    public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Perfil perfil);
+
 }

@@ -11,7 +11,9 @@ import java.util.Properties;
 
 public class MailSenderJavax {
 
-    public void mandarNotificacionDeIncidenteNuevo(Incidente incidente, Perfil perfil) {
+
+    public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Perfil perfil) {
+
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host","smtp.gmail.com");
@@ -35,16 +37,18 @@ public class MailSenderJavax {
             email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(perfil.getUsuario().getEmail(), true));
             email.setSubject("Incidente en " + incidente.getEstablecimiento().getNombre());
             email.setText(_body, "utf-8", "html");
-            System.out.print("Mandando email");
+            System.out.print("Mandando email\n");
             Transport.send(email);
-            System.out.print("Email enviado");
+            System.out.print("Email enviado\n");
+            return Boolean.TRUE;
         } catch (MessagingException e) {
             System.out.print("Error: " + e);
+            return Boolean.FALSE;
         }
 
     }
 
-    public void mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Perfil perfil) {
+    public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Perfil perfil) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host","smtp.gmail.com");
@@ -71,13 +75,15 @@ public class MailSenderJavax {
             System.out.print("Mandando email");
             Transport.send(email);
             System.out.print("Email enviado");
+            return Boolean.TRUE;
         } catch (MessagingException e) {
             System.out.print("Error: " + e);
+            return Boolean.FALSE;
         }
 
     }
 
-    public void mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Perfil perfil) {
+    public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Perfil perfil) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.host","smtp.gmail.com");
@@ -113,8 +119,10 @@ public class MailSenderJavax {
             System.out.print("Mandando email");
             Transport.send(email);
             System.out.print("Email enviado");
+            return Boolean.TRUE;
         } catch (MessagingException e) {
             System.out.print("Error: " + e);
+            return Boolean.FALSE;
         }
 
     }

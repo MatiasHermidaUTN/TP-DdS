@@ -1,9 +1,6 @@
 package ar.edu.utn.frba.dds.services.georef;
 
-import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeDepartamentos;
-import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeLocalidades;
-import ar.edu.utn.frba.dds.services.georef.entities.ListadoDeProvincias;
-import ar.edu.utn.frba.dds.services.georef.entities.RtaUbicacion;
+import ar.edu.utn.frba.dds.services.georef.entities.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -29,4 +26,7 @@ public interface GeorefServiceQuerys {
 
     @GET("localidades?max=5&orden=nombre")
     Call<ListadoDeLocalidades> localidades(@Query("departamento") String idDepartamento, @Query("campos") String campos);
+
+    @GET("direcciones")
+    Call<ListadoDeDirecciones> direcciones(@Query("direccion") String direccion, @Query("localidad") String nombreLocalidad);
 }

@@ -5,24 +5,24 @@ import lombok.Getter;
 @Getter
 public class Localizacion {
     private Ubicacion ubicacion;
-    private Provincia provincia;
-    private Departamento departamento;
     private Localidad localidad;
 
-    public Localizacion(Provincia provincia, Departamento departamento, Localidad localidad, Ubicacion ubicacion) {
-        this.provincia = provincia;
-        this.departamento = departamento;
+    public Localizacion(Localidad localidad, Ubicacion ubicacion) {
         this.localidad = localidad;
         this.ubicacion = ubicacion;
+    }
+    public Localizacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public Localizacion() {
     }
 
     @Override
     public String toString() {
         return "Localizacion{" +
                 "ubicacion=" + ubicacion.toString() +
-                ", provincia='" + provincia.nombre + '\'' +
-                ", departamento='" + departamento.nombre + '\'' +
-                ", localidad='" + localidad.nombre + '\'' +
+                ", localidad='" + localidad.toString() + '\'' +
                 '}';
     }
 }

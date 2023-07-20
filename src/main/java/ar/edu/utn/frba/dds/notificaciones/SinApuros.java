@@ -42,6 +42,7 @@ public class SinApuros implements ConfiguracionNotificacion{
         if(incidentesNuevos.contains(incidente)) {
             incidentesNuevos.remove(incidente);
         } else {
+            incidentesConcluidos.add(incidente);
         }
     }
 

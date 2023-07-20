@@ -26,26 +26,41 @@ public class AdapterGeoref {
     }
 
     public List<Departamento> obtenerListadoDepartamentos(Provincia provincia) throws IOException {
-        return georefServiceRetrofit.listadoDeDepartamentosDeProvincia(provincia).departamentos;
+        List<Departamento> dptos = georefServiceRetrofit.listadoDeDepartamentosDeProvincia(provincia).departamentos;
+        dptos.forEach(departamento -> departamento.provincia = provincia);
+        return dptos;
     }
 
     public List<Localidad> obtenerListadoLocalidades(Departamento departamento) throws IOException {
-        return georefServiceRetrofit.listadoDeLocalidadesDeDepartamento(departamento).localidades;
+        List<Localidad> localidades = georefServiceRetrofit.listadoDeLocalidadesDeDepartamento(departamento).localidades;
+        localidades.forEach(localidad -> localidad.departamento = departamento);
+        return localidades;
     }
 
-    public Localizacion obtenerLocalizacion(double latitud, double longitud) throws IOException {
+    public Localizacion obtenerLocalizacionDeLatLon(double latitud, double longitud) throws IOException {
         RtaUbicacion rta = georefServiceRetrofit.dptoYProvDeUbicacion(latitud, longitud);
         Provincia provincia = rta.ubicacion.provincia;
         Departamento departamento = rta.ubicacion.departamento;
+        departamento.provincia = provincia;
         Localidad localidad = new Localidad();
-        localidad.nombre = "Localidad Mockeada pq no se puede obtener de la API";   //TODO: ver si se puede obtener de la API, de la forma normal no se puede
+        localidad.nombre = "Localidad Hardcodeada pq no se puede obtener de la API";   //TODO: no se puede obtener a partir de lat y lon, hay que hacerlo con listado de localidades
         localidad.id = "0";
         localidad.departamento = departamento;
         localidad.centroide = new Ubicacion(latitud, longitud);
-        return new Localizacion(provincia, departamento, localidad, new Ubicacion(latitud, longitud));
+        return new Localizacion(localidad, new Ubicacion(latitud, longitud));
     }
 
-    public Ubicacion obtenerUbicacion(Localidad localidad) throws IOException {
-        return localidad.centroide;
+    public Localizacion obtenerLocalizacion(String nombreProv, String nombreDpto, String nombreLocalidad, String direccion) throws IOException {
+        Provincia prov = georefServiceRetrofit.listadoDeProvincias().provincias.stream().filter(provincia -> provincia.nombre.equals(nombreProv)).toList().get(0);
+        Departamento dpto = georefServiceRetrofit.listadoDeDepartamentosDeProvincia(prov).departamentos.stream().filter(departamento -> departamento.nombre.equals(nombreDpto)).toList().get(0);
+        dpto.provincia = prov;
+        Localidad localidad = georefServiceRetrofit.listadoDeLocalidadesDeDepartamento(dpto).localidades.stream().filter(localid -> localid.nombre.equals(nombreLocalidad)).toList().get(0);
+        localidad.departamento = dpto;
+        Ubicacion ubicacion = obtenerUbicacion(direccion, localidad);
+        return new Localizacion(localidad, ubicacion);
+    }
+
+    public Ubicacion obtenerUbicacion(String direccion, Localidad localidad) throws IOException {
+        return georefServiceRetrofit.listadoDeDirecciones(direccion, localidad).direcciones.get(0).ubicacion;
     }
 }

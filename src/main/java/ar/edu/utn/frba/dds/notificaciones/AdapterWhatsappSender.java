@@ -2,25 +2,32 @@ package ar.edu.utn.frba.dds.notificaciones;
 
 import ar.edu.utn.frba.dds.comunidades.Perfil;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
+import lombok.Getter;
+import lombok.Setter;
+
 
 import java.util.List;
 
+
+@Setter @Getter
 public class AdapterWhatsappSender implements Notificador {
 
-    @Override
-    public void mandarNotificacionDeIncidenteNuevo(Incidente incidente, Perfil perfil) {
-        //if(perfil.getTipoPerfil() == CUANDO_SUCEDE)
 
+    private WhatsappSender whatsappSender;
+    @Override
+    public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Perfil perfil) {
+        return whatsappSender.mandarNotificacion(incidente, perfil);
     }
 
     @Override
-    public void mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Perfil perfil) {
-
+    public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Perfil perfil) {
+        return whatsappSender.mandarNotificacion(incidente, perfil);
     }
 
     @Override
-    public void mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Perfil perfil) {
-
+    public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Perfil perfil) {
+        return true;
     }
 
 }
+
