@@ -24,6 +24,10 @@ public class SinApuros implements ConfiguracionNotificacion{
     @Getter
     List<Incidente> incidentesConcluidos = new ArrayList<Incidente>();
 
+    public SinApuros(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public void agregarHorario(DiaSemana diaDeLaSemana, String hora, String minuto){
         Cron cron = new Cron();
         cron.enviarConfigurable(diaDeLaSemana, hora, minuto, this);
@@ -51,7 +55,5 @@ public class SinApuros implements ConfiguracionNotificacion{
         incidentesConcluidos.clear();
 
     }
-    public SinApuros(Usuario usuario) {
-        this.usuario = usuario;
-    }
+
 }

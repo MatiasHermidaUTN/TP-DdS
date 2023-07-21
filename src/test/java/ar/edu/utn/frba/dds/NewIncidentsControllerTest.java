@@ -11,6 +11,8 @@ import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
 import ar.edu.utn.frba.dds.notificaciones.SinApuros;
+import ar.edu.utn.frba.dds.notificaciones.cron.Cron;
+import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
@@ -22,7 +24,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana.VIERNES;
 
 
 public class NewIncidentsControllerTest {
@@ -138,7 +139,6 @@ public class NewIncidentsControllerTest {
         perfil2.setUsuario(julianPolaco);
 
 
-
         crearIncidente(mcDonalds, banio, julianPolaco);
 
     }
@@ -166,13 +166,13 @@ public class NewIncidentsControllerTest {
         comunidad1.agregarMiembros(perfil1);
         comunidad2.agregarMiembros(perfil2);
 
-        Usuario julianPolaco = new Usuario("adalessandro@frba.utn.edu.ar", "julianPolaco", "1234");
+        Usuario julianPolaco = new Usuario("leofierens@frba.utn.edu.ar", "julianPolaco", "1234");
         julianPolaco.agregarEntidadInteres(entidadMcDonalds);
         julianPolaco.agregarServicioInteres(banio);
 
         ConfiguracionNotificacion configuracionNotificacion = new SinApuros(julianPolaco);
         configuracionNotificacion.setNotificador(new AdapterMailSender());
-        configuracionNotificacion.agregarHorario(VIERNES, "17", "37");
+        configuracionNotificacion.agregarHorario(DiaSemana.VIERNES, "18", "37"); //aca va el horario que se quiere testear
         julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
 
         julianPolaco.agregarPerfil(perfil1);
@@ -182,6 +182,8 @@ public class NewIncidentsControllerTest {
         perfil2.setUsuario(julianPolaco);
 
         crearIncidente(mcDonalds, banio, julianPolaco);
+
+        Thread.sleep(300000);
 
     }
 }
