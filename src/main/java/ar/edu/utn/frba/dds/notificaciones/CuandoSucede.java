@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.notificaciones;
 import ar.edu.utn.frba.dds.comunidades.Perfil;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
+import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,5 +31,8 @@ public class CuandoSucede implements ConfiguracionNotificacion{
         notificador.mandarNotificacionDeConclusionDeIncidente(incidente, usuario);
 
     }
+
+    @Override
+    public void agregarHorario(DiaSemana diaDeLaSemana, String hora, String minuto) {}
 
 }

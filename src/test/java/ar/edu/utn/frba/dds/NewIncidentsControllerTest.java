@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+
 public class NewIncidentsControllerTest {
     //Hay que charlar un par de cosas
 
@@ -138,22 +139,51 @@ public class NewIncidentsControllerTest {
         perfil2.setUsuario(julianPolaco);
 
 
-
         crearIncidente(mcDonalds, banio, julianPolaco);
 
     }
 
     @Test
-    public void envioPorCron() throws Exception {
-        System.out.print(LocalDateTime.now());
+    public void incidente_sin_apuros() throws Exception {
         Establecimiento mcDonalds = new Establecimiento("McDonalds");
+
+        Entidad entidadMcDonalds = new Entidad("entidad de mcdonalds?");
+        entidadMcDonalds.agregarEstablecimientos(mcDonalds);
+        mcDonalds.setEntidad(entidadMcDonalds);
+
+        Servicio banio = new Servicio("baño");
         Servicio escalera = new Servicio("escalera");
-        Usuario julianPolaco = new Usuario("leofierens@frba.utn.edu.ar", "julianPolaco", "1234");
-        SinApuros sinApuros = new SinApuros(julianPolaco);
-        sinApuros.setNotificador(new AdapterMailSender());
-        sinApuros.notificarConclusionDeIncidente(new Incidente(mcDonalds, "comunidadA", escalera, julianPolaco));
-        Cron cron = new Cron();
-        cron.enviarConfigurable(DiaSemana.VIERNES, "18", "11", sinApuros);// el horario que se quiere testear
+        Servicio wifi = new Servicio("wifi");
+
+        mcDonalds.agregarServicios(banio, escalera, wifi);
+
+        Comunidad comunidad1 = new Comunidad("comunidad1");
+        Comunidad comunidad2 = new Comunidad("comunidad2");
+
+        Perfil perfil1 = new Perfil("JuanP", comunidad1, TipoPerfil.NORMAL);
+        Perfil perfil2 = new Perfil("JuanP", comunidad2, TipoPerfil.NORMAL);
+
+        comunidad1.agregarMiembros(perfil1);
+        comunidad2.agregarMiembros(perfil2);
+
+        Usuario julianPolaco = new Usuario("adalessandro@frba.utn.edu.ar", "julianPolaco", "1234");
+        julianPolaco.agregarEntidadInteres(entidadMcDonalds);
+        julianPolaco.agregarServicioInteres(banio);
+
+        ConfiguracionNotificacion configuracionNotificacion = new SinApuros(julianPolaco);
+        configuracionNotificacion.setNotificador(new AdapterMailSender());
+        configuracionNotificacion.agregarHorario(DiaSemana.VIERNES, "18", "30");
+        julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
+
+        julianPolaco.agregarPerfil(perfil1);
+        julianPolaco.agregarPerfil(perfil2);
+
+        perfil1.setUsuario(julianPolaco);
+        perfil2.setUsuario(julianPolaco);
+
+        crearIncidente(mcDonalds, banio, julianPolaco);
+
         Thread.sleep(300000);
+
     }
 }

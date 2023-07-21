@@ -36,9 +36,7 @@ public class SinApuros implements ConfiguracionNotificacion{
 
     @Override
     public void notificarIncidenteNuevo(Incidente incidente) {
-
         incidentesNuevos.add(incidente);
-
     }
 
     @Override
