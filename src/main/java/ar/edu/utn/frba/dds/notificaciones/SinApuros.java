@@ -32,9 +32,7 @@ public class SinApuros implements ConfiguracionNotificacion{
 
     @Override
     public void notificarIncidenteNuevo(Incidente incidente) {
-
         incidentesNuevos.add(incidente);
-
     }
 
     @Override
@@ -53,5 +51,7 @@ public class SinApuros implements ConfiguracionNotificacion{
         incidentesConcluidos.clear();
 
     }
-
+    public SinApuros(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

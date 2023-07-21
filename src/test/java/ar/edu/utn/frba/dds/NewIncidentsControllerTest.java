@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
+import ar.edu.utn.frba.dds.notificaciones.SinApuros;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
@@ -20,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana.VIERNES;
 
 
 public class NewIncidentsControllerTest {
@@ -135,6 +138,48 @@ public class NewIncidentsControllerTest {
         perfil2.setUsuario(julianPolaco);
 
 
+
+        crearIncidente(mcDonalds, banio, julianPolaco);
+
+    }
+
+    @Test
+    public void incidente_sin_apuros() throws Exception {
+        Establecimiento mcDonalds = new Establecimiento("McDonalds");
+
+        Entidad entidadMcDonalds = new Entidad("entidad de mcdonalds?");
+        entidadMcDonalds.agregarEstablecimientos(mcDonalds);
+        mcDonalds.setEntidad(entidadMcDonalds);
+
+        Servicio banio = new Servicio("baño");
+        Servicio escalera = new Servicio("escalera");
+        Servicio wifi = new Servicio("wifi");
+
+        mcDonalds.agregarServicios(banio, escalera, wifi);
+
+        Comunidad comunidad1 = new Comunidad("comunidad1");
+        Comunidad comunidad2 = new Comunidad("comunidad2");
+
+        Perfil perfil1 = new Perfil("JuanP", comunidad1, TipoPerfil.NORMAL);
+        Perfil perfil2 = new Perfil("JuanP", comunidad2, TipoPerfil.NORMAL);
+
+        comunidad1.agregarMiembros(perfil1);
+        comunidad2.agregarMiembros(perfil2);
+
+        Usuario julianPolaco = new Usuario("adalessandro@frba.utn.edu.ar", "julianPolaco", "1234");
+        julianPolaco.agregarEntidadInteres(entidadMcDonalds);
+        julianPolaco.agregarServicioInteres(banio);
+
+        ConfiguracionNotificacion configuracionNotificacion = new SinApuros(julianPolaco);
+        configuracionNotificacion.setNotificador(new AdapterMailSender());
+        configuracionNotificacion.agregarHorario(VIERNES, "17", "37");
+        julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
+
+        julianPolaco.agregarPerfil(perfil1);
+        julianPolaco.agregarPerfil(perfil2);
+
+        perfil1.setUsuario(julianPolaco);
+        perfil2.setUsuario(julianPolaco);
 
         crearIncidente(mcDonalds, banio, julianPolaco);
 
