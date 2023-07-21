@@ -166,13 +166,13 @@ public class NewIncidentsControllerTest {
         comunidad1.agregarMiembros(perfil1);
         comunidad2.agregarMiembros(perfil2);
 
-        Usuario julianPolaco = new Usuario("adalessandro@frba.utn.edu.ar", "julianPolaco", "1234");
+        Usuario julianPolaco = new Usuario("leofierens@frba.utn.edu.ar", "julianPolaco", "1234");
         julianPolaco.agregarEntidadInteres(entidadMcDonalds);
         julianPolaco.agregarServicioInteres(banio);
 
         ConfiguracionNotificacion configuracionNotificacion = new SinApuros(julianPolaco);
         configuracionNotificacion.setNotificador(new AdapterMailSender());
-        configuracionNotificacion.agregarHorario(DiaSemana.VIERNES, "18", "30");
+        configuracionNotificacion.agregarHorario(DiaSemana.VIERNES, "18", "37"); //aca va el horario que se quiere testear
         julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
 
         julianPolaco.agregarPerfil(perfil1);

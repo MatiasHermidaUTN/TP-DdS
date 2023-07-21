@@ -24,18 +24,6 @@ public class Perfil {
     public Perfil() {
     }
 
-    /*public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
-
-        usuario.getConfiguracionNotificacion().notificarIncidenteNuevo(incidente);
-
-    }
-
-    public void recibirNotificacionDeCierreDeIncidente(Incidente incidente) {
-
-        usuario.getConfiguracionNotificacion().notificarConclusionDeIncidente(incidente);
-
-    }*/
-
 
 
 }
