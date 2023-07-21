@@ -31,14 +31,7 @@ public class Prestacion {
         this.incidentes.remove(incidente);
     }
 
-public double getPromedioCierre(){
-        return incidentes.stream().mapToDouble(incidente -> {
-            LocalDateTime fechaCierre = incidente.getHorarioCierre();
-            LocalDateTime fechaApertura = incidente.getHorarioApertura();
 
-            return ChronoUnit.MINUTES.between(fechaApertura, fechaCierre);
-        }).sum() / incidentes.size();
-    }
 }
 
 

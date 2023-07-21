@@ -2,7 +2,9 @@ package ar.edu.utn.frba.dds.ranking;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
+import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -11,20 +13,21 @@ import java.util.List;
 public class MayorPromedioCierre {
 
 
-    public List<Prestacion> generarRanking() {
+    public List<Entidad> generarRanking() {
         List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+        List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();
 
-        listaDePrestaciones.sort((prestacion1, prestacion2) -> {
-            if (prestacion1.getPromedioCierre() > prestacion2.getPromedioCierre()) {
+        listaDeEntidades.sort((entidad1, entidad2) -> {
+            if (entidad1.getPromedioCierre(listaDePrestaciones) > entidad2.getPromedioCierre(listaDePrestaciones)) {
                 return 1;
-            } else if (prestacion1.getPromedioCierre() < prestacion2.getPromedioCierre()) {
+            } else if (entidad1.getPromedioCierre(listaDePrestaciones) < entidad2.getPromedioCierre(listaDePrestaciones)) {
                 return -1;
             } else {
                 return 0;
             }
         });
 
-        return listaDePrestaciones;
+        return listaDeEntidades;
     }
 }
 
