@@ -10,6 +10,9 @@ import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
+import ar.edu.utn.frba.dds.notificaciones.SinApuros;
+import ar.edu.utn.frba.dds.notificaciones.cron.Cron;
+import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
@@ -138,5 +141,19 @@ public class NewIncidentsControllerTest {
 
         crearIncidente(mcDonalds, banio, julianPolaco);
 
+    }
+
+    @Test
+    public void envioPorCron() throws Exception {
+        System.out.print(LocalDateTime.now());
+        Establecimiento mcDonalds = new Establecimiento("McDonalds");
+        Servicio escalera = new Servicio("escalera");
+        Usuario julianPolaco = new Usuario("leofierens@frba.utn.edu.ar", "julianPolaco", "1234");
+        SinApuros sinApuros = new SinApuros(julianPolaco);
+        sinApuros.setNotificador(new AdapterMailSender());
+        sinApuros.notificarConclusionDeIncidente(new Incidente(mcDonalds, "comunidadA", escalera, julianPolaco));
+        Cron cron = new Cron();
+        cron.enviarConfigurable(DiaSemana.VIERNES, "18", "11", sinApuros);// el horario que se quiere testear
+        Thread.sleep(300000);
     }
 }

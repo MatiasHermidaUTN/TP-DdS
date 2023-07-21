@@ -17,6 +17,8 @@ public class EnviarNotificacionesDeIncidentes implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
+        System.out.print(LocalDateTime.now());
+
         JobDataMap data = jobExecutionContext.getJobDetail().getJobDataMap();
         SinApuros sinApuros = (SinApuros) data.get("sinApuros");
 
