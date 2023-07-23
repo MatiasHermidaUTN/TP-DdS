@@ -22,4 +22,9 @@ public class WhatsappSender implements Notificador {
     public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Usuario usuario) {
         return null;
     }
+
+    @Override
+    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidente, Usuario usuario) {
+        return null;
+    }
 }
