@@ -1,11 +1,16 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.incidentes.Incidente;
+import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.localizacion.*;
+import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ar.edu.utn.frba.dds.services.georef.AdapterGeoref;
 
 import java.util.List;
+
+import static ar.edu.utn.frba.dds.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
 
 
 public class GeoRefTest {
@@ -71,10 +76,26 @@ public class GeoRefTest {
         System.out.println("\n\nunaUbicacion = " + unaUbicacion.toString());
     }
     @Test
-    public void estanCerca2Localizaciones() throws Exception {
-        Localizacion localizacion1 = new Localizacion(new Ubicacion(-34.60806241126338, -58.39352197717003));
-        Localizacion localizacion2 = new Localizacion(new Ubicacion(-34.60846183769753, -58.39895013198136));
-        Boolean estanCerca = AdapterCercaniaLocalizacion.estaCerca(localizacion1, localizacion2);
+    public void estanCerca2Localizaciones() {
+//        Ubicacion ubicacion1 = new Ubicacion(-34.60806241126338, -58.39352197717003);
+//        Ubicacion ubicacion2 = new Ubicacion(-34.60846183769753, -58.39895013198136);
+        Ubicacion ubicacion1 = new Ubicacion(-34.61305310845683, -58.476466730931136);
+        Ubicacion ubicacion2 = new Ubicacion(-34.61717542840653, -58.47866320902155);
+//        Ubicacion ubicacion1 = new Ubicacion(-34.60213357161358, -58.45502276033098);
+//        Ubicacion ubicacion2 = new Ubicacion(-34.60270120372355, -58.45587401620668);
+        Boolean estanCerca = AdapterCercaniaLocalizacion.estaDentroDeRadio(ubicacion1, ubicacion2, 500);
         System.out.println("\n\nestanCerca = " + estanCerca);
+    }
+    @Test
+    public void incidentesCercanos() {
+        List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+        List<Incidente> incidentes = listaDePrestaciones.stream().
+                flatMap(prestacion -> prestacion.getIncidentes().stream()).
+                toList();
+        filtrarIncidentesCercanos(incidentes, -34.60806241126338, -58.39352197717003, 500);
+        System.out.println("\n\nincidentes.size() = " + incidentes.size());
+        for (Incidente unIncidente : incidentes) {
+            System.out.println("\n\nunIncidente = " + unIncidente.toString());
+        }
     }
 }
