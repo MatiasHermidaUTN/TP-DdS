@@ -92,7 +92,13 @@ public class GeoRefTest {
         List<Incidente> incidentes = listaDePrestaciones.stream().
                 flatMap(prestacion -> prestacion.getIncidentes().stream()).
                 toList();
-        filtrarIncidentesCercanos(incidentes, -34.60806241126338, -58.39352197717003, 500);
+
+        double lat = -34.60806241126338;
+        double lon = -58.39352197717003;
+        int radio = 500;
+
+        filtrarIncidentesCercanos(incidentes, lat, lon, radio);
+
         System.out.println("\n\nincidentes.size() = " + incidentes.size());
         for (Incidente unIncidente : incidentes) {
             System.out.println("\n\nunIncidente = " + unIncidente.toString());

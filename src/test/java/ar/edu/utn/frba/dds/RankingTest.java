@@ -8,4 +8,14 @@ public class RankingTest {
     public void primerRanking() {
 
     }
+
+    @Test
+    public void segundoRanking() {
+
+    }
+
+    @Test
+    public void tercerRanking() {
+
+    }
 }

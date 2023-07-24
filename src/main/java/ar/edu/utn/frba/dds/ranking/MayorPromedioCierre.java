@@ -9,7 +9,6 @@ import java.util.List;
 
 public class MayorPromedioCierre {
 
-
     public List<Entidad> generarRanking() {
         List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
         List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();

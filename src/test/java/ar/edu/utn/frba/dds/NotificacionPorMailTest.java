@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ar.edu.utn.frba.dds.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
+
 public class NotificacionPorMailTest {
 
     AdapterMailSender mailSender = new AdapterMailSender();
@@ -56,5 +58,19 @@ public class NotificacionPorMailTest {
         incidentesNuevos.add(incidenteB);
         incidentesConcluidos.add(incidenteC);
         mailSender.mandarResumenDeIncidentes(incidentesNuevos, incidentesConcluidos, usuario);
+    }
+
+    @Test
+    public void enviarNotificacionIncidentesCercanos() {
+        //TODO
+        List<Incidente> incidentes = new ArrayList<>();
+        incidentes.add(incidenteA);
+        incidentes.add(incidenteB);
+        incidentes.add(incidenteC);
+        double lat = -34.60806241126338;
+        double lon = -58.39352197717003;
+        int radio = 500;
+        List<Incidente> incidentesCercanos = filtrarIncidentesCercanos(incidentes, lat, lon, radio);
+        mailSender.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 }

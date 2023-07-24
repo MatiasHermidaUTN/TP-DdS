@@ -9,9 +9,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.Properties;
 
-public class MailSenderJavax implements Notificador {
+public class MailSenderJavax {
 
-    @Override
     public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Usuario usuario) {
 
 
@@ -48,7 +47,6 @@ public class MailSenderJavax implements Notificador {
 
     }
 
-    @Override
     public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Usuario usuario) {
 
         Properties properties = new Properties();
@@ -84,7 +82,6 @@ public class MailSenderJavax implements Notificador {
 
     }
 
-    @Override
     public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Usuario usuario) {
 
         Properties properties = new Properties();
@@ -129,7 +126,6 @@ public class MailSenderJavax implements Notificador {
 
     }
 
-    @Override
     public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentes, Usuario usuario) {
 
         Properties properties = new Properties();
@@ -147,7 +143,7 @@ public class MailSenderJavax implements Notificador {
 
         MimeMessage email = new MimeMessage(session);
         StringBuilder str = new StringBuilder();
-        str.append("Ocurrieron los siguientes incidentes:<ul>");
+        str.append("Los siguientes incidentes se encuentran en su radio de proximidad:<ul>");
         if(!incidentes.isEmpty()) {
             incidentes.stream().forEach(i -> str.append("<li>El/la " + i.getServicio().getNombre()
                     + " de " + i.getEstablecimiento().getNombre() + " presenta un incidente y se encuentra en sus cercanias."

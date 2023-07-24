@@ -17,7 +17,7 @@ public class AdapterCercaniaLocalizacion {
 
         double Distance_Result_en_metros = Distance_Result * 100 / Distance_Result_100m;
 
-        //TODO borrar prints que son para chequear y la regla de 3 de abajo:
+        //TODO borrar prints que son para chequear la regla de 3 de abajo:
         //System.out.println("\n\ndeltaLat = " + deltaLat);
         //System.out.println("\n\ndeltaLon = " + deltaLon);
         //System.out.println("\n\nDistance_Result = " + Distance_Result);

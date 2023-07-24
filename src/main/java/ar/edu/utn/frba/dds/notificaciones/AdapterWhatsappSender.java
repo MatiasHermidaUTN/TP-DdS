@@ -29,5 +29,9 @@ public class AdapterWhatsappSender implements Notificador {
         return whatsappSender.mandarResumenDeIncidentes(incidentesNuevos, incidentesConcluidos, usuario);
     }
 
+    @Override
+    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidente, Usuario usuario) {
+        return whatsappSender.mandarNotificacionRevisionDeIncidentesCercano(incidente, usuario);
+    }
 }
 

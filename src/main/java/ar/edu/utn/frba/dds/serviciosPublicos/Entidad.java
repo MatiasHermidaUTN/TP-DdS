@@ -67,7 +67,7 @@ public class Entidad {
             LocalDateTime fechaApertura = incidente.getHorarioApertura();
 
             return ChronoUnit.MINUTES.between(fechaApertura, fechaCierre);
-        }).sum() / incidentes.size();
+        }).count() / incidentes.size();
     }
 
     public int cantIncidentesEnLaSemana(List<Prestacion> listaDePrestaciones) {
