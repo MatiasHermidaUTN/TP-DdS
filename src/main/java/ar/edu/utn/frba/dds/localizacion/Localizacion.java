@@ -25,4 +25,12 @@ public class Localizacion {
                 ", localidad='" + localidad.toString() + '\'' +
                 '}';
     }
+
+    public void setLatitud(Double latitud) {
+        this.ubicacion.setLat(latitud);
+    }
+
+    public void setLongitud(Double longitud) {
+        this.ubicacion.setLon(longitud);
+    }
 }
