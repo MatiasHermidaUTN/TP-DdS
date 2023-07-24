@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
+import ar.edu.utn.frba.dds.repositorios.RepoComunidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Comunidad {
         this.miembros = new ArrayList<>();
         this.serviciosDeComunidad = new ArrayList<>();
         this.incidentes = new ArrayList<>();
+        RepoComunidad.agregarComunidad(this);
     }
 
     public void agregarMiembros(Perfil ... perfiles){

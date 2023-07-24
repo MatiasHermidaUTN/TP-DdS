@@ -1,13 +1,10 @@
 package ar.edu.utn.frba.dds.ranking;
 
-import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class MayorPromedioCierre {

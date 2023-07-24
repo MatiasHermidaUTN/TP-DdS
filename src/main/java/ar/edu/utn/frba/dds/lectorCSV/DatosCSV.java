@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.lectorCSV;
 
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
-import ar.edu.utn.frba.dds.serviciosPublicos.Organismo;
+import ar.edu.utn.frba.dds.serviciosPublicos.OrganismoDeControl;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class DatosCSV {
     private List<Entidad> listaEntidades;
-    private List<Organismo> listaOrganismos;
+    private List<OrganismoDeControl> listaOrganismos;
 
     public DatosCSV() {
         this.listaOrganismos = new ArrayList<>();
@@ -21,7 +21,7 @@ public class DatosCSV {
         this.listaEntidades.add(entidad);
     }
 
-    public void agregarOrganismo(Organismo organismo) {
+    public void agregarOrganismo(OrganismoDeControl organismo) {
         this.listaOrganismos.add(organismo);
     }
 
@@ -32,7 +32,7 @@ public class DatosCSV {
     }
 
     public void mostrarOrganismos(){
-        for(Organismo organismo : listaOrganismos) {
+        for(OrganismoDeControl organismo : listaOrganismos) {
             System.out.println(organismo.getNombre());
         }
     }

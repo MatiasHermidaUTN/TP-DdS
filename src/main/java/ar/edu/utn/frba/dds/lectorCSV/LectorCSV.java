@@ -1,14 +1,11 @@
 package ar.edu.utn.frba.dds.lectorCSV;
 
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
-import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
-import ar.edu.utn.frba.dds.serviciosPublicos.Organismo;
+import ar.edu.utn.frba.dds.serviciosPublicos.OrganismoDeControl;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class LectorCSV {
@@ -44,7 +41,7 @@ public class LectorCSV {
                 if(Objects.equals(celdas[0], "entidad")){
                     datosCSV.agregarEntidad(new Entidad(nombre));
                 } else if (Objects.equals(celdas[0], "organismo")) {
-                    datosCSV.agregarOrganismo(new Organismo(nombre));
+                    datosCSV.agregarOrganismo(new OrganismoDeControl(nombre));
                 }
                 else
                     System.out.print("No corresponde el tipo. ");

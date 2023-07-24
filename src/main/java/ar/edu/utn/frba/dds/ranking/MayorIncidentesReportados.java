@@ -1,20 +1,28 @@
 package ar.edu.utn.frba.dds.ranking;
 
-import ar.edu.utn.frba.dds.incidentes.Incidente;
+import ar.edu.utn.frba.dds.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
+import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
+import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 
 import java.util.List;
 
-public class MayorIncidentesReportados implements Ranking{
-    @Override
-    public void generarRanking(List<Incidente> listaDeIncidentes) {
-        // tambien va distribuido por las entidades.
-        // entidades con mayor cantidad de incidentes reportados en la semana
-        // no se considera otro incidente, si el mismo esta dentro del plazo de 24 horas y continua abierto.
-        // incidente nuevo -> si
-        // incidente visto -> no continua abierto -> si
-        // incidente visto -> continua abierto -> (hora incidente visto) > (hora incidente nuevo) + 1440(min) -> si
-        // otro, no se considera el incidente para la cantidad dentro del reporte
-        //
+public class MayorIncidentesReportados {
 
+    public List<Entidad> generarRanking() {
+        List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+        List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();
+
+        listaDeEntidades.sort((entidad1, entidad2) -> {
+            if (entidad1.cantIncidentesEnLaSemana(listaDePrestaciones) > entidad2.cantIncidentesEnLaSemana(listaDePrestaciones)) {
+                return 1;
+            } else if (entidad1.cantIncidentesEnLaSemana(listaDePrestaciones) < entidad2.cantIncidentesEnLaSemana(listaDePrestaciones)) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        return listaDeEntidades;
     }
 }
