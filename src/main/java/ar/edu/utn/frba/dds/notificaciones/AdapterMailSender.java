@@ -28,8 +28,8 @@ public class AdapterMailSender implements Notificador {
     }
 
     @Override
-    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidente, Usuario usuario) {
-        return mailSender.mandarNotificacionRevisionDeIncidentesCercano(incidente, usuario);
+    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentesCercanos, Usuario usuario) {
+        return mailSender.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 
 }

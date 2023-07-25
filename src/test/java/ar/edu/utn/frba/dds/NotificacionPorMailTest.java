@@ -67,25 +67,28 @@ public class NotificacionPorMailTest {
 
     @Test
     public void enviarNotificacionIncidentesCercanos() {
-        //TODO
         List<Incidente> incidentes = new ArrayList<>();
         incidentes.add(incidenteA); //Estación A
         incidentes.add(incidenteB); //Estación A
         incidentes.add(incidenteC); //Estación B
         //Estacion B <-----400m-----> puntoMedio <-----400m-----> Estacion A
+
         double lat = -34.60805915947694;    //en el medio de las dos estaciones
         double lon = -58.393507608910674;
         int radio = 500;
         List<Incidente> incidentesCercanos = filtrarIncidentesCercanos(incidentes, lat, lon, radio);
         Assertions.assertEquals(3, incidentesCercanos.size());
+
         lat = -34.60781914239126;   //Estación A
         lon = -58.38929918544316;
         List<Incidente> incidentesCercanos2 = filtrarIncidentesCercanos(incidentes, lat, lon, radio);
         Assertions.assertEquals(2, incidentesCercanos2.size());
+
         lat = -34.6083140245063;   //Estación B
         lon = -58.39782535899123;
         List<Incidente> incidentesCercanos3 = filtrarIncidentesCercanos(incidentes, lat, lon, radio);
         Assertions.assertEquals(1, incidentesCercanos3.size());
+
         radio = 1000;               //radio mas grande
         List<Incidente> incidentesCercanos4 = filtrarIncidentesCercanos(incidentes, lat, lon, radio);
         Assertions.assertEquals(3, incidentesCercanos4.size());

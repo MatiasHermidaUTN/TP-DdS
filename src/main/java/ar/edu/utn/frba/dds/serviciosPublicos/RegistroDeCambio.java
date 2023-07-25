@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
+import ar.edu.utn.frba.dds.comunidades.Usuario;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -8,15 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegistroDeCambio {
-
     @Getter
-    private Map<LocalDateTime, EstadoServicio> registroDeCambio;
+    private LocalDateTime fechaDeCambio;
+    private EstadoServicio estadoServicio;
+    private Usuario usuarioQueLoCambio;
 
-    public void registrarCambio(EstadoServicio estadoServicio, LocalDateTime tiempo) {
-        this.registroDeCambio.put(tiempo, estadoServicio);
-    }
-
-    public RegistroDeCambio() {
-        this.registroDeCambio = new HashMap<LocalDateTime, EstadoServicio>();
+    public RegistroDeCambio(EstadoServicio nuevoEstadoServicio, LocalDateTime now, Usuario usuario) {
+        this.fechaDeCambio = now;
+        this.estadoServicio = nuevoEstadoServicio;
+        this.usuarioQueLoCambio = usuario;
     }
 }

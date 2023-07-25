@@ -7,7 +7,7 @@ import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 
 import java.util.List;
 
-public class MayorPromedioCierre {
+public class MayorPromedioCierre implements GeneradorRanking {
 
     public List<Entidad> generarRanking() {
         List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();

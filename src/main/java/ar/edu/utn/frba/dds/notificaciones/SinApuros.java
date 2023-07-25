@@ -41,7 +41,6 @@ public class SinApuros implements ConfiguracionNotificacion{
 
     @Override
     public void notificarConclusionDeIncidente(Incidente incidente) {
-
         if(incidentesNuevos.contains(incidente)) {
             incidentesNuevos.remove(incidente);
         } else {
@@ -50,10 +49,13 @@ public class SinApuros implements ConfiguracionNotificacion{
     }
 
     public void incidentesNotificados() {
-
         incidentesNuevos.clear();
         incidentesConcluidos.clear();
+    }
 
+    @Override
+    public void notificarIncidentesCercanos(List<Incidente> incidentesCercanos) {
+        notificador.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 
 }

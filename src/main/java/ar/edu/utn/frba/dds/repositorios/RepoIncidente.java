@@ -26,7 +26,7 @@ public class RepoIncidente {
         return instancia;
     }
 
-    /*private ImpactoProblematicas rankingImpactoProblematicas;
+    /*private MayorImpactoProblematicas rankingImpactoProblematicas;
     private MayorIncidentesReportados rankingMayorIncidentesReportados;
     private MayorPromedioCierre rankingMayorPromedioCierre;
 

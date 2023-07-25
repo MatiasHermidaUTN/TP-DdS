@@ -13,22 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 public class Usuario {
-    @Setter
     private String email;
-    @Setter
     private String usuario;
-    @Setter
     private String contrasenia;
-    @Setter
     private Integer telefono;
     private List<Perfil> perfiles;
-    @Setter
     private Localizacion localizacion;
     private List<Entidad> entidadesInteres;
     private List<Servicio> serviciosInteres;
     private TipoUsuario tipoUsuario;
-    @Setter
     private ConfiguracionNotificacion configuracionNotificacion;
 
     public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {
@@ -78,16 +73,16 @@ public class Usuario {
         this.serviciosInteres.remove(servicio);
     }
 
+    //Estos son los metodos para notificar:
     public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
-
         configuracionNotificacion.notificarIncidenteNuevo(incidente);
-
     }
 
     public void recibirNotificacionDeCierreDeIncidente(Incidente incidente) {
-
         configuracionNotificacion.notificarConclusionDeIncidente(incidente);
-
     }
 
+    public void recibirNotificacionDeIncidentesCercanos(List<Incidente> incidentes) {
+        configuracionNotificacion.notificarIncidentesCercanos(incidentes);
+    }
 }

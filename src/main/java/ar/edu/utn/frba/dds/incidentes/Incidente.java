@@ -16,6 +16,7 @@ import java.time.temporal.TemporalAdjusters;
 public class Incidente {
     private Integer idIncidente;
     private String nombreComunidad;
+    public String observaciones;
     private Establecimiento establecimiento;
     private Servicio servicio;
     private Usuario usuarioApertura;

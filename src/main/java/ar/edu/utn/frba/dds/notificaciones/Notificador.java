@@ -1,6 +1,5 @@
 package ar.edu.utn.frba.dds.notificaciones;
 
-import ar.edu.utn.frba.dds.comunidades.Perfil;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 
@@ -14,6 +13,6 @@ public interface Notificador {
 
     public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Usuario usuario);
 
-    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidente, Usuario usuario);
+    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentesCercanos, Usuario usuario);
 
 }

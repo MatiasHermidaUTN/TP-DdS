@@ -1,11 +1,12 @@
 package ar.edu.utn.frba.dds.notificaciones;
 
-import ar.edu.utn.frba.dds.comunidades.Perfil;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 public class CuandoSucede implements ConfiguracionNotificacion{
 
@@ -20,16 +21,17 @@ public class CuandoSucede implements ConfiguracionNotificacion{
 
     @Override
     public void notificarIncidenteNuevo(Incidente incidente) {
-
         notificador.mandarNotificacionDeIncidenteNuevo(incidente, usuario);
-
     }
 
     @Override
     public void notificarConclusionDeIncidente(Incidente incidente) {
-
         notificador.mandarNotificacionDeConclusionDeIncidente(incidente, usuario);
+    }
 
+    @Override
+    public void notificarIncidentesCercanos(List<Incidente> incidentesCercanos) {
+        notificador.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class WhatsappSender implements Notificador {
         return null;
     }
 
-    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidente, Usuario usuario) {
+    public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentesCercanos, Usuario usuario) {
         return null;
     }
 }
