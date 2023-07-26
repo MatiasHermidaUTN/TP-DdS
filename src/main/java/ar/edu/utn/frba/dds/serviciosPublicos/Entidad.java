@@ -1,12 +1,14 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
+import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -62,7 +64,7 @@ public class Entidad {
                 flatMap(prestacion -> prestacion.getIncidentes().stream()).
                 toList();
 
-        return incidentes.stream().mapToDouble(incidente -> {
+        return (double) incidentes.stream().mapToDouble(incidente -> {
             LocalDateTime fechaCierre = incidente.getHorarioCierre();
             LocalDateTime fechaApertura = incidente.getHorarioApertura();
 
@@ -70,37 +72,36 @@ public class Entidad {
         }).count() / incidentes.size();
     }
 
-    public int cantIncidentesEnLaSemana(List<Prestacion> listaDePrestaciones) {
-
-        List<Prestacion> prestaciones = listaDePrestaciones.stream().
+    public int cantIncidentesEnLaSemana(List<Prestacion> listaDePrestacionesGlobal, LocalDateTime fechaDeSemana) {
+        //Filtrar las prestacionesDeEntidad de la entidad
+        List<Prestacion> prestacionesDeEntidad = listaDePrestacionesGlobal.stream().
                 filter(prestacion -> prestacion.getEstablecimiento().getEntidad().equals(this)).toList();
 
-        // Filtramos las listas de incidentes de cada prestacion con los incidentes que se abrieron en la ultima semana
-        prestaciones.forEach(prestacion ->
-                prestacion.getIncidentes().stream().
-                filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(LocalDateTime.now())));
+//        List<Incidente> incidentesNoRepetidosDeLaSemana = new ArrayList();
+        Integer cantidadIncidentesNoRepetidosDeLaSemana = 0;
 
-        // No tomamos en cuenta las prestaciones cuya lista de incidentes este vacia
-        List<Prestacion> prestaciones_en_la_semana = prestaciones.stream().filter(prestacion -> prestacion.getIncidentes().size() > 0).toList();
+        // Recorremos la lista de prestaciones con los incidentes que se abrieron en la ultima semana
+        for (Prestacion prestacion : prestacionesDeEntidad) {
+            List<Incidente> incidentesDeLaSemana = prestacion.getIncidentes().stream().
+                    filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(fechaDeSemana)).
+                    toList();
 
-        // Filtrar los incidentes que se hayan hecho en menos de 24 horas respecto del primer incidente
-        List<Incidente> incidentesNoRepetidosDeLaSemana = new ArrayList();
+            while (incidentesDeLaSemana.size() > 0) {
+                Incidente primerIncidente = incidentesDeLaSemana.get(0);
 
-        for (Prestacion unaPrestacion : prestaciones_en_la_semana){
-            List<Incidente> incidentesDeUnaPrestacion = unaPrestacion.getIncidentes();
+                cantidadIncidentesNoRepetidosDeLaSemana++;
+                incidentesDeLaSemana = incidentesDeLaSemana.stream().
+                        filter(otroIncidente -> !otroIncidente.equals(primerIncidente)).toList();
 
-            while (incidentesDeUnaPrestacion.size() > 0) {
-                Incidente primerIncidente = incidentesDeUnaPrestacion.get(0);
-                incidentesDeUnaPrestacion.remove(0);
+                if (primerIncidente.getEstado().equals(EstadoIncidente.RESUELTO)) continue;
 
-                incidentesNoRepetidosDeLaSemana.add(primerIncidente);
-
-                incidentesDeUnaPrestacion.removeIf(otroIncidente ->
-                        primerIncidente.getEstado().equals("ABIERTO") && ChronoUnit.HOURS.between(otroIncidente.getHorarioApertura(), primerIncidente.getHorarioApertura()) < 24);
+                incidentesDeLaSemana = incidentesDeLaSemana.stream().filter(otroIncidente ->
+                        Duration.between(primerIncidente.getHorarioApertura(), otroIncidente.getHorarioApertura()).toHours() > 24
+                ).toList();
             }
         }
 
-        return incidentesNoRepetidosDeLaSemana.size();
+        return cantidadIncidentesNoRepetidosDeLaSemana;
     }
 
 }
