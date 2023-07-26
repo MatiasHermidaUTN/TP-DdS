@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
+import ar.edu.utn.frba.dds.repositorios.RepoIncidente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,13 +57,13 @@ public class Entidad {
 
     public void avisar_a_usuarios() {}
 
-    public double getPromedioCierre(List<Prestacion> listaDePrestaciones) { //se puede hacer desde el repo de incidentes tambien
-        List<Incidente> incidentes = listaDePrestaciones.stream().
-                filter(prestacion -> prestacion.getEstablecimiento().getEntidad().equals(this)).
-                flatMap(prestacion -> prestacion.getIncidentes().stream()).
-                toList();
+    public double getPromedioCierreRanking() {
+        List<Incidente> incidentes = RepoIncidente.getInstancia().getListaIncidentes().stream()
+                .filter(unIncidete -> unIncidete.seOriginoEnEntidad(this))
+                .filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(LocalDateTime.now()))
+                .toList();
 
-        return incidentes.stream().mapToDouble(incidente -> {
+        return (double) incidentes.stream().mapToDouble(incidente -> {
             LocalDateTime fechaCierre = incidente.getHorarioCierre();
             LocalDateTime fechaApertura = incidente.getHorarioApertura();
 
