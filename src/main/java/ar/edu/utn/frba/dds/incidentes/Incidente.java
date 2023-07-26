@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.incidentes;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
+import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
@@ -92,4 +93,7 @@ public class Incidente {
         return horarioApertura.isAfter(inicioDeSemana) && horarioApertura.isBefore(finDeSemana);
     }
 
+    public boolean seOriginoEnEntidad(Entidad entidad) {
+        return this.establecimiento.getEntidad().equals(entidad);
+    }
 }
