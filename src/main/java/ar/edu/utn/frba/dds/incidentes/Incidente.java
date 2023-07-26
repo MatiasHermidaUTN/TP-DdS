@@ -46,29 +46,8 @@ public class Incidente {
         this.idIncidente = obtenerID(); //TODO: esto genera autoincremental?
     }
 
-    public Long diferenciaCierreApertura(){
-        LocalDateTime tempDateTime = LocalDateTime.from( horarioApertura );
-
-        long years = tempDateTime.until( horarioCierre, ChronoUnit.YEARS );
-        tempDateTime = tempDateTime.plusYears( years );
-
-        long months = tempDateTime.until( horarioCierre, ChronoUnit.MONTHS );
-        tempDateTime = tempDateTime.plusMonths( months );
-
-        long days = tempDateTime.until( horarioCierre, ChronoUnit.DAYS );
-        tempDateTime = tempDateTime.plusDays( days );
-
-        long hours = tempDateTime.until( horarioCierre, ChronoUnit.HOURS );
-        tempDateTime = tempDateTime.plusHours( hours );
-
-        long minutes = tempDateTime.until( horarioCierre, ChronoUnit.MINUTES );
-        tempDateTime = tempDateTime.plusMinutes( minutes );
-
-        long seconds = tempDateTime.until( horarioCierre, ChronoUnit.SECONDS );
-
-        long diferencia = tempDateTime.truncatedTo(ChronoUnit.DAYS).until(tempDateTime, ChronoUnit.MINUTES);
-
-        return diferencia;
+    public double minutosEntreAperturaYCierre() {
+        return ChronoUnit.MINUTES.between(horarioApertura, horarioCierre);
     }
 
     public boolean seReportoEnLaSemanaDeLaFecha(LocalDateTime unaFecha) {
@@ -91,6 +70,28 @@ public class Incidente {
 
         // Check if the date is between the start and end of the previous week
         return horarioApertura.isAfter(inicioDeSemana) && horarioApertura.isBefore(finDeSemana);
+    }
+
+    public boolean seCerroEnLaSemanaDeLaFecha(LocalDateTime unaFecha) {
+
+        // Calculate the start of the previous week (Monday at 00:00)
+        LocalDateTime inicioDeSemana;
+        if (unaFecha.getDayOfWeek() != DayOfWeek.MONDAY) {
+            inicioDeSemana = unaFecha.with(TemporalAdjusters.previous(DayOfWeek.MONDAY)).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        } else {
+            inicioDeSemana = unaFecha.withHour(0).withMinute(0).withSecond(0).withNano(0);
+        }
+
+        // Calculate the end of the next week (Sunday at 23:59)
+        LocalDateTime finDeSemana;
+        if (unaFecha.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            finDeSemana = unaFecha.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+        } else {
+            finDeSemana = unaFecha.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+        }
+
+        // Check if the date is between the start and end of the previous week
+        return horarioCierre.isAfter(inicioDeSemana) && horarioCierre.isBefore(finDeSemana);
     }
 
     public boolean seOriginoEnEntidad(Entidad entidad) {

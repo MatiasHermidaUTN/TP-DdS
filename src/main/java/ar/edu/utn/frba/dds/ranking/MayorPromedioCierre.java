@@ -16,9 +16,11 @@ public class MayorPromedioCierre implements GeneradorRanking {
         List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();
 
         listaDeEntidades.sort((entidad1, entidad2) -> {
-            if (entidad1.getPromedioCierreRanking() > entidad2.getPromedioCierreRanking()) {
+            double promedioCierreEntidad1 = entidad1.getPromedioCierreRanking(fechaDeSemana);
+            double promedioCierreEntidad2 = entidad2.getPromedioCierreRanking(fechaDeSemana);
+            if (promedioCierreEntidad1 < promedioCierreEntidad2) {
                 return 1;
-            } else if (entidad1.getPromedioCierreRanking() < entidad2.getPromedioCierreRanking()) {
+            } else if (promedioCierreEntidad1 > promedioCierreEntidad2) {
                 return -1;
             } else {
                 return 0;

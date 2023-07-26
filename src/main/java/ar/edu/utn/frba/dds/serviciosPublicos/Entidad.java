@@ -59,18 +59,13 @@ public class Entidad {
 
     public void avisar_a_usuarios() {}
 
-    public double getPromedioCierreRanking() {
+    public double getPromedioCierreRanking(LocalDateTime fechaDeSemana) {
         List<Incidente> incidentes = RepoIncidente.getInstancia().getListaIncidentes().stream()
                 .filter(unIncidete -> unIncidete.seOriginoEnEntidad(this))
-                .filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(LocalDateTime.now()))
+                .filter(incidente -> incidente.seCerroEnLaSemanaDeLaFecha(fechaDeSemana))
                 .toList();
 
-        return (double) incidentes.stream().mapToDouble(incidente -> {
-            LocalDateTime fechaCierre = incidente.getHorarioCierre();
-            LocalDateTime fechaApertura = incidente.getHorarioApertura();
-
-            return ChronoUnit.MINUTES.between(fechaApertura, fechaCierre);
-        }).count() / incidentes.size();
+        return incidentes.stream().mapToDouble(incidente -> incidente.minutosEntreAperturaYCierre()).sum() / incidentes.size();
     }
 
     public int cantIncidentesEnLaSemana(List<Prestacion> listaDePrestacionesGlobal, LocalDateTime fechaDeSemana) {
@@ -78,14 +73,13 @@ public class Entidad {
         List<Prestacion> prestacionesDeEntidad = listaDePrestacionesGlobal.stream().
                 filter(prestacion -> prestacion.getEstablecimiento().getEntidad().equals(this)).toList();
 
-//        List<Incidente> incidentesNoRepetidosDeLaSemana = new ArrayList();
         Integer cantidadIncidentesNoRepetidosDeLaSemana = 0;
 
         // Recorremos la lista de prestaciones con los incidentes que se abrieron en la ultima semana
         for (Prestacion prestacion : prestacionesDeEntidad) {
             List<Incidente> incidentesDeLaSemana = prestacion.getIncidentes().stream().
-                    filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(fechaDeSemana)).
-                    toList();
+                filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(fechaDeSemana)).
+                toList();
 
             while (incidentesDeLaSemana.size() > 0) {
                 Incidente primerIncidente = incidentesDeLaSemana.get(0);
@@ -97,8 +91,8 @@ public class Entidad {
                 if (primerIncidente.getEstado().equals(EstadoIncidente.RESUELTO)) continue;
 
                 incidentesDeLaSemana = incidentesDeLaSemana.stream().filter(otroIncidente ->
-                        Duration.between(primerIncidente.getHorarioApertura(), otroIncidente.getHorarioApertura()).toHours() > 24
-                ).toList();
+                        Duration.between(primerIncidente.getHorarioApertura(), otroIncidente.getHorarioApertura()).toHours() > 24).
+                        toList();
             }
         }
 

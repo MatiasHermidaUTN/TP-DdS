@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.localizacion;
 
+import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 
 import java.util.List;
@@ -39,7 +40,9 @@ public class AdapterCercaniaLocalizacion {
 
     public static List<Incidente> filtrarIncidentesCercanos(List<Incidente> listaDeIncidentes, double latitud, double longitud, int radioMetros){
         Ubicacion ubicacionActualPersona = new Ubicacion(latitud, longitud);
-        List<Incidente> incidentesEnRadio = listaDeIncidentes.stream().filter(incidente -> estaDentroDeRadio(ubicacionActualPersona, incidente.getEstablecimiento().getLocalizacion().getUbicacion(), radioMetros)).toList();
+        List<Incidente> incidentesEnRadio = listaDeIncidentes.stream()
+            .filter(incidente -> incidente.getEstado() == EstadoIncidente.ABIERTO)
+            .filter(incidente -> estaDentroDeRadio(ubicacionActualPersona, incidente.getEstablecimiento().getLocalizacion().getUbicacion(), radioMetros)).toList();
         return incidentesEnRadio;
     }
 }
