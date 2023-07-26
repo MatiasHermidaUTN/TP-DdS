@@ -41,7 +41,10 @@ public class Incidente {
         this.idIncidente = obtenerID(); //TODO: esto genera autoincremental?
     }
 
-    public Incidente(){}
+    public Incidente(){
+        this.estado = EstadoIncidente.ABIERTO;
+        this.idIncidente = obtenerID(); //TODO: esto genera autoincremental?
+    }
 
     public Long diferenciaCierreApertura(){
         LocalDateTime tempDateTime = LocalDateTime.from( horarioApertura );
@@ -69,22 +72,21 @@ public class Incidente {
     }
 
     public boolean seReportoEnLaSemanaDeLaFecha(LocalDateTime unaFecha) {
-        LocalDateTime fechaSemanaAnterior = unaFecha.minusDays(7);
 
         // Calculate the start of the previous week (Monday at 00:00)
         LocalDateTime inicioDeSemana;
         if (unaFecha.getDayOfWeek() != DayOfWeek.MONDAY) {
-            inicioDeSemana = fechaSemanaAnterior.with(TemporalAdjusters.previous(DayOfWeek.MONDAY)).withHour(0).withMinute(0).withSecond(0).withNano(0);
+            inicioDeSemana = unaFecha.with(TemporalAdjusters.previous(DayOfWeek.MONDAY)).withHour(0).withMinute(0).withSecond(0).withNano(0);
         } else {
-            inicioDeSemana = fechaSemanaAnterior.withHour(0).withMinute(0).withSecond(0).withNano(0);
+            inicioDeSemana = unaFecha.withHour(0).withMinute(0).withSecond(0).withNano(0);
         }
 
         // Calculate the end of the next week (Sunday at 23:59)
         LocalDateTime finDeSemana;
         if (unaFecha.getDayOfWeek() != DayOfWeek.SUNDAY) {
-            finDeSemana = fechaSemanaAnterior.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+            finDeSemana = unaFecha.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
         } else {
-            finDeSemana = fechaSemanaAnterior.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+            finDeSemana = unaFecha.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
         }
 
         // Check if the date is between the start and end of the previous week

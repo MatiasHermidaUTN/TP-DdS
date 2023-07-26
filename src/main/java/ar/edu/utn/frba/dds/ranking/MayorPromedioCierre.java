@@ -5,11 +5,14 @@ import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MayorPromedioCierre implements GeneradorRanking {
 
-    public List<Entidad> generarRanking() {
+    public List<Entidad> generarRanking(LocalDateTime fechaDeSemana) {
+        List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+
         List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();
 
         listaDeEntidades.sort((entidad1, entidad2) -> {

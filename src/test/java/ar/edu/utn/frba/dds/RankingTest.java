@@ -1,16 +1,12 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.comunidades.Perfil;
-import ar.edu.utn.frba.dds.comunidades.Usuario;
+import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
-import ar.edu.utn.frba.dds.localizacion.Localizacion;
-import ar.edu.utn.frba.dds.localizacion.Ubicacion;
-import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
-import ar.edu.utn.frba.dds.ranking.GeneradorRanking;
 import ar.edu.utn.frba.dds.ranking.MayorImpactoProblematicas;
 import ar.edu.utn.frba.dds.ranking.MayorIncidentesReportados;
 import ar.edu.utn.frba.dds.ranking.MayorPromedioCierre;
+import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
@@ -23,104 +19,137 @@ import java.util.List;
 
 public class RankingTest {
     RepoPrestacion repoPrestacion = RepoPrestacion.getInstancia();
-    Usuario usuario = new Usuario();
+    RepoEntidad repoEntidad = RepoEntidad.getInstancia();
+
     Entidad entidadA = new Entidad("Entidad A");
     Entidad entidadB = new Entidad("Entidad B");
     Entidad entidadC = new Entidad("Entidad C");
-//    Entidad entidadD = new Entidad("Entidad D");
-//    Entidad entidadE = new Entidad("Entidad E");
     Establecimiento establecimientoA = new Establecimiento();
     Establecimiento establecimientoB = new Establecimiento();
     Establecimiento establecimientoC = new Establecimiento();
-//    Establecimiento establecimientoD = new Establecimiento();
-//    Establecimiento establecimientoE = new Establecimiento();
-    Servicio servicioA = new Servicio();
-    Servicio servicioB = new Servicio();
-    Servicio servicioC = new Servicio();
-    Servicio servicioD = new Servicio();
-    Servicio servicioE = new Servicio();
-    Incidente incidenteA = new Incidente();
-    Incidente incidenteB = new Incidente();
-    Incidente incidenteC = new Incidente();
-    Incidente incidenteD = new Incidente();
-    Incidente incidenteE = new Incidente();
-    Prestacion prestacionA = new Prestacion(establecimientoA, servicioA);
-    Prestacion prestacionB = new Prestacion(establecimientoB, servicioB);
-    Prestacion prestacionC = new Prestacion(establecimientoC, servicioC);
-    Prestacion prestacionD = new Prestacion(establecimientoA, servicioD);
-    Prestacion prestacionE = new Prestacion(establecimientoB, servicioE);
+    Servicio servicioA1 = new Servicio();
+    Servicio servicioA2 = new Servicio();
+    Servicio servicioB1 = new Servicio();
+    Servicio servicioB2 = new Servicio();
+    Servicio servicioC1 = new Servicio();
+    Incidente incidenteA1 = new Incidente();
+    Incidente incidenteA2 = new Incidente();
+    Incidente incidenteA3 = new Incidente();
+    Incidente incidenteA4 = new Incidente();
+    Incidente incidenteB1 = new Incidente();
+    Incidente incidenteB2 = new Incidente();
+    Incidente incidenteB3 = new Incidente();
+    Incidente incidenteC1 = new Incidente();
+    Incidente incidenteC2 = new Incidente();
+    Prestacion prestacionA1 = new Prestacion(establecimientoA, servicioA1);
+    Prestacion prestacionA2 = new Prestacion(establecimientoA, servicioA2);
+    Prestacion prestacionB1 = new Prestacion(establecimientoB, servicioB1);
+    Prestacion prestacionB2 = new Prestacion(establecimientoB, servicioB2);
+    Prestacion prestacionC1 = new Prestacion(establecimientoC, servicioC1);
 
     @BeforeEach
     public void init(){
+        repoPrestacion.agregarPrestacion(prestacionA1);
+        repoPrestacion.agregarPrestacion(prestacionA2);
+        repoPrestacion.agregarPrestacion(prestacionB1);
+        repoPrestacion.agregarPrestacion(prestacionB2);
+        repoPrestacion.agregarPrestacion(prestacionC1);
+
+        repoEntidad.agregarEntidad(entidadC);
+        repoEntidad.agregarEntidad(entidadA);
+        repoEntidad.agregarEntidad(entidadB);
+
+        //establecimiento A
         this.establecimientoA.setEntidad(entidadA);
+        this.establecimientoA.setNombre("Estación A");
+        this.establecimientoA.setEntidad(entidadA);
+
+        this.servicioA1.setNombre("Baño");
+        this.servicioA2.setNombre("Ascensor");
+        this.prestacionA1.agregarIncidente(incidenteA1);
+        this.prestacionA1.agregarIncidente(incidenteA2);
+        this.prestacionA2.agregarIncidente(incidenteA3);
+        this.prestacionA2.agregarIncidente(incidenteA4);
+
+        this.incidenteA1.setEstablecimiento(establecimientoA);
+        this.incidenteA2.setEstablecimiento(establecimientoA);
+        this.incidenteA3.setEstablecimiento(establecimientoA);
+        this.incidenteA4.setEstablecimiento(establecimientoA);
+        this.incidenteA1.setServicio(servicioA1);
+        this.incidenteA2.setServicio(servicioA1);
+        this.incidenteA3.setServicio(servicioA2);
+        this.incidenteA4.setServicio(servicioA2);
+        this.incidenteA1.setHorarioApertura(LocalDateTime.of(2023, 7, 26, 12, 0));  //Miercoles 26/7 (prestacionA1)
+        this.incidenteA1.setHorarioCierre(LocalDateTime.of(2023, 7, 26, 12, 30));
+        this.incidenteA1.setEstado(EstadoIncidente.RESUELTO);
+        this.incidenteA2.setHorarioApertura(LocalDateTime.of(2023, 7, 26, 15, 0));  //Miercoles 26/7 (prestacionA1)(menos de 24hs pero anterior RESUELTO)
+        this.incidenteA3.setHorarioApertura(LocalDateTime.of(2023, 7, 26, 12, 0));  //Miercoles 26/7 (prestacionA2)
+        this.incidenteA4.setHorarioApertura(LocalDateTime.of(2023, 7, 30, 12, 0));  //Domingo 30/7 (prestacionA2)(misma semana)
+
+        //establecimiento B
         this.establecimientoB.setEntidad(entidadB);
+        this.establecimientoB.setNombre("Estación B");
+        this.establecimientoB.setEntidad(entidadB);
+
+        this.servicioB1.setNombre("Rampa");
+        this.servicioB2.setNombre("Escalera Mecanica");
+        this.prestacionB1.agregarIncidente(incidenteB1);
+        this.prestacionB2.agregarIncidente(incidenteB2);
+        this.prestacionB2.agregarIncidente(incidenteB3);
+
+        this.incidenteB1.setEstablecimiento(establecimientoB);
+        this.incidenteB2.setEstablecimiento(establecimientoB);
+        this.incidenteB3.setEstablecimiento(establecimientoB);
+        this.incidenteB1.setServicio(servicioB1);
+        this.incidenteB2.setServicio(servicioB2);
+        this.incidenteB3.setServicio(servicioB2);
+        this.incidenteB1.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));  //Martes 25/7 (prestacionB1)
+        this.incidenteB2.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));  //Martes 25/7 (prestacionB2)
+        this.incidenteB3.setHorarioApertura(LocalDateTime.of(2023, 7, 18, 12, 0));  //Martes 18/7 (prestacionB2)(en otra semana)
+
+        //establecimiento C
+        this.establecimientoC.setEntidad(entidadC);
+        this.establecimientoC.setNombre("Estación C");
         this.establecimientoC.setEntidad(entidadC);
 
-        this.establecimientoA.setNombre("Estación A");
-        this.establecimientoB.setNombre("Estación B");
-        this.establecimientoC.setNombre("Estación C");
-//        this.establecimientoA.agregarServicios(servicioA, servicioD);
-//        this.establecimientoB.agregarServicios(servicioB, servicioE);
-//        this.establecimientoC.agregarServicios(servicioC);
+        this.servicioC1.setNombre("Puerta Emergencia");
+        this.prestacionC1.agregarIncidente(incidenteC1);
+        this.prestacionC1.agregarIncidente(incidenteC2);
 
-        this.servicioA.setNombre("Baño");
-        this.servicioB.setNombre("Rampa");
-        this.servicioC.setNombre("Puerta Emergencia");
-        this.servicioD.setNombre("Ascensor");
-        this.servicioE.setNombre("Escalera Mecanica");
-
-        this.incidenteA.setEstablecimiento(establecimientoA);
-        this.incidenteB.setEstablecimiento(establecimientoA);
-        this.incidenteC.setEstablecimiento(establecimientoC);
-        this.incidenteD.setEstablecimiento(establecimientoA);
-        this.incidenteE.setEstablecimiento(establecimientoB);
-        this.incidenteA.setServicio(servicioA);
-        this.incidenteB.setServicio(servicioB);
-        this.incidenteC.setServicio(servicioC);
-        this.incidenteD.setServicio(servicioD);
-        this.incidenteE.setServicio(servicioE);
-        this.prestacionA.agregarIncidente(incidenteA);
-        this.prestacionB.agregarIncidente(incidenteB);
-        this.prestacionC.agregarIncidente(incidenteC);
-        this.prestacionD.agregarIncidente(incidenteD);
-        this.prestacionE.agregarIncidente(incidenteE);
-
-        this.incidenteA.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));
-        this.incidenteB.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));
-        this.incidenteC.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));
-        this.incidenteD.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));
-        this.incidenteE.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));
-
-        this.incidenteA.setHorarioCierre(LocalDateTime.of(2023, 7, 25, 12, 30));
-        this.incidenteB.setHorarioCierre(LocalDateTime.of(2023, 7, 25, 12, 30));
-        this.incidenteC.setHorarioCierre(LocalDateTime.of(2023, 7, 25, 12, 30));
-        this.incidenteD.setHorarioCierre(LocalDateTime.of(2023, 7, 25, 12, 30));
-        this.incidenteE.setHorarioCierre(LocalDateTime.of(2023, 7, 25, 12, 30));
-
-        repoPrestacion.agregarPrestacion(prestacionA);
-        repoPrestacion.agregarPrestacion(prestacionB);
-        repoPrestacion.agregarPrestacion(prestacionC);
-        repoPrestacion.agregarPrestacion(prestacionD);
-        repoPrestacion.agregarPrestacion(prestacionE);
+        this.incidenteC1.setEstablecimiento(establecimientoC);
+        this.incidenteC2.setEstablecimiento(establecimientoC);
+        this.incidenteC1.setServicio(servicioC1);
+        this.incidenteC2.setServicio(servicioC1);
+        this.incidenteC1.setHorarioApertura(LocalDateTime.of(2023, 7, 24, 12, 0));  //Lunes 24/7 (prestacionC1)
+        this.incidenteC2.setHorarioApertura(LocalDateTime.of(2023, 7, 24, 20, 0));  //Lunes 24/7 (prestacionC1)(menos de 24hs del anterior ABIERTO)
     }
 
     @Test
     public void primerRanking() {
+        LocalDateTime fechaDeSemana = LocalDateTime.of(2023, 7, 25, 12, 0);
         MayorPromedioCierre generadorRanking = new MayorPromedioCierre();
-        List<Entidad> rankingEntidades = generadorRanking.generarRanking();
+        List<Entidad> rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
     }
 
     @Test
     public void segundoRanking() {
+        LocalDateTime fechaDeSemana = LocalDateTime.of(2023, 7, 25, 12, 0);
         MayorIncidentesReportados generadorRanking = new MayorIncidentesReportados();
-        List<Entidad> rankingEntidades = generadorRanking.generarRanking();
 
+        List<Entidad> rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
+        for (Entidad entidad : rankingEntidades) {
+            Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.indexOf(entidad);
+            System.out.println("rankingMayorIncidentesReportados: ");
+            System.out.println("Estas son las posiciones en las que la entidad " + entidad.getNombre() +
+                    " se encuentra en rankingMayorIncidentesReportados en la posicion: " + (posicionEnRankingMayorIncidentesReportados+1) + "º. ");
+        }
     }
 
     @Test
     public void tercerRanking() {
+        LocalDateTime fechaDeSemana = LocalDateTime.of(2023, 7, 25, 12, 0);
         MayorImpactoProblematicas generadorRanking = new MayorImpactoProblematicas();
-        List<Entidad> rankingEntidades = generadorRanking.generarRanking();
+        List<Entidad> rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
 
     }
 }

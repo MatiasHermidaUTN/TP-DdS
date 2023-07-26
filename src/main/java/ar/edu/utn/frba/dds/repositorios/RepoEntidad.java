@@ -11,7 +11,7 @@ public class RepoEntidad {
     @Getter
     private static List<Entidad> listaEntidades;
 
-    public static void agregarPrestacion(Entidad entidad) {
+    public static void agregarEntidad(Entidad entidad) {
         listaEntidades.add(entidad);
     }
 
