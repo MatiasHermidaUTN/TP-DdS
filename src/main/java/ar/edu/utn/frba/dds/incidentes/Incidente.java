@@ -38,12 +38,12 @@ public class Incidente {
         this.usuarioApertura = usuarioApertura;
         this.horarioApertura = LocalDateTime.now();
         this.estado = EstadoIncidente.ABIERTO;
-        this.idIncidente = obtenerID(); //TODO: esto genera autoincremental?
+        this.idIncidente = obtenerID();
     }
 
     public Incidente(){
         this.estado = EstadoIncidente.ABIERTO;
-        this.idIncidente = obtenerID(); //TODO: esto genera autoincremental?
+        this.idIncidente = obtenerID();
     }
 
     public double minutosEntreAperturaYCierre() {

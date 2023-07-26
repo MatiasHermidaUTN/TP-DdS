@@ -11,8 +11,6 @@ import java.util.List;
 public class MayorPromedioCierre implements GeneradorRanking {
 
     public List<Entidad> generarRanking(LocalDateTime fechaDeSemana) {
-        List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
-
         List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();
 
         listaDeEntidades.sort((entidad1, entidad2) -> {

@@ -36,9 +36,9 @@ public class MailSenderJavax {
             email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(usuario.getEmail(), true));
             email.setSubject("Incidente en " + incidente.getEstablecimiento().getNombre());
             email.setText(_body, "utf-8", "html");
-            System.out.print("Mandando email\n");
+            System.out.print("Mandando email<br>");
             Transport.send(email);
-            System.out.print("Email enviado\n");
+            System.out.print("Email enviado<br>");
             return Boolean.TRUE;
         } catch (MessagingException e) {
             System.out.print("Error: " + e);
@@ -150,6 +150,41 @@ public class MailSenderJavax {
                     + " Le sugerimos que se acerce a revisar el estado del mismo. Origen: "+ i.getNombreComunidad() + "</li>"));
         }
         str.append("</ul>Eso es todo. Muchas Gracias.");
+        String _body = str.toString();
+
+        try {
+            email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(usuario.getEmail(), true));
+            email.setSubject("Incidentes");
+            email.setText(_body, "utf-8", "html");
+            System.out.print("Mandando email");
+            Transport.send(email);
+            System.out.print("Email enviado");
+            return Boolean.TRUE;
+        } catch (MessagingException e) {
+            System.out.print("Error: " + e);
+            return Boolean.FALSE;
+        }
+    }
+
+    public Boolean mandarNotificacionInformeSemanal(String msjInformeSemanal, Usuario usuario) {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("ddstpa2023@gmail.com", "hwxklytiqfhzftwe");
+            }
+        });
+
+        MimeMessage email = new MimeMessage(session);
+        StringBuilder str = new StringBuilder();
+        str.append("Este es el informe semanal de los rankings: <br>");
+        str.append(msjInformeSemanal);
+        str.append("<br> Eso es todo. Muchas Gracias.");
         String _body = str.toString();
 
         try {

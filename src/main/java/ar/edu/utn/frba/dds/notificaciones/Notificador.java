@@ -15,4 +15,5 @@ public interface Notificador {
 
     public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentesCercanos, Usuario usuario);
 
+    public Boolean mandarNotificacionInformeSemanal(String msjInformeSemanal, Usuario usuario);
 }

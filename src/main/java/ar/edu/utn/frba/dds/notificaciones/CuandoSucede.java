@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.notificaciones;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
+import ar.edu.utn.frba.dds.ranking.InformeSemanal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,11 @@ public class CuandoSucede implements ConfiguracionNotificacion{
     @Override
     public void notificarIncidentesCercanos(List<Incidente> incidentesCercanos) {
         notificador.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
+    }
+
+    @Override
+    public void notificarInformeSemanal(String msjInformeSemanal) {
+        notificador.mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
     }
 
     @Override

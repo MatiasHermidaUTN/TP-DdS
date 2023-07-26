@@ -20,25 +20,25 @@ public class InformeSemanal {
     }
 
     private Integer posicionEnRankingMayorPromedioCierre(Entidad entidad) {
-        return rankingMayorPromedioCierre.indexOf(entidad);
+        return rankingMayorPromedioCierre.indexOf(entidad) + 1;
     }
 
     private Integer posicionEnRankingMayorIncidentesReportados(Entidad entidad) {
-        return rankingMayorIncidentesReportados.indexOf(entidad);
+        return rankingMayorIncidentesReportados.indexOf(entidad) + 1;
     }
 
     private Integer posicionEnRankingMayorImpactoProblematicas(Entidad entidad) {
-        return rankingMayorImpactoProblematicas.indexOf(entidad);
+        return rankingMayorImpactoProblematicas.indexOf(entidad) + 1;
     }
 
     public String posicionesParaEntidad(Entidad entidad) {
         StringBuilder str = new StringBuilder();
-        str.append("Estas son las posiciones en las que la entidad " + entidad.getNombre() + " se encuentra en los rankings: ");
-        str.append("rankingMayorPromedioCierre: " + posicionEnRankingMayorPromedioCierre(entidad) + ", ");
-        str.append("rankingMayorIncidentesReportados: " + posicionEnRankingMayorIncidentesReportados(entidad) + ", ");
-        str.append("rankingMayorImpactoProblematicas: " + posicionEnRankingMayorImpactoProblematicas(entidad) + ". ");
-        String _body = str.toString();
-        return _body;
+        str.append("<br>Estas son las posiciones en las que la entidad " + entidad.getNombre() + " se encuentra en los rankings: ");
+        str.append("<br>- rankingMayorPromedioCierre: " + posicionEnRankingMayorPromedioCierre(entidad));
+        str.append("<br>- rankingMayorIncidentesReportados: " + posicionEnRankingMayorIncidentesReportados(entidad));
+        str.append("<br>- rankingMayorImpactoProblematicas: " + posicionEnRankingMayorImpactoProblematicas(entidad));
+        str.append("<br><br>");
+        return str.toString();
     }
 
     public String posicionesParaOrganismoDeControl(OrganismoDeControl organismoDeControl) {
@@ -48,8 +48,7 @@ public class InformeSemanal {
         for (Entidad entidad : entidadesControladas) {
             str.append(posicionesParaEntidad(entidad));
         }
-        String _body = str.toString();
-        return _body;
+        return str.toString();
     }
 
 }

@@ -32,4 +32,9 @@ public class AdapterMailSender implements Notificador {
         return mailSender.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 
+    @Override
+    public Boolean mandarNotificacionInformeSemanal(String msjInformeSemanal, Usuario usuario) {
+        return mailSender.mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
+    }
+
 }

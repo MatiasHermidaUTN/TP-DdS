@@ -23,4 +23,8 @@ public class WhatsappSender implements Notificador {
     public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentesCercanos, Usuario usuario) {
         return null;
     }
+
+    public Boolean mandarNotificacionInformeSemanal(String msjInformeSemanal, Usuario usuario) {
+        return null;
+    }
 }

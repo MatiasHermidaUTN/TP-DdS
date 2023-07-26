@@ -58,4 +58,8 @@ public class SinApuros implements ConfiguracionNotificacion{
         notificador.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 
+    @Override
+    public void notificarInformeSemanal(String msjInformeSemanal) {
+        notificador.mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
+    }
 }

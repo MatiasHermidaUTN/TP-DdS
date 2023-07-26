@@ -99,4 +99,8 @@ public class Entidad {
         return cantidadIncidentesNoRepetidosDeLaSemana;
     }
 
+    public double calcularImpactoProblematicas(LocalDateTime fechaDeSemana) {
+        //TODO entrega 4
+        return 0;
+    }
 }

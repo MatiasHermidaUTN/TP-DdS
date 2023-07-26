@@ -14,6 +14,18 @@ public class MayorImpactoProblematicas implements GeneradorRanking {
         // tenemos que distinguir entre usuarios y observadores.
         List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();
 
+        listaDeEntidades.sort((entidad1, entidad2) -> {
+            double promedioCierreEntidad1 = entidad1.calcularImpactoProblematicas(fechaDeSemana);
+            double promedioCierreEntidad2 = entidad2.calcularImpactoProblematicas(fechaDeSemana);
+            if (promedioCierreEntidad1 < promedioCierreEntidad2) {
+                return 1;
+            } else if (promedioCierreEntidad1 > promedioCierreEntidad2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
         return listaDeEntidades;
     }
 }

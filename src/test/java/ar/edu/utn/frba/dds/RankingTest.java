@@ -1,18 +1,25 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.comunidades.TipoUsuario;
+import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
+import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
+import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
+import ar.edu.utn.frba.dds.notificaciones.SinApuros;
+import ar.edu.utn.frba.dds.ranking.InformeSemanal;
 import ar.edu.utn.frba.dds.ranking.MayorImpactoProblematicas;
 import ar.edu.utn.frba.dds.ranking.MayorIncidentesReportados;
 import ar.edu.utn.frba.dds.ranking.MayorPromedioCierre;
 import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.repositorios.RepoIncidente;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
+import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -225,7 +232,7 @@ public class RankingTest {
         for (Entidad entidad : rankingEntidades) {
             Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.indexOf(entidad);
             System.out.println("Estas son las posiciones en las que la entidad " + entidad.getNombre() +
-                    " se encuentra en rankingMayorIncidentesReportados en la posicion: " + (posicionEnRankingMayorIncidentesReportados+1) + "º. ");
+                    " se encuentra en rankingMayorIncidentesReportados en la posicion: " + posicionEnRankingMayorIncidentesReportados + "º. ");
         }
     }
 
@@ -239,7 +246,45 @@ public class RankingTest {
         for (Entidad entidad : rankingEntidades) {
             Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.indexOf(entidad);
             System.out.println("Estas son las posiciones en las que la entidad " + entidad.getNombre() +
-                    " se encuentra en rankingMayorImpactoProblematicas en la posicion: " + (posicionEnRankingMayorIncidentesReportados+1) + "º. ");
+                    " se encuentra en rankingMayorImpactoProblematicas en la posicion: " + posicionEnRankingMayorIncidentesReportados + "º. ");
+        }
+    }
+
+    @Test
+    public void enviarInforme() {
+        initRankingMayorIncidentesReportados();
+        InformeSemanal informeSemanal = new InformeSemanal(LocalDateTime.of(2023, 7, 25, 12, 0));
+
+        Usuario juanPerez = new Usuario("mhermida@frba.utn.edu.ar", "juanPerez", "1234");
+        juanPerez.setTipoUsuario(TipoUsuario.ENTIDAD_PRESTADORA);
+        juanPerez.agregarEntidadInteres(entidadA);
+        ConfiguracionNotificacion configuracionNotificacion = new CuandoSucede(juanPerez);
+        configuracionNotificacion.setNotificador(new AdapterMailSender());
+        juanPerez.setConfiguracionNotificacion(configuracionNotificacion);
+
+        Usuario juanPerez2 = new Usuario("mhermida@frba.utn.edu.ar", "juanPerez2", "1234");
+        juanPerez2.setTipoUsuario(TipoUsuario.ORGANISMO_CONTROL);
+        juanPerez2.agregarEntidadInteres(entidadB);
+        juanPerez2.agregarEntidadInteres(entidadC);
+        ConfiguracionNotificacion configuracionNotificacion2 = new CuandoSucede(juanPerez2);
+        configuracionNotificacion2.setNotificador(new AdapterMailSender());
+        juanPerez2.setConfiguracionNotificacion(configuracionNotificacion2);
+
+        RepoUsuario.agregarUsuario(juanPerez);
+        RepoUsuario.agregarUsuario(juanPerez2);
+
+        List<Usuario> usuarioList = RepoUsuario.getInstancia().getListaUsuarios(); //TODO este RepoUsuario se deberia hacer con Hibernate
+        for (Usuario usuario : usuarioList) {
+            String msjInformeSemanal;
+            //TODO hacerlo polimorfico con composicion? (por si se agreagan mas tipos de usuarios)
+            TipoUsuario tipoUsuario = usuario.getTipoUsuario();
+            if (tipoUsuario.equals(TipoUsuario.ENTIDAD_PRESTADORA) || tipoUsuario.equals(TipoUsuario.ORGANISMO_CONTROL)) {
+                msjInformeSemanal = new String();
+                for (Entidad entidad : usuario.getEntidadesInteres()) {
+                    msjInformeSemanal = msjInformeSemanal + informeSemanal.posicionesParaEntidad(entidad);
+                }
+                usuario.recibirInformeSemanal(msjInformeSemanal);
+            }
         }
     }
 }

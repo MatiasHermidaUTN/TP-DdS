@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
+import ar.edu.utn.frba.dds.ranking.InformeSemanal;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -84,5 +85,9 @@ public class Usuario {
 
     public void recibirNotificacionDeIncidentesCercanos(List<Incidente> incidentes) {
         configuracionNotificacion.notificarIncidentesCercanos(incidentes);
+    }
+
+    public void recibirInformeSemanal(String msjInformeSemanal) {
+        configuracionNotificacion.notificarInformeSemanal(msjInformeSemanal);
     }
 }
