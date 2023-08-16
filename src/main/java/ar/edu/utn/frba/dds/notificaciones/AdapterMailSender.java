@@ -14,17 +14,20 @@ public class AdapterMailSender implements Notificador {
 
     @Override
     public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Usuario usuario) {
-        return mailSender.mandarNotificacionDeIncidenteNuevo(incidente, usuario);
+        Notificacion notificacion = FactoryNotificacion.crearNotificacionDeIncidenteNuevo(incidente);
+        return mailSender.mandarNotificacion(notificacion, usuario.getEmail());
     }
 
     @Override
     public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Usuario usuario) {
-        return mailSender.mandarNotificacionDeConclusionDeIncidente(incidente, usuario);
+        Notificacion notificacion = FactoryNotificacion.crearNotificacionDeConclusionDeIncidente(incidente);
+        return mailSender.mandarNotificacion(notificacion, usuario.getEmail());
     }
 
     @Override
     public Boolean mandarResumenDeIncidentes(List<Incidente> incidentesNuevos, List<Incidente> incidentesConcluidos, Usuario usuario) {
-        return mailSender.mandarResumenDeIncidentes(incidentesNuevos, incidentesConcluidos, usuario);
+        Notificacion notificacion = FactoryNotificacion.crearNotificacionDeResumenDeIncidentes(incidentesNuevos, incidentesConcluidos);
+        return mailSender.mandarNotificacion(notificacion, usuario.getEmail());
     }
 
     @Override
