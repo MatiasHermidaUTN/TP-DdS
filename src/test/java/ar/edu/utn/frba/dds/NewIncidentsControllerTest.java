@@ -11,8 +11,8 @@ import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
 import ar.edu.utn.frba.dds.notificaciones.SinApuros;
-import ar.edu.utn.frba.dds.notificaciones.cron.Cron;
 import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
+import ar.edu.utn.frba.dds.repositorios.RepoComunidad;
 import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
@@ -31,6 +31,8 @@ public class NewIncidentsControllerTest {
 
 
     public void crearIncidente(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura) {
+
+        RepoComunidad.getInstancia();
 
         List<Comunidad> comunidades = usuarioApertura.getPerfiles()
                 .stream()
@@ -172,7 +174,7 @@ public class NewIncidentsControllerTest {
 
         ConfiguracionNotificacion configuracionNotificacion = new SinApuros(julianPolaco);
         configuracionNotificacion.setNotificador(new AdapterMailSender());
-        configuracionNotificacion.agregarHorario(DiaSemana.VIERNES, "18", "37"); //aca va el horario que se quiere testear
+        configuracionNotificacion.agregarHorario(DiaSemana.JUEVES, "11", "04"); //aca va el horario que se quiere testear
         julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
 
         julianPolaco.agregarPerfil(perfil1);

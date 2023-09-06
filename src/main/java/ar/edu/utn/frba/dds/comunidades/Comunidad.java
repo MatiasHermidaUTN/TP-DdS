@@ -23,7 +23,7 @@ public class Comunidad {
         this.miembros = new ArrayList<>();
         this.serviciosDeComunidad = new ArrayList<>();
         this.incidentes = new ArrayList<>();
-        RepoComunidad.agregarComunidad(this);
+        RepoComunidad.getInstancia().agregarComunidad(this);
     }
 
     public void agregarMiembros(Perfil ... perfiles){
