@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.OrganismoDeControl;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,11 +13,13 @@ public class InformeSemanal {
     private List<Entidad> rankingMayorPromedioCierre;
     private List<Entidad> rankingMayorIncidentesReportados;
     private List<Entidad> rankingMayorImpactoProblematicas;
+    private LocalDate fechaCreacion;
 
     public InformeSemanal(LocalDateTime fechaDeLaSemana) {
         rankingMayorPromedioCierre = new MayorPromedioCierre().generarRanking(fechaDeLaSemana);
         rankingMayorIncidentesReportados = new MayorIncidentesReportados().generarRanking(fechaDeLaSemana);
         rankingMayorImpactoProblematicas = new MayorImpactoProblematicas().generarRanking(fechaDeLaSemana);
+        fechaCreacion = fechaDeLaSemana.toLocalDate();
     }
 
     private Integer posicionEnRankingMayorPromedioCierre(Entidad entidad) {
