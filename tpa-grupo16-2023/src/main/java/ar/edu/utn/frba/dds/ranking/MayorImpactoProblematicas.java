@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MayorImpactoProblematicas implements GeneradorRanking {
 
-    public Ranking generarRanking(LocalDateTime fechaDeSemana) {
+    public List<Entidad> generarRanking(LocalDateTime fechaDeSemana) {
         //TODO entrega 4
         // a mayor cantidad de miembros en una comunidad -> mayor impacto de un incidente sobre esa comunidad
         // tenemos que distinguir entre usuarios y observadores.
@@ -26,6 +26,6 @@ public class MayorImpactoProblematicas implements GeneradorRanking {
             }
         });
 
-        return new Ranking(listaDeEntidades, fechaDeSemana.toLocalDate());
+        return listaDeEntidades;
     }
 }

@@ -209,10 +209,10 @@ public class RankingTest {
         LocalDateTime fechaDeSemana = LocalDateTime.of(2023, 7, 25, 12, 0);
         MayorPromedioCierre generadorRanking = new MayorPromedioCierre();
 
-        Ranking rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
+        List<Entidad> rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
         System.out.println("rankingMayorPromedioCierre: ");
-        for (Entidad entidad : rankingEntidades.getTopEntidades()) {
-            Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.getTopEntidades().indexOf(entidad);
+        for (Entidad entidad : rankingEntidades) {
+            Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.indexOf(entidad);
             System.out.println("Estas son las posiciones en las que la entidad " + entidad.getNombre() +
                     " se encuentra en rankingMayorPromedioCierre en la posicion: " + (posicionEnRankingMayorIncidentesReportados+1) + "º. ");
         }
@@ -224,10 +224,10 @@ public class RankingTest {
         LocalDateTime fechaDeSemana = LocalDateTime.of(2023, 7, 25, 12, 0);
         MayorIncidentesReportados generadorRanking = new MayorIncidentesReportados();
 
-        Ranking rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
+        List<Entidad> rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
         System.out.println("rankingMayorIncidentesReportados: ");
-        for (Entidad entidad : rankingEntidades.getTopEntidades()) {
-            Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.getTopEntidades().indexOf(entidad);
+        for (Entidad entidad : rankingEntidades) {
+            Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.indexOf(entidad);
             System.out.println("Estas son las posiciones en las que la entidad " + entidad.getNombre() +
                     " se encuentra en rankingMayorIncidentesReportados en la posicion: " + posicionEnRankingMayorIncidentesReportados + "º. ");
         }
@@ -238,10 +238,10 @@ public class RankingTest {
         LocalDateTime fechaDeSemana = LocalDateTime.of(2023, 7, 25, 12, 0);
         MayorImpactoProblematicas generadorRanking = new MayorImpactoProblematicas();
 
-        Ranking rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
+        List<Entidad> rankingEntidades = generadorRanking.generarRanking(fechaDeSemana);
         System.out.println("rankingMayorImpactoProblematicas (TODO en 4ta entrega): ");
-        for (Entidad entidad : rankingEntidades.getTopEntidades()) {
-            Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.getTopEntidades().indexOf(entidad);
+        for (Entidad entidad : rankingEntidades) {
+            Integer posicionEnRankingMayorIncidentesReportados = rankingEntidades.indexOf(entidad);
             System.out.println("Estas son las posiciones en las que la entidad " + entidad.getNombre() +
                     " se encuentra en rankingMayorImpactoProblematicas en la posicion: " + posicionEnRankingMayorIncidentesReportados + "º. ");
         }

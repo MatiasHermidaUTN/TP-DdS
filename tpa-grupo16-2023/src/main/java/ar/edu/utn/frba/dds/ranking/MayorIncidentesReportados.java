@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MayorIncidentesReportados implements GeneradorRanking {
 
-    public Ranking generarRanking(LocalDateTime fechaDeSemana) {
+    public List<Entidad> generarRanking(LocalDateTime fechaDeSemana) {
         List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
         List<Entidad> listaDeEntidades = RepoEntidad.getInstancia().getListaEntidades();
 
@@ -26,6 +26,6 @@ public class MayorIncidentesReportados implements GeneradorRanking {
             }
         });
 
-        return new Ranking(listaDeEntidades, fechaDeSemana.toLocalDate());
+        return listaDeEntidades;
     }
 }
