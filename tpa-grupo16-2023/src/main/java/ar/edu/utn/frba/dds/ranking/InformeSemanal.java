@@ -23,15 +23,15 @@ public class InformeSemanal {
     }
 
     private Integer posicionEnRankingMayorPromedioCierre(Entidad entidad) {
-        return rankingMayorPromedioCierre.indexOf(entidad) + 1;
+        return rankingMayorPromedioCierre.getTopEntidades().indexOf(entidad) + 1;
     }
 
     private Integer posicionEnRankingMayorIncidentesReportados(Entidad entidad) {
-        return rankingMayorIncidentesReportados.indexOf(entidad) + 1;
+        return rankingMayorIncidentesReportados.getTopEntidades().indexOf(entidad) + 1;
     }
 
     private Integer posicionEnRankingMayorImpactoProblematicas(Entidad entidad) {
-        return rankingMayorImpactoProblematicas.indexOf(entidad) + 1;
+        return rankingMayorImpactoProblematicas.getTopEntidades().indexOf(entidad) + 1;
     }
 
     public String posicionesParaEntidad(Entidad entidad) {

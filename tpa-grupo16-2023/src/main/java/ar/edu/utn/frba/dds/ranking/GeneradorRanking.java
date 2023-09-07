@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface GeneradorRanking {
-    public List<Entidad> generarRanking(LocalDateTime fechaDeSemana);
+    public Ranking generarRanking(LocalDateTime fechaDeSemana);
 }
