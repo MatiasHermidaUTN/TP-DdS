@@ -10,9 +10,9 @@ import java.util.List;
 
 @Getter
 public class InformeSemanal {
-    private Ranking rankingMayorPromedioCierre;
-    private Ranking rankingMayorIncidentesReportados;
-    private Ranking rankingMayorImpactoProblematicas;
+    private List<Entidad> rankingMayorPromedioCierre;
+    private List<Entidad> rankingMayorIncidentesReportados;
+    private List<Entidad> rankingMayorImpactoProblematicas;
     private LocalDate fechaCreacion;
 
     public InformeSemanal(LocalDateTime fechaDeLaSemana) {
