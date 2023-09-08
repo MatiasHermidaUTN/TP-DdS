@@ -22,6 +22,10 @@ public class RepoUsuario {
         listaUsuarios = new ArrayList<>();
     }
 
+    public static List<Usuario> buscarTodos() {
+        return listaUsuarios;
+    }
+
     public static RepoUsuario getInstancia() {
         if (instancia == null) {
             instancia = new RepoUsuario();

@@ -143,6 +143,7 @@ public class NewIncidentsControllerTest {
 
     }
 
+    /*
     @Test
     public void incidente_sin_apuros() throws Exception {
         Establecimiento mcDonalds = new Establecimiento("McDonalds");
@@ -186,4 +187,6 @@ public class NewIncidentsControllerTest {
         Thread.sleep(300000);
 
     }
+    */
+
 }

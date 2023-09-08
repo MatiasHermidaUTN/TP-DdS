@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Fue reemplazado por EnviarNotificaciones
 public class EnviarNotificacionesDeIncidentes implements Job {
 
     @Override

@@ -1,9 +1,7 @@
 package ar.edu.utn.frba.dds.notificaciones;
 
-import ar.edu.utn.frba.dds.comunidades.Perfil;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
-import ar.edu.utn.frba.dds.notificaciones.cron.Cron;
 import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +16,9 @@ public class SinApuros implements ConfiguracionNotificacion{
     @Getter @Setter
     Usuario usuario = null;
 
-    List<Cron> crones = new ArrayList<Cron>();
+    //List<Cron> crones = new ArrayList<Cron>();
+    @Getter
+    List<Horario> horarios = new ArrayList<Horario>();
     @Getter
     List<Incidente> incidentesNuevos = new ArrayList<Incidente>();
     @Getter
@@ -28,10 +28,17 @@ public class SinApuros implements ConfiguracionNotificacion{
         this.usuario = usuario;
     }
 
+    /*
     public void agregarHorario(DiaSemana diaDeLaSemana, String hora, String minuto){
         Cron cron = new Cron();
         cron.enviarConfigurable(diaDeLaSemana, hora, minuto, this);
         crones.add(cron);
+    }
+    */
+
+    public void agregarHorario(DiaSemana diaDeLaSemana, Integer hora){
+        Horario horario = new Horario(diaDeLaSemana, hora);
+        horarios.add(horario);
     }
 
     @Override
