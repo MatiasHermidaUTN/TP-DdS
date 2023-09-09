@@ -9,23 +9,43 @@ import ar.edu.utn.frba.dds.repositorios.RepoIncidente;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Entity
+@Table
 @Getter
 public class Entidad {
+
+    @Id
+    @GeneratedValue
+    private Integer entidad_id;
+
+    @Column
     private String nombre;
 
+    @OneToOne
+    @JoinColumn(name = "localizacion_id", referencedColumnName = "localizacion_id")
     @Setter
     private Localizacion localizacion;
+
+    @Transient
     private List<Establecimiento> establecimientos;
-    private Map<String,String> atributosVariables;
+
+    @ManyToMany
+    private List<AtributoVariable> atributosVariables;
+
+    @ManyToMany
     private List<Usuario> usuariosAsignados;
 
-    // private Boolean servicioPublico;
+
+    public Entidad() {
+
+    }
 
     public List<Servicio> servicios() {
         return this.establecimientos.stream().
@@ -37,7 +57,7 @@ public class Entidad {
     public Entidad(String nombre) {
         this.nombre = nombre;
         this.establecimientos = new ArrayList<>();
-        this.atributosVariables = new HashMap<String, String>();
+        this.atributosVariables = new ArrayList<>() ;
         this.usuariosAsignados = new ArrayList<>();
     }
 
@@ -50,11 +70,12 @@ public class Entidad {
     }
 
     public void agregarAtributoVar(String nombre, String valor) {
-        this.atributosVariables.put(nombre, valor);
+        AtributoVariable nuevoAtributo = new AtributoVariable(nombre, valor);
+        this.atributosVariables.add(nuevoAtributo);
     }
 
     public void eliminarAtributoVar(String nombre){
-        this.atributosVariables.remove(nombre);
+        this.atributosVariables.removeIf(atributoVariable -> atributoVariable.getNombre_atributo() == nombre);
     }
 
     public void avisar_a_usuarios() {}

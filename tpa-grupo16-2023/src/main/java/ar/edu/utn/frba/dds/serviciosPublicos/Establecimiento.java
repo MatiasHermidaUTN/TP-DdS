@@ -4,17 +4,33 @@ import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Getter
 @Setter
+@Entity
+@Table
 public class Establecimiento {
+
+    @Id
+    @GeneratedValue
+    private Integer establecimiento_id;
+
+    @Column
     private String nombre;
 
+    @ManyToOne
+    @JoinColumn(name = "entidad_id", referencedColumnName = "entidad_id")
     private Entidad entidad;
+
+    @OneToOne
+    @JoinColumn(name = "localizacion_id", referencedColumnName = "localizacion_id")
     private Localizacion localizacion;
+
+    @ManyToMany
     private List<Servicio> servicios;
 
     public Establecimiento() {this.servicios = new ArrayList<Servicio>();}

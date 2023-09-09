@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.incidentes;
 
 import ar.edu.utn.frba.dds.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
-import ar.edu.utn.frba.dds.converters.DateConverter;
+import ar.edu.utn.frba.dds.converters.LocalDateTimeAttributeConverter;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -16,6 +16,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
 @Entity
+@Table
 @Getter
 @Setter
 public class Incidente {
@@ -48,12 +49,12 @@ public class Incidente {
     @JoinColumn(name = "usuario_cierre", referencedColumnName = "usuario_id")
     private Usuario usuarioCierre;
 
-    @Converter(converter = DateConverter.class) // no se que falla aca
-    @Column(name = "horario_apertura")
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Column(name = "horario_apertura", columnDefinition = "TIMESTAMP")
     private LocalDateTime horarioApertura;
 
-    @Converter(converter = DateConverter.class)
-    @Column(name = "horario_apertura")
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Column(name = "horario_cierre", columnDefinition = "TIMESTAMP")
     private LocalDateTime horarioCierre;
 
     @Enumerated(EnumType.STRING)

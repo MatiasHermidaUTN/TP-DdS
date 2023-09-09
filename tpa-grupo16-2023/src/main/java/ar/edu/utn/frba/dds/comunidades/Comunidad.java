@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
+@Table
 @Getter
 public class Comunidad {
 
@@ -68,7 +69,7 @@ public class Comunidad {
 
     public Incidente getIncidenteFromId(Integer idIncidente) {
         return incidentes.stream()
-                .filter(incidente -> incidente.getIdIncidente().equals(idIncidente))
+                .filter(incidente -> incidente.getIncidente_id().equals(idIncidente))
                 .toList()
                 .get(0);
     }

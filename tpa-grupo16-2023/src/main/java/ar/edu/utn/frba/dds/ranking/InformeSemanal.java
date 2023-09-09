@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table
 @Getter
 public class InformeSemanal {
 

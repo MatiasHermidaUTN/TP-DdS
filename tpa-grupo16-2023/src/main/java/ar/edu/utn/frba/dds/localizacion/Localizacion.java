@@ -5,6 +5,7 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
+@Table
 @Getter
 public class Localizacion {
 
