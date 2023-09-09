@@ -3,6 +3,9 @@ package ar.edu.utn.frba.dds.localizacion;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 @Getter
 @Setter
 public class Ubicacion {
@@ -12,6 +15,10 @@ public class Ubicacion {
     public Ubicacion(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
+    }
+
+    public Ubicacion() {
+
     }
 
     @Override

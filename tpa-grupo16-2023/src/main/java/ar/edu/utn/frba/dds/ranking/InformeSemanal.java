@@ -4,22 +4,37 @@ import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.OrganismoDeControl;
 import lombok.Getter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
 @Getter
 public class InformeSemanal {
-    private List<Entidad> rankingMayorPromedioCierre;
-    private List<Entidad> rankingMayorIncidentesReportados;
-    private List<Entidad> rankingMayorImpactoProblematicas;
+
+    @Id
     private LocalDate fechaCreacion;
+
+    @ManyToMany
+    private List<Entidad> rankingMayorPromedioCierre;
+
+    @ManyToMany
+    private List<Entidad> rankingMayorIncidentesReportados;
+
+    @ManyToMany
+    private List<Entidad> rankingMayorImpactoProblematicas;
+
 
     public InformeSemanal(LocalDateTime fechaDeLaSemana) {
         rankingMayorPromedioCierre = new MayorPromedioCierre().generarRanking(fechaDeLaSemana);
         rankingMayorIncidentesReportados = new MayorIncidentesReportados().generarRanking(fechaDeLaSemana);
         rankingMayorImpactoProblematicas = new MayorImpactoProblematicas().generarRanking(fechaDeLaSemana);
         fechaCreacion = fechaDeLaSemana.toLocalDate();
+    }
+
+    public InformeSemanal() {
+
     }
 
     private Integer posicionEnRankingMayorPromedioCierre(Entidad entidad) {

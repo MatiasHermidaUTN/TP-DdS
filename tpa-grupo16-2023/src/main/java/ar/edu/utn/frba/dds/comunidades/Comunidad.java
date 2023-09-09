@@ -6,16 +6,30 @@ import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Entity
 @Getter
 public class Comunidad {
+
+    @Id
+    @GeneratedValue
+    private Integer comunidad_id;
+
     @Setter
+    @Column(name = "comunidad_nombre")
     private String nombre;
+
+    @Transient
     private List<Perfil> miembros;
+
+    @ManyToMany
     private List<Servicio> serviciosDeComunidad;
+
+    @Transient
     private List<Incidente> incidentes;
 
     public Comunidad(String nombre) {
@@ -24,6 +38,10 @@ public class Comunidad {
         this.serviciosDeComunidad = new ArrayList<>();
         this.incidentes = new ArrayList<>();
         RepoComunidad.getInstancia().agregarComunidad(this);
+    }
+
+    public Comunidad() {
+
     }
 
     public void agregarMiembros(Perfil ... perfiles){

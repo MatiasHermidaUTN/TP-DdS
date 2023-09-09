@@ -10,21 +10,48 @@ import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
 public class Usuario {
+    @Id
+    @GeneratedValue
+    private Integer usuario_id;
+
+    @Column
     private String email;
+
+    @Column
     private String usuario;
+
+    @Column
     private String contrasenia;
+
+    @Column
     private Integer telefono;
+
+    @Transient
     private List<Perfil> perfiles;
+
+    @OneToOne
+    @JoinColumn(name = "localizacion_id", referencedColumnName = "localizacion_id")
     private Localizacion localizacion;
+
+    @Transient
     private List<Entidad> entidadesInteres;
+
+    @Transient
     private List<Servicio> serviciosInteres;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_usuario")
     private TipoUsuario tipoUsuario;
+
+    @Transient
     private ConfiguracionNotificacion configuracionNotificacion;
 
     public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {

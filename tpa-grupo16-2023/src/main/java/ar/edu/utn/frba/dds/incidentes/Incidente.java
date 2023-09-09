@@ -1,35 +1,73 @@
 package ar.edu.utn.frba.dds.incidentes;
 
+import ar.edu.utn.frba.dds.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
+import ar.edu.utn.frba.dds.converters.DateConverter;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
+@Entity
 @Getter
 @Setter
 public class Incidente {
-    private Integer idIncidente;
+
+    @Id
+    @GeneratedValue
+    private Integer incidente_id;
+
+    @ManyToOne
+    @JoinColumn(name = "comunidad_id", referencedColumnName = "comunidad_id")
+    private Comunidad comunidad; // esto lo agregue porque no le gustaba al inteliij que use el nombreComunidad
+
+    @Transient
     private String nombreComunidad;
+
+    @Column
     public String observaciones;
+
+    @Transient
     private Establecimiento establecimiento;
+
+    @Transient
     private Servicio servicio;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_apertura", referencedColumnName = "usuario_id")
     private Usuario usuarioApertura;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_cierre", referencedColumnName = "usuario_id")
     private Usuario usuarioCierre;
+
+    @Converter(converter = DateConverter.class) // no se que falla aca
+    @Column(name = "horario_apertura")
     private LocalDateTime horarioApertura;
+
+    @Converter(converter = DateConverter.class)
+    @Column(name = "horario_apertura")
     private LocalDateTime horarioCierre;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_incidente")
     private EstadoIncidente estado;
 
-    private static Integer id = 0;
-    private Integer obtenerID() {
-        return id++;
-    }
+    @ManyToOne
+    @JoinColumn(name = "prestacion_id", referencedColumnName = "prestacion_id")
+    private Prestacion prestacion;
+
+    // private static Integer id = 0;
+    // private Integer obtenerID() {
+        // return id++;
+    // }
 
     public Incidente(Establecimiento establecimiento, String nombreComunidad, Servicio servicio, Usuario usuarioApertura) {
         this.establecimiento = establecimiento;
@@ -38,12 +76,12 @@ public class Incidente {
         this.usuarioApertura = usuarioApertura;
         this.horarioApertura = LocalDateTime.now();
         this.estado = EstadoIncidente.ABIERTO;
-        this.idIncidente = obtenerID();
+        // this.idIncidente = obtenerID();
     }
 
     public Incidente(){
         this.estado = EstadoIncidente.ABIERTO;
-        this.idIncidente = obtenerID();
+        // this.idIncidente = obtenerID();
     }
 
     public double minutosEntreAperturaYCierre() {
