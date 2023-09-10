@@ -30,7 +30,7 @@ public class Establecimiento {
     @JoinColumn(name = "localizacion_id", referencedColumnName = "localizacion_id")
     private Localizacion localizacion;
 
-    @ManyToMany
+    @Transient
     private List<Servicio> servicios;
 
     public Establecimiento() {this.servicios = new ArrayList<Servicio>();}

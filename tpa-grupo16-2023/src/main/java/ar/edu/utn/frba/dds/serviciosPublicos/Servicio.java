@@ -31,6 +31,10 @@ public class Servicio {
     @Transient
     private List<RegistroDeCambio> registro;
 
+    @ManyToOne
+    @JoinColumn(name = "establecimiento_id", referencedColumnName = "establecimiento_id")
+    private Establecimiento establecimiento;
+
     public Servicio() {}
 
     public Servicio(String nombre) {

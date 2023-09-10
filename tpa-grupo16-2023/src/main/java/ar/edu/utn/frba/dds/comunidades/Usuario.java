@@ -45,7 +45,7 @@ public class Usuario {
     @Transient
     private List<Entidad> entidadesInteres;
 
-    @Transient
+    @ManyToMany
     private List<Servicio> serviciosInteres;
 
     @Enumerated(EnumType.STRING)

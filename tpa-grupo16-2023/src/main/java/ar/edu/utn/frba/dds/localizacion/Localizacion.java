@@ -16,8 +16,6 @@ public class Localizacion {
     @Embedded
     private Ubicacion ubicacion;
 
-    // esto hay que reveerlo, si guardamos todos los datos de la localizacion o solo el nombre de la localidad
-    // lo primero implicaria persistir la localidad, el departamento y la provincia en cuestion
     @Transient
     private Localidad localidad;
 

@@ -284,4 +284,14 @@ public class RankingTest {
             }
         }
     }
+
+    @Test
+    public void mostrarInforme() {
+        initRankingMayorIncidentesReportados();
+        InformeSemanal informeSemanal = new InformeSemanal(LocalDateTime.of(2023, 7, 25, 12, 0));
+
+        System.out.println(informeSemanal.getRankingMayorImpactoProblematicasString());
+        System.out.println(informeSemanal.getRankingMayorIncidentesReportadosString());
+        System.out.println(informeSemanal.getRankingMayorPromedioCierreString());
+    }
 }
