@@ -1,8 +1,9 @@
-package ar.edu.utn.frba.dds.notificaciones;
+package ar.edu.utn.frba.dds.notificaciones.medios;
 
-import ar.edu.utn.frba.dds.comunidades.Perfil;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
+import ar.edu.utn.frba.dds.notificaciones.FactoryNotificacion;
+import ar.edu.utn.frba.dds.notificaciones.Notificacion;
 
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class AdapterMailSender implements Notificador {
 
     @Override
     public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentesCercanos, Usuario usuario) {
-        //return mailSender.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
-        return null;
+        Notificacion notificacion = FactoryNotificacion.crearNotificacionDeRevisionDeIncidentesCercanos(incidentesCercanos);
+        return mailSender.mandarNotificacion(notificacion, usuario.getEmail());
     }
 
     @Override
     public Boolean mandarNotificacionInformeSemanal(String msjInformeSemanal, Usuario usuario) {
-        //return mailSender.mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
-        return null;
+        Notificacion notificacion = FactoryNotificacion.crearNotificacionDeInformeSemanal(msjInformeSemanal);
+        return mailSender.mandarNotificacion(notificacion, usuario.getEmail());
     }
 
 }

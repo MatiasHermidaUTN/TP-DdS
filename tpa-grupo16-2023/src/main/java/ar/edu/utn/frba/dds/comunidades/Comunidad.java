@@ -30,13 +30,24 @@ public class Comunidad {
     @ManyToMany
     private List<Servicio> serviciosDeComunidad;
 
+    @ManyToMany
+    private List<Servicio> establecimientosDeComunidad;
+
     @Transient
     private List<Incidente> incidentes;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "grado_de_confianza")
+    private GradoDeConfianza gradoDeConfianza;
+
+    @Column(name = "activa")
+    private Boolean activa;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.miembros = new ArrayList<>();
         this.serviciosDeComunidad = new ArrayList<>();
+        this.establecimientosDeComunidad = new ArrayList<>();
         this.incidentes = new ArrayList<>();
         RepoComunidad.getInstancia().agregarComunidad(this);
     }

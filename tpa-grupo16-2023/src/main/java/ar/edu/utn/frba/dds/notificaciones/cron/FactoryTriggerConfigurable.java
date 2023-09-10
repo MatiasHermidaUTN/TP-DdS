@@ -4,6 +4,7 @@ import org.quartz.CronScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 
+//Se usa en el Cron, deprecado
 public class FactoryTriggerConfigurable {
 
     public static Trigger crearTriggerConfigurable(DiaSemana diaDeLaSemana, String hora, String minuto) {

@@ -1,6 +1,5 @@
 package ar.edu.utn.frba.dds.notificaciones.cron;
 
-import ar.edu.utn.frba.dds.notificaciones.SinApuros;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 

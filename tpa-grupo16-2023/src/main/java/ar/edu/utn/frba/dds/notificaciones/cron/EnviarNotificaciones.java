@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.notificaciones.cron;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
-import ar.edu.utn.frba.dds.notificaciones.SinApuros;
+import ar.edu.utn.frba.dds.notificaciones.estrategias.SinApuros;
 import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static ar.edu.utn.frba.dds.repositorios.RepoUsuario.buscarTodos;
 
 public class EnviarNotificaciones  implements Job {
 

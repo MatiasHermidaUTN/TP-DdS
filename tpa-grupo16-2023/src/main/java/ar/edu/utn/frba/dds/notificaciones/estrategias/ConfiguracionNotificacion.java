@@ -1,7 +1,9 @@
-package ar.edu.utn.frba.dds.notificaciones;
+package ar.edu.utn.frba.dds.notificaciones.estrategias;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
+import ar.edu.utn.frba.dds.notificaciones.Horario;
+import ar.edu.utn.frba.dds.notificaciones.medios.Notificador;
 import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
 
 import java.util.List;

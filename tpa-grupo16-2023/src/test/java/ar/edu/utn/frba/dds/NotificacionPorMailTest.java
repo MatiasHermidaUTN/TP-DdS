@@ -5,7 +5,7 @@ import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.localizacion.Ubicacion;
-import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
+import ar.edu.utn.frba.dds.notificaciones.medios.AdapterMailSender;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import org.junit.jupiter.api.Assertions;

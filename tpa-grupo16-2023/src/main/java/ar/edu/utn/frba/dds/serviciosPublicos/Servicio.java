@@ -35,7 +35,10 @@ public class Servicio {
     @JoinColumn(name = "establecimiento_id", referencedColumnName = "establecimiento_id")
     private Establecimiento establecimiento;
 
-    public Servicio() {}
+    public Servicio() {
+        this.atributosVariables = new ArrayList<>();
+        this.registro = new ArrayList<>();
+    }
 
     public Servicio(String nombre) {
         this.nombre = nombre;

@@ -1,7 +1,5 @@
 package ar.edu.utn.frba.dds.comunidades;
 
-import ar.edu.utn.frba.dds.incidentes.Incidente;
-import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import lombok.Getter;
 import lombok.Setter;
 
