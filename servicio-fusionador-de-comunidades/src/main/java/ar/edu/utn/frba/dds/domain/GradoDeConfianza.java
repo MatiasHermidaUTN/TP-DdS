@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.domain;
 
 public enum GradoDeConfianza {
     NO_CONFIABLE,

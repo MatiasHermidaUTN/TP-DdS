@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,12 @@ import java.util.List;
 @Setter
 public class Comunidad {
     private Long id;
-    private Long idComunidadModelo;
     private String nombre;
     private List<Long> idUsuarios;
     private List<Long> idEstablecimientos;
     private List<Long> idServicios;
     private GradoDeConfianza gradoDeConfianza;
-    private Boolean activo;
+    private Boolean activa;
 
     public Comunidad() {
         this.idUsuarios = new ArrayList<Long>();
@@ -33,7 +32,7 @@ public class Comunidad {
                 "      " + ", idEstablecimientos=" + idEstablecimientos + "\n" +
                 "      " + ", idServicios=" + idServicios + "\n" +
                 "      " + ", gradoDeConfianza=" + gradoDeConfianza + "\n" +
-                "      " + ", activo=" + activo + "\n" +
+                "      " + ", activa=" + activa + "\n" +
                 '}';
     }
 }

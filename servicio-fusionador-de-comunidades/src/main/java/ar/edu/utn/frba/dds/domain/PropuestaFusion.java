@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,6 @@ public class PropuestaFusion {
     public PropuestaFusion() {
         this.estadoPropuestaFusion = EstadoPropuestaFusion.PENDIENTE;
         this.fechaPropuestaFusion = LocalDate.now();
-        /**/
         this.comunidadFusionada = new Comunidad();
     }
 
@@ -28,6 +27,7 @@ public class PropuestaFusion {
         comunidadFusionada = new Comunidad();
         comunidadFusionada.setNombre(comunidad1.getNombre() + "-" + comunidad2.getNombre());
         comunidadFusionada.setGradoDeConfianza(comunidad1.getGradoDeConfianza());
+        comunidadFusionada.setActiva(true);
 
         List<Long> listaIdUsuarios = new ArrayList<>();
         listaIdUsuarios.addAll(comunidad1.getIdUsuarios());
@@ -53,12 +53,16 @@ public class PropuestaFusion {
                 .distinct()
                 .toList());
 
-        comunidad1.setActivo(false);
-        comunidad2.setActivo(false);
+        comunidad1.setActiva(false);
+        comunidad2.setActiva(false);
     }
 
-    public boolean getAceptada() {
+    public boolean estaAceptada() {
         return this.estadoPropuestaFusion == EstadoPropuestaFusion.ACEPTADA;
+    }
+
+    public boolean estaRechazada() {
+        return this.estadoPropuestaFusion == EstadoPropuestaFusion.RECHAZADA;
     }
 
     @Override

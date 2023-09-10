@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ public class SugeridorDeFusiones {
 
     private Double coincidenciaEnServicios = 0.75;
 
-    private Double coincidenciaEnUsuarios = 0.75;
+    private Double coincidenciaEnUsuarios = 0.05;
 
     public List<PropuestaFusion> sugerirFusiones(List<Comunidad> comunidades, List<PropuestaFusion> propuestasFusionesAntiguas) {
         List<PropuestaFusion> nuevasPropuestas = new ArrayList<>();
@@ -25,9 +25,10 @@ public class SugeridorDeFusiones {
         for(Comunidad comunidad1 : comunidades) {
             for(Comunidad comunidad2 : comunidades) {
                 if (comunidad1.equals(comunidad2)) continue;
+
                 if ( !this.estaEnNuevasPropuestas(comunidad1, nuevasPropuestas)
                         && !this.estaEnNuevasPropuestas(comunidad2, nuevasPropuestas)
-                            && this.esPosibleFusion(comunidad1, comunidad2))
+                        && this.esPosibleFusion(comunidad1, comunidad2))
                 {
                     PropuestaFusion propuesta = new PropuestaFusion();
                     propuesta.setComunidad1(comunidad1);
@@ -52,15 +53,15 @@ public class SugeridorDeFusiones {
         return propuestasRecientes
                 .stream()
                 .anyMatch(prop ->
-                    (prop.getComunidad1().equals(propuesta.getComunidad1())
-                        && prop.getComunidad2().equals(propuesta.getComunidad2()))
-                    || (prop.getComunidad1().equals(propuesta.getComunidad2())
-                        && prop.getComunidad2().equals(propuesta.getComunidad1())));
+                        (prop.getComunidad1().getId().equals(propuesta.getComunidad1().getId())
+                                && prop.getComunidad2().getId().equals(propuesta.getComunidad2().getId()))
+                                || (prop.getComunidad1().getId().equals(propuesta.getComunidad2().getId())
+                                && prop.getComunidad2().getId().equals(propuesta.getComunidad1().getId())));
     }
 
     public Boolean estaEnNuevasPropuestas(Comunidad comunidad, List<PropuestaFusion> nuevasPropuestas) {
-          return nuevasPropuestas.stream().anyMatch(prop -> prop.getComunidad1().equals(comunidad)
-                  || prop.getComunidad2().equals(comunidad));
+        return nuevasPropuestas.stream().anyMatch(prop -> prop.getComunidad1().getId().equals(comunidad.getId())
+                || prop.getComunidad2().getId().equals(comunidad.getId()));
     }
 
     public Boolean esPosibleFusion(Comunidad comunidad1, Comunidad comunidad2) {

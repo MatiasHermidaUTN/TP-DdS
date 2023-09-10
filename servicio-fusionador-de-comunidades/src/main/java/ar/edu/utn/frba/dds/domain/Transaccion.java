@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,12 @@ import java.util.List;
 @Getter
 @Setter
 public class Transaccion {
-    private Long id;
     private EtapaTransaccion etapa;
-    private List<Comunidad> comunidades;
-    private List<Comunidad> comunidadesFusionadas;
-    private List<Comunidad> comunidadesDesactivadas;
-    private List<PropuestaFusion> propuestasFusionesAntiguas;
-    private List<PropuestaFusion> propuestasFusionesNuevas;
+    private List<Comunidad> comunidades;                        //IN
+    private List<Comunidad> comunidadesFusionadas;              //OUT
+    private List<Comunidad> comunidadesDesactivadas;            //OUT
+    private List<PropuestaFusion> propuestasFusionesAntiguas;   //IN
+    private List<PropuestaFusion> propuestasFusionesNuevas;     //OUT
     private LocalDate fechaInicioTransaccion;
     private LocalDate fechaFinTransaccion;
 
@@ -31,7 +30,6 @@ public class Transaccion {
     @Override
     public String toString() {
         return "Transaccion{ " + this.hashCode() + "\n" +
-                "  " + "id=" + id + "\n" +
                 "  " + "etapa=" + etapa + "\n" +
                 "  " + "comunidades=" + comunidades + "\n" +
                 "  " + "comunidadesFusionadas=" + comunidadesFusionadas + "\n" +
