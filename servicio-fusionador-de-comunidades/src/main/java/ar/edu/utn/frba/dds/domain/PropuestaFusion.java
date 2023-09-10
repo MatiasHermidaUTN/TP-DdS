@@ -13,14 +13,13 @@ public class PropuestaFusion {
     private Long id;
     private Comunidad comunidad1;
     private Comunidad comunidad2;
-    private Comunidad comunidadFusionada;
+    private Comunidad comunidadFusionada = null;
     private EstadoPropuestaFusion estadoPropuestaFusion;
     private LocalDate fechaPropuestaFusion;
 
     public PropuestaFusion() {
         this.estadoPropuestaFusion = EstadoPropuestaFusion.PENDIENTE;
         this.fechaPropuestaFusion = LocalDate.now();
-        this.comunidadFusionada = new Comunidad();
     }
 
     public void fusionarComunidades() {
@@ -71,7 +70,7 @@ public class PropuestaFusion {
                 "    " + "id=" + id + "\n" +
                 "    " + ", comunidad1=" + comunidad1.toString() + "\n" +
                 "    " + ", comunidad2=" + comunidad2.toString() + "\n" +
-                "    " + ", comunidadFusionada=" + comunidadFusionada.toString() + "\n" +
+                //"    " + ", comunidadFusionada=" + comunidadFusionada.toString() + "\n" +
                 "    " + ", estadoPropuestaFusion=" + estadoPropuestaFusion + "\n" +
                 "    " + ", fechaPropuestaFusion=" + fechaPropuestaFusion + "\n" +
                 '}';

@@ -63,11 +63,11 @@ public class IniciarTransaccionController implements Handler {
             return true;
         }
         if(transaccion.getComunidades() == null) {
-            ctx.result("No hay comunidades");
+            ctx.result("No hay comunidades en la transaccion");
             return true;
         }
         if(transaccion.getComunidades().isEmpty()) {
-            ctx.result("No hay comunidades");
+            ctx.result("No hay comunidades en la transaccion");
             return true;
         }
         if(transaccion.getComunidades().stream().anyMatch(comunidad -> comunidad.getIdServicios() == null)){

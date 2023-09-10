@@ -5,5 +5,4 @@ public enum EtapaTransaccion {
     RETORNO_POST,
     PATCH_TRANSACCION,
     RETORNO_PATCH,
-
 }
