@@ -4,26 +4,38 @@ import ar.edu.utn.frba.dds.comunidades.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter
+@Entity
+@Table
 public class Servicio {
+    
+    @Id
+    @GeneratedValue
+    private Integer servicio_id;
+    
+    @Column
     private String nombre;
-    private Map<String,String> atributosVariables;
-
+    
+    @ManyToMany
+    private List<AtributoVariable> atributosVariables;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_servicio")
     private EstadoServicio estado;
+    
+    @Transient
     private List<RegistroDeCambio> registro;
 
     public Servicio() {}
 
     public Servicio(String nombre) {
         this.nombre = nombre;
-        this.atributosVariables = new HashMap<String, String>();
+        this.atributosVariables = new ArrayList<>();
         this.estado = EstadoServicio.DISPONIBLE;
         this.registro = new ArrayList<>();
         // guardamos fecha de creacion del servicio
@@ -41,10 +53,11 @@ public class Servicio {
     }
 
     public void agregarAtributoVar(String nombre, String valor) {
-        this.atributosVariables.put(nombre, valor);
+        AtributoVariable nuevoAtributo = new AtributoVariable(nombre, valor);
+        this.atributosVariables.add(nuevoAtributo);
     }
 
     public void eliminarAtributoVar(String nombre){
-        this.atributosVariables.remove(nombre);
+        this.atributosVariables.removeIf(atributo -> atributo.getNombre_atributo() == nombre);
     }
 }
