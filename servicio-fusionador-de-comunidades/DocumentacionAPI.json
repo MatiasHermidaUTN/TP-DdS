@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "/transacciones": {
+    "/api/transacciones": {
       "post": {
         "tags": [
           "transacciones"
@@ -353,7 +353,7 @@
                 3,
                 4
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -377,7 +377,7 @@
                 3,
                 5
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -407,7 +407,7 @@
                   3,
                   4
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -431,7 +431,7 @@
                   3,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -470,7 +470,7 @@
                 3,
                 4
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -494,7 +494,7 @@
                 3,
                 5
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -524,7 +524,7 @@
                   3,
                   4
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -548,7 +548,7 @@
                   3,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -580,7 +580,7 @@
                   3,
                   4
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -604,7 +604,7 @@
                   3,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -642,7 +642,7 @@
                 3,
                 4
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -666,7 +666,7 @@
                 3,
                 5
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -696,7 +696,7 @@
                   3,
                   4
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -720,7 +720,7 @@
                   3,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -752,7 +752,7 @@
                   3,
                   4
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -776,7 +776,7 @@
                   3,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -814,7 +814,7 @@
                 3,
                 4
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -838,7 +838,7 @@
                 3,
                 5
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -865,7 +865,7 @@
                 4,
                 5
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -893,7 +893,7 @@
                 3,
                 4
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -917,7 +917,7 @@
                 3,
                 5
               ],
-              "idEstablecimiento": [
+              "idEstablecimientos": [
                 6,
                 7,
                 8,
@@ -945,7 +945,7 @@
                   3,
                   4
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -969,7 +969,7 @@
                   3,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -1001,7 +1001,7 @@
                   3,
                   4
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -1025,7 +1025,7 @@
                   3,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
@@ -1050,7 +1050,7 @@
                   4,
                   5
                 ],
-                "idEstablecimiento": [
+                "idEstablecimientos": [
                   6,
                   7,
                   8,
