@@ -2,6 +2,8 @@ package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 
+import ar.edu.utn.frba.dds.notificaciones.Horario;
+import ar.edu.utn.frba.dds.notificaciones.medios.Notificador;
 import ar.edu.utn.frba.dds.persistencia.Persistente;
 import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoUsuarioDeprecado;
 
@@ -55,6 +57,18 @@ public class Usuario extends Persistente {
     @Transient
     private ConfiguracionNotificacion configuracionNotificacion;
 
+    @Transient
+    private Notificador notificador;
+
+    @Transient
+    List<Horario> horarios = new ArrayList<Horario>();
+
+    @Transient
+    List<Incidente> incidentesNuevos = new ArrayList<Incidente>();
+
+    @Transient
+    List<Incidente> incidentesConcluidos = new ArrayList<Incidente>();
+
     public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {
         this.email = email;
         this.usuario = usuario;
@@ -82,6 +96,27 @@ public class Usuario extends Persistente {
         RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
     }
 
+    public void agregarIncidenteNuevo(Incidente incidente) {
+        this.incidentesNuevos.add(incidente);
+    }
+
+    public void removerIncidenteNuevo(Incidente incidente) {
+        this.incidentesNuevos.remove(incidente);
+    }
+
+    public void agregarIncidenteConcluido(Incidente incidente) {
+        this.incidentesNuevos.add(incidente);
+    }
+
+    public void incidentesNotificados() {
+        incidentesNuevos.clear();
+        incidentesConcluidos.clear();
+    }
+
+    public void agregarHorario(Horario horario) {
+        this.horarios.add(horario);
+    }
+
     public void agregarPerfil(Perfil perfil){
         this.perfiles.add(perfil);
     }
@@ -104,18 +139,18 @@ public class Usuario extends Persistente {
 
     //Estos son los metodos para notificar:
     public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
-        configuracionNotificacion.notificarIncidenteNuevo(incidente);
+        configuracionNotificacion.notificarIncidenteNuevo(incidente, this);
     }
 
     public void recibirNotificacionDeCierreDeIncidente(Incidente incidente) {
-        configuracionNotificacion.notificarConclusionDeIncidente(incidente);
+        configuracionNotificacion.notificarConclusionDeIncidente(incidente, this);
     }
 
     public void recibirNotificacionDeIncidentesCercanos(List<Incidente> incidentes) {
-        configuracionNotificacion.notificarIncidentesCercanos(incidentes);
+        configuracionNotificacion.notificarIncidentesCercanos(incidentes, this);
     }
 
     public void recibirInformeSemanal(String msjInformeSemanal) {
-        configuracionNotificacion.notificarInformeSemanal(msjInformeSemanal);
+        configuracionNotificacion.notificarInformeSemanal(msjInformeSemanal, this);
     }
 }

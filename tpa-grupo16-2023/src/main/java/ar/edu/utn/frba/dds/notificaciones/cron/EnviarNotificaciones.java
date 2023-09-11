@@ -29,7 +29,7 @@ public class EnviarNotificaciones  implements Job {
 
         List<Usuario> usuariosANotificar =
                 usuariosSinApuros.stream()
-                        .filter(u -> !(u.getConfiguracionNotificacion().getHorarios().stream()
+                        .filter(u -> !(u.getHorarios().stream()
                                 .filter(h -> (h.diaSemanaComoDayOfWeek() == LocalDateTime.now().getDayOfWeek())
                                 && (h.getHora() == LocalDateTime.now().getHour()))
                                 .collect(Collectors.toList())
@@ -37,17 +37,20 @@ public class EnviarNotificaciones  implements Job {
                         .collect(Collectors.toList());
 
         List<Usuario> usuariosConNotificacionesPendientes = usuariosANotificar.stream()
-                .filter(u -> !(u.getConfiguracionNotificacion().getIncidentesNuevos().isEmpty()
-                && u.getConfiguracionNotificacion().getIncidentesConcluidos().isEmpty()))
+                .filter(u -> !(u.getIncidentesNuevos().isEmpty()
+                && u.getIncidentesConcluidos().isEmpty()))
                 .collect(Collectors.toList());
 
         usuariosConNotificacionesPendientes.stream()
-                .forEach(u -> u.getConfiguracionNotificacion().getNotificador()
+                .forEach(u -> u.getNotificador()
                 .mandarResumenDeIncidentes(
-                        u.getConfiguracionNotificacion().getIncidentesNuevos().stream().filter(
+                        u.getIncidentesNuevos().stream().filter(
                                 i -> ChronoUnit.HOURS.between(i.getHorarioApertura(), LocalDateTime.now()) < 24
                         ).collect(Collectors.toList()),
-                        u.getConfiguracionNotificacion().getIncidentesConcluidos(),
+                        u.getIncidentesConcluidos(),
                         u));
+
+        usuariosConNotificacionesPendientes.stream()
+                .forEach(u -> u.incidentesNotificados());
     }
 }

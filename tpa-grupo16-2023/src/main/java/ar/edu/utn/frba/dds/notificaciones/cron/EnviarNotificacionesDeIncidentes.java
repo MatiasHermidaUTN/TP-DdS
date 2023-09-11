@@ -13,10 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //Fue reemplazado por EnviarNotificaciones. Deprecado.
+//Además se rompió tdo después de hacer stateless a SinApuros.
 public class EnviarNotificacionesDeIncidentes implements Job {
 
     @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {/*
 
         System.out.print(LocalDateTime.now());
 
@@ -36,7 +37,7 @@ public class EnviarNotificacionesDeIncidentes implements Job {
 
             sinApuros.incidentesNotificados();
 
-        }
+        }*/
 
     }
 

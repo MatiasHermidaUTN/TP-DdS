@@ -12,51 +12,32 @@ import java.util.List;
 
 public class CuandoSucede implements ConfiguracionNotificacion{
 
-    @Getter @Setter
-    Notificador notificador = null;
-    @Getter @Setter
-    Usuario usuario = null;
 
-    public CuandoSucede(Usuario usuario) {
-        this.usuario = usuario;
+    public CuandoSucede() {
+
     }
 
     @Override
-    public void notificarIncidenteNuevo(Incidente incidente) {
-        notificador.mandarNotificacionDeIncidenteNuevo(incidente, usuario);
+    public void notificarIncidenteNuevo(Incidente incidente, Usuario usuario) {
+        usuario.getNotificador().mandarNotificacionDeIncidenteNuevo(incidente, usuario);
     }
 
     @Override
-    public void notificarConclusionDeIncidente(Incidente incidente) {
-        notificador.mandarNotificacionDeConclusionDeIncidente(incidente, usuario);
+    public void notificarConclusionDeIncidente(Incidente incidente, Usuario usuario) {
+        usuario.getNotificador().mandarNotificacionDeConclusionDeIncidente(incidente, usuario);
     }
 
     @Override
-    public void notificarIncidentesCercanos(List<Incidente> incidentesCercanos) {
-        notificador.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
+    public void notificarIncidentesCercanos(List<Incidente> incidentesCercanos, Usuario usuario) {
+        usuario.getNotificador().mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 
     @Override
-    public void notificarInformeSemanal(String msjInformeSemanal) {
-        notificador.mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
+    public void notificarInformeSemanal(String msjInformeSemanal, Usuario usuario) {
+        usuario.getNotificador().mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
     }
 
     @Override
-    public void agregarHorario(DiaSemana diaDeLaSemana, Integer hora) {}
-
-    @Override
-    public List<Horario> getHorarios() {
-        return null;
-    }
-
-    @Override
-    public List<Incidente> getIncidentesNuevos() {
-        return null;
-    }
-
-    @Override
-    public List<Incidente> getIncidentesConcluidos() {
-        return null;
-    }
+    public void agregarHorario(DiaSemana diaDeLaSemana, Integer hora, Usuario usuario) {}
 
 }

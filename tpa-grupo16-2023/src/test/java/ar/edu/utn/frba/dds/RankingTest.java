@@ -254,16 +254,16 @@ public class RankingTest {
         Usuario juanPerez = new Usuario("mhermida@frba.utn.edu.ar", "juanPerez", "1234");
         juanPerez.setTipoUsuario(TipoUsuario.ENTIDAD_PRESTADORA);
         juanPerez.agregarEntidadInteres(entidadA);
-        ConfiguracionNotificacion configuracionNotificacion = new CuandoSucede(juanPerez);
-        configuracionNotificacion.setNotificador(new AdapterMailSender());
+        ConfiguracionNotificacion configuracionNotificacion = new CuandoSucede();
+        juanPerez.setNotificador(new AdapterMailSender());
         juanPerez.setConfiguracionNotificacion(configuracionNotificacion);
 
         Usuario juanPerez2 = new Usuario("mhermida@frba.utn.edu.ar", "juanPerez2", "1234");
         juanPerez2.setTipoUsuario(TipoUsuario.ORGANISMO_CONTROL);
         juanPerez2.agregarEntidadInteres(entidadB);
         juanPerez2.agregarEntidadInteres(entidadC);
-        ConfiguracionNotificacion configuracionNotificacion2 = new CuandoSucede(juanPerez2);
-        configuracionNotificacion2.setNotificador(new AdapterMailSender());
+        ConfiguracionNotificacion configuracionNotificacion2 = new CuandoSucede();
+        juanPerez2.setNotificador(new AdapterMailSender());
         juanPerez2.setConfiguracionNotificacion(configuracionNotificacion2);
 
         RepoUsuarioDeprecado.agregarUsuario(juanPerez);

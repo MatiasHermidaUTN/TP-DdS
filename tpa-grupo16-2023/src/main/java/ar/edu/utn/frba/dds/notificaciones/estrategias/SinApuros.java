@@ -13,62 +13,44 @@ import java.util.List;
 
 public class SinApuros implements ConfiguracionNotificacion{
 
-    @Getter @Setter
-    Notificador notificador = null;
-    @Getter @Setter
-    Usuario usuario = null;
 
-    //List<Cron> crones = new ArrayList<Cron>();
-    @Getter
-    List<Horario> horarios = new ArrayList<Horario>();
-    @Getter
-    List<Incidente> incidentesNuevos = new ArrayList<Incidente>();
-    @Getter
-    List<Incidente> incidentesConcluidos = new ArrayList<Incidente>();
+    public SinApuros() {
 
-    public SinApuros(Usuario usuario) {
-        this.usuario = usuario;
     }
 
-    /*
+    /* deprecado
     public void agregarHorario(DiaSemana diaDeLaSemana, String hora, String minuto){
         Cron cron = new Cron();
         cron.enviarConfigurable(diaDeLaSemana, hora, minuto, this);
         crones.add(cron);
-    }
-    */
+    }*/
 
-    public void agregarHorario(DiaSemana diaDeLaSemana, Integer hora){
+    public void agregarHorario(DiaSemana diaDeLaSemana, Integer hora, Usuario usuario){
         Horario horario = new Horario(diaDeLaSemana, hora);
-        horarios.add(horario);
+        usuario.agregarHorario(horario);
     }
 
     @Override
-    public void notificarIncidenteNuevo(Incidente incidente) {
-        incidentesNuevos.add(incidente);
+    public void notificarIncidenteNuevo(Incidente incidente, Usuario usuario) {
+        usuario.agregarIncidenteNuevo(incidente);
     }
 
     @Override
-    public void notificarConclusionDeIncidente(Incidente incidente) {
-        if(incidentesNuevos.contains(incidente)) {
-            incidentesNuevos.remove(incidente);
+    public void notificarConclusionDeIncidente(Incidente incidente, Usuario usuario) {
+        if(usuario.getIncidentesNuevos().contains(incidente)) {
+            usuario.removerIncidenteNuevo(incidente);
         } else {
-            incidentesConcluidos.add(incidente);
+            usuario.agregarIncidenteConcluido(incidente);
         }
     }
 
-    public void incidentesNotificados() {
-        incidentesNuevos.clear();
-        incidentesConcluidos.clear();
+    @Override
+    public void notificarIncidentesCercanos(List<Incidente> incidentesCercanos, Usuario usuario) {
+        usuario.getNotificador().mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
     }
 
     @Override
-    public void notificarIncidentesCercanos(List<Incidente> incidentesCercanos) {
-        notificador.mandarNotificacionRevisionDeIncidentesCercano(incidentesCercanos, usuario);
-    }
-
-    @Override
-    public void notificarInformeSemanal(String msjInformeSemanal) {
-        notificador.mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
+    public void notificarInformeSemanal(String msjInformeSemanal, Usuario usuario) {
+        usuario.getNotificador().mandarNotificacionInformeSemanal(msjInformeSemanal, usuario);
     }
 }

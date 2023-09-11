@@ -7,6 +7,8 @@ import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
+import ar.edu.utn.frba.dds.notificaciones.estrategias.SinApuros;
 import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoComunidadDeprecado;
 import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoPrestacionDeprecado;
 import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoUsuarioDeprecado;
@@ -131,8 +133,8 @@ public class NewIncidentsControllerTest {
         Usuario julianPolaco = new Usuario("adalessandro@frba.utn.edu.ar", "julianPolaco", "1234");
         julianPolaco.agregarEntidadInteres(entidadMcDonalds);
         julianPolaco.agregarServicioInteres(banio);
-        ConfiguracionNotificacion configuracionNotificacion = new CuandoSucede(julianPolaco);
-        configuracionNotificacion.setNotificador(new AdapterMailSender());
+        ConfiguracionNotificacion configuracionNotificacion = new CuandoSucede();
+        julianPolaco.setNotificador(new AdapterMailSender());
         julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
 
         julianPolaco.agregarPerfil(perfil1);
@@ -146,7 +148,7 @@ public class NewIncidentsControllerTest {
 
     }
 
-    /*
+
     @Test
     public void incidente_sin_apuros() throws Exception {
         Establecimiento mcDonalds = new Establecimiento("McDonalds");
@@ -174,9 +176,9 @@ public class NewIncidentsControllerTest {
         julianPolaco.agregarEntidadInteres(entidadMcDonalds);
         julianPolaco.agregarServicioInteres(banio);
 
-        ConfiguracionNotificacion configuracionNotificacion = new SinApuros(julianPolaco);
-        configuracionNotificacion.setNotificador(new AdapterMailSender());
-        configuracionNotificacion.agregarHorario(DiaSemana.JUEVES, "11", "04"); //aca va el horario que se quiere testear
+        ConfiguracionNotificacion configuracionNotificacion = new SinApuros();
+        julianPolaco.setNotificador(new AdapterMailSender());
+        configuracionNotificacion.agregarHorario(DiaSemana.JUEVES, 15, julianPolaco); //aca va el horario que se quiere testear
         julianPolaco.setConfiguracionNotificacion(configuracionNotificacion);
 
         julianPolaco.agregarPerfil(perfil1);
@@ -190,6 +192,6 @@ public class NewIncidentsControllerTest {
         Thread.sleep(300000);
 
     }
-    */
+
 
 }
