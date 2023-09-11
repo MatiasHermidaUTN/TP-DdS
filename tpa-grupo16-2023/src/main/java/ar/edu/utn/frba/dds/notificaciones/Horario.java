@@ -28,7 +28,7 @@ public class Horario extends Persistente {
     }
 
     public Horario() {
-        
+
     }
 
     public DayOfWeek diaSemanaComoDayOfWeek() {

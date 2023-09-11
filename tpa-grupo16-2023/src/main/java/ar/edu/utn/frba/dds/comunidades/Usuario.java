@@ -1,5 +1,7 @@
 package ar.edu.utn.frba.dds.comunidades;
 
+import ar.edu.utn.frba.dds.converters.ConfiguracionNotificacionConverter;
+import ar.edu.utn.frba.dds.converters.NotificadorConverter;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 
 import ar.edu.utn.frba.dds.notificaciones.Horario;
@@ -54,19 +56,21 @@ public class Usuario extends Persistente {
     @Column(name = "tipo_usuario")
     private TipoUsuario tipoUsuario;
 
-    @Transient
+    @Convert(converter = ConfiguracionNotificacionConverter.class)
+    @Column(name = "configuracion_notificacion")
     private ConfiguracionNotificacion configuracionNotificacion;
 
-    @Transient
+    @Convert(converter = NotificadorConverter.class)
+    @Column
     private Notificador notificador;
 
-    @Transient
+    @ManyToMany
     List<Horario> horarios = new ArrayList<Horario>();
 
-    @Transient
+    @ManyToMany
     List<Incidente> incidentesNuevos = new ArrayList<Incidente>();
 
-    @Transient
+    @ManyToMany
     List<Incidente> incidentesConcluidos = new ArrayList<Incidente>();
 
     public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {
