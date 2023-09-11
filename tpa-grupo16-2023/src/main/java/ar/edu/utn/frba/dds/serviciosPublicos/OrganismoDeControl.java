@@ -28,6 +28,11 @@ public class OrganismoDeControl extends Persistente {
         this.serviciosControlados = new ArrayList<>();
     }
 
+    public OrganismoDeControl() {
+        this.entidadesControladas = new ArrayList<>();
+        this.serviciosControlados = new ArrayList<>();
+    }
+
     public void agregarEntidad(Entidad entidad) {
         this.entidadesControladas.add(entidad);
     }

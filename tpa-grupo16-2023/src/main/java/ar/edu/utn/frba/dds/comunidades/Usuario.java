@@ -1,9 +1,12 @@
 package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
-import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
+
 import ar.edu.utn.frba.dds.persistencia.Persistente;
 import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoUsuarioDeprecado;
+
+import ar.edu.utn.frba.dds.notificaciones.estrategias.ConfiguracionNotificacion;
+
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
@@ -42,7 +45,7 @@ public class Usuario extends Persistente {
     @Transient
     private List<Entidad> entidadesInteres;
 
-    @Transient
+    @ManyToMany
     private List<Servicio> serviciosInteres;
 
     @Enumerated(EnumType.STRING)

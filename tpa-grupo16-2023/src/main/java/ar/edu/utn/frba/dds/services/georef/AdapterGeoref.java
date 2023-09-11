@@ -44,7 +44,7 @@ public class AdapterGeoref {
         departamento.provincia = provincia;
         Localidad localidad = new Localidad();
         localidad.nombre = "Localidad Hardcodeada pq no se puede obtener de la API";   //TODO: no se puede obtener a partir de lat y lon, hay que hacerlo con listado de localidades
-        localidad.id = "0";
+        localidad.localidad_id = 0;
         localidad.departamento = departamento;
         localidad.centroide = new Ubicacion(latitud, longitud);
         return new Localizacion(localidad, new Ubicacion(latitud, longitud));

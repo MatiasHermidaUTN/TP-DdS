@@ -36,6 +36,10 @@ public class Prestacion extends Persistente {
         this.incidentes = new ArrayList<>();
     }
 
+    public Prestacion() {
+        this.incidentes = new ArrayList<>();
+    }
+
     public void agregarIncidente(Incidente incidente){
         this.incidentes.add(incidente);
     }

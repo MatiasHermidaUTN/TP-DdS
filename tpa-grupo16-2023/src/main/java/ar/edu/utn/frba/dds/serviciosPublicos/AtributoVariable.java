@@ -22,4 +22,8 @@ public class AtributoVariable extends Persistente {
         this.nombre_atributo = nombre_atributo;
         this.valor_atributo = valor_atributo;
     }
+
+    public AtributoVariable() {
+
+    }
 }

@@ -25,7 +25,7 @@ public class GeoRefTest {
     public void obtenerProvincias() throws Exception {
         List<Provincia> provincias  = adapterGeoref.obtenerListadoProvincias();
         for(Provincia unaProvincia : provincias){
-            System.out.print(unaProvincia.id + ") ");
+            System.out.print(unaProvincia.provincia_id.toString() + ") ");
             System.out.print(unaProvincia.centroide.toString() + "_");
             System.out.print(unaProvincia.nombre + " - ");
         }
@@ -33,12 +33,12 @@ public class GeoRefTest {
     @Test
     public void obtenerDepartamentos() throws Exception {
         Provincia provinciaElegida = new Provincia();
-        provinciaElegida.id = "54";
+        provinciaElegida.provincia_id = 54;
         provinciaElegida.nombre = "Misiones";
         List<Departamento> departamentos = adapterGeoref.obtenerListadoDepartamentos(provinciaElegida);
-        System.out.println("\n\nLos departamentos de la provincia " + provinciaElegida.id + ") " + provinciaElegida.nombre + " son:");
+        System.out.println("\n\nLos departamentos de la provincia " + provinciaElegida.provincia_id.toString() + ") " + provinciaElegida.nombre + " son:");
         for (Departamento unDepartamento : departamentos) {
-            System.out.print(unDepartamento.id + ") ");
+            System.out.print(unDepartamento.departamento_id.toString() + ") ");
             System.out.print(unDepartamento.nombre + ", de la provincia ");
             System.out.print(unDepartamento.provincia.nombre + " \n ");
         }
@@ -46,12 +46,12 @@ public class GeoRefTest {
     @Test
     public void obtenerLocalidades() throws Exception {
         Departamento departamentoElegido = new Departamento();
-        departamentoElegido.id = "54063";
+        departamentoElegido.departamento_id = 54063;
         departamentoElegido.nombre = "Iguazú";
         List<Localidad> localidades = adapterGeoref.obtenerListadoLocalidades(departamentoElegido);
-        System.out.println("\n\nLas localidades del departamento " + departamentoElegido.id + ") " + departamentoElegido.nombre + " son:");
+        System.out.println("\n\nLas localidades del departamento " + departamentoElegido.departamento_id.toString() + ") " + departamentoElegido.nombre + " son:");
         for (Localidad unaLocalidad : localidades) {
-            System.out.print(unaLocalidad.id + ") ");
+            System.out.print(unaLocalidad.localidad_id.toString() + ") ");
             System.out.print(unaLocalidad.nombre + ", del departamento ");
             System.out.print(unaLocalidad.departamento.nombre + " \n");
         }

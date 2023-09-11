@@ -28,7 +28,14 @@ public class Servicio extends Persistente {
     @Transient
     private List<RegistroDeCambio> registro;
 
-    public Servicio() {}
+    @ManyToOne
+    @JoinColumn(name = "establecimiento_id", referencedColumnName = "establecimiento_id")
+    private Establecimiento establecimiento;
+
+    public Servicio() {
+        this.atributosVariables = new ArrayList<>();
+        this.registro = new ArrayList<>();
+    }
 
     public Servicio(String nombre) {
         this.nombre = nombre;

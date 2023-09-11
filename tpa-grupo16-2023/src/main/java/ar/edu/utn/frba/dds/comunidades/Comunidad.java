@@ -27,13 +27,24 @@ public class Comunidad extends Persistente {
     @ManyToMany
     private List<Servicio> serviciosDeComunidad;
 
+    @ManyToMany
+    private List<Servicio> establecimientosDeComunidad;
+
     @Transient
     private List<Incidente> incidentes;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "grado_de_confianza")
+    private GradoDeConfianza gradoDeConfianza;
+
+    @Column(name = "activa")
+    private Boolean activa;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.miembros = new ArrayList<>();
         this.serviciosDeComunidad = new ArrayList<>();
+        this.establecimientosDeComunidad = new ArrayList<>();
         this.incidentes = new ArrayList<>();
         RepoComunidadDeprecado.getInstancia().agregarComunidad(this);
     }
@@ -66,7 +77,7 @@ public class Comunidad extends Persistente {
 
     public Incidente getIncidenteFromId(Integer idIncidente) {
         return incidentes.stream()
-                .filter(incidente -> incidente.getIncidente_id().equals(idIncidente))
+                .filter(incidente -> incidente.getId().equals(idIncidente))
                 .toList()
                 .get(0);
     }

@@ -1,37 +1,51 @@
 package ar.edu.utn.frba.dds.ranking;
 
+import ar.edu.utn.frba.dds.converters.LocalDateTimeConverter;
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.OrganismoDeControl;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table
 @Getter
-public class InformeSemanal {
+public class InformeSemanal extends Persistente {
 
-    @Id
-    private LocalDate fechaCreacion;
+    @Convert(converter = LocalDateTimeConverter.class)
+    @Column(name = "fecha_creacion", columnDefinition = "TIMESTAMP")
+    private LocalDateTime fechaCreacion;
 
-    @ManyToMany
+    @Transient
     private List<Entidad> rankingMayorPromedioCierre;
 
-    @ManyToMany
+    @Transient
     private List<Entidad> rankingMayorIncidentesReportados;
 
-    @ManyToMany
+    @Transient
     private List<Entidad> rankingMayorImpactoProblematicas;
+
+    @Column(name = "ranking_mayor_promedio_cierre")
+    private String rankingMayorPromedioCierreString;
+
+    @Column(name = "ranking_mayor_incidentes_reportados")
+    private String rankingMayorIncidentesReportadosString;
+
+    @Column(name = "ranking_mayor_impacto_problematicas")
+    private String rankingMayorImpactoProblematicasString;
 
 
     public InformeSemanal(LocalDateTime fechaDeLaSemana) {
         rankingMayorPromedioCierre = new MayorPromedioCierre().generarRanking(fechaDeLaSemana);
         rankingMayorIncidentesReportados = new MayorIncidentesReportados().generarRanking(fechaDeLaSemana);
         rankingMayorImpactoProblematicas = new MayorImpactoProblematicas().generarRanking(fechaDeLaSemana);
-        fechaCreacion = fechaDeLaSemana.toLocalDate();
+        fechaCreacion = fechaDeLaSemana;
+        this.rankingMayorPromedioCierreString = generarStringsEntidades(rankingMayorPromedioCierre);
+        this.rankingMayorIncidentesReportadosString = generarStringsEntidades(rankingMayorIncidentesReportados);
+        this.rankingMayorImpactoProblematicasString = generarStringsEntidades(rankingMayorImpactoProblematicas);
     }
 
     public InformeSemanal() {
@@ -70,4 +84,13 @@ public class InformeSemanal {
         return str.toString();
     }
 
+    public String generarStringsEntidades(List<Entidad> entidades){
+        String entidadesString = "";
+        for(int i=0; i<entidades.size(); i++){
+            entidadesString += i+1 + ". " + entidades.get(i).getNombre() + ", ";
+        }
+
+        entidadesString = entidadesString.substring(0, entidadesString.length() - 2);
+        return entidadesString;
+    }
 }

@@ -5,9 +5,9 @@ import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
-import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
-import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
-import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
+import ar.edu.utn.frba.dds.notificaciones.medios.AdapterMailSender;
+import ar.edu.utn.frba.dds.notificaciones.estrategias.ConfiguracionNotificacion;
+import ar.edu.utn.frba.dds.notificaciones.estrategias.CuandoSucede;
 import ar.edu.utn.frba.dds.ranking.*;
 import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoEntidadDeprecado;
 import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoIncidenteDeprecado;
@@ -282,5 +282,15 @@ public class RankingTest {
                 usuario.recibirInformeSemanal(msjInformeSemanal);
             }
         }
+    }
+
+    @Test
+    public void mostrarInforme() {
+        initRankingMayorIncidentesReportados();
+        InformeSemanal informeSemanal = new InformeSemanal(LocalDateTime.of(2023, 7, 25, 12, 0));
+
+        System.out.println(informeSemanal.getRankingMayorImpactoProblematicasString());
+        System.out.println(informeSemanal.getRankingMayorIncidentesReportadosString());
+        System.out.println(informeSemanal.getRankingMayorPromedioCierreString());
     }
 }
