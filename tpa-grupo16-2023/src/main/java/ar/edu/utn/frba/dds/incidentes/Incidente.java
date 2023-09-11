@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.incidentes;
 
 import ar.edu.utn.frba.dds.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
-import ar.edu.utn.frba.dds.converters.LocalDateTimeAttributeConverter;
+import ar.edu.utn.frba.dds.converters.LocalDateTimeConverter;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -49,11 +49,11 @@ public class Incidente {
     @JoinColumn(name = "usuario_cierre", referencedColumnName = "usuario_id")
     private Usuario usuarioCierre;
 
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "horario_apertura", columnDefinition = "TIMESTAMP")
     private LocalDateTime horarioApertura;
 
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "horario_cierre", columnDefinition = "TIMESTAMP")
     private LocalDateTime horarioCierre;
 

@@ -1,21 +1,37 @@
 package ar.edu.utn.frba.dds.notificaciones;
 
+import ar.edu.utn.frba.dds.converters.DiaSemanaConverter;
 import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.DayOfWeek;
 
+@Entity
+@Table
 @Getter
 @Setter
 public class Horario {
 
+    @Id
+    @GeneratedValue
+    private Integer horario_id;
+
+    @Convert(converter = DiaSemanaConverter.class)
+    @Column(name = "dia")
     private DiaSemana dia;
-    private Integer hora;
+
+    @Transient
+    private Integer hora; // aca como se haria el mapeo del string? Hay un tipo de dato HOUR o algo asi?
 
     public Horario(DiaSemana dia, Integer hora) {
         this.dia = dia;
         this.hora = hora;
+    }
+
+    public Horario() {
+        
     }
 
     public DayOfWeek diaSemanaComoDayOfWeek() {

@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
-import ar.edu.utn.frba.dds.converters.LocalDateTimeAttributeConverter;
+import ar.edu.utn.frba.dds.converters.LocalDateTimeConverter;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ public class RegistroDeCambio {
     private Integer registro_id;
 
     @Getter
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "fecha_cambio", columnDefinition = "TIMESTAMP")
     private LocalDateTime fechaDeCambio;
 

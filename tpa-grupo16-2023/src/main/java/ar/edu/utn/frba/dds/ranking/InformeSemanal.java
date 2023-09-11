@@ -1,12 +1,11 @@
 package ar.edu.utn.frba.dds.ranking;
 
-import ar.edu.utn.frba.dds.converters.LocalDateTimeAttributeConverter;
+import ar.edu.utn.frba.dds.converters.LocalDateTimeConverter;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.OrganismoDeControl;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class InformeSemanal {
     @GeneratedValue
     private Integer informe_id;
 
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "fecha_creacion", columnDefinition = "TIMESTAMP")
     private LocalDateTime fechaCreacion;
 
