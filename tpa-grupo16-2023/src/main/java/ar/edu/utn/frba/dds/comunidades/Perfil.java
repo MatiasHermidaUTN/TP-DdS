@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +12,7 @@ import javax.persistence.*;
 @Table
 @Setter
 @Getter
-public class Perfil {
-
-    @Id
-    @GeneratedValue
-    private Integer perfil_id;
+public class Perfil extends Persistente {
 
     @Column
     private String nickname;

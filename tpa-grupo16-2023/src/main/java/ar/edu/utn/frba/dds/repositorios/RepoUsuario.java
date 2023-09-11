@@ -1,35 +1,39 @@
 package ar.edu.utn.frba.dds.repositorios;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
-import lombok.Getter;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
-
-import java.util.ArrayList;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepoUsuario {
+public class RepoUsuario implements WithSimplePersistenceUnit {
 
-    private static RepoUsuario instancia = null;
-
-    @Getter
-    private static List<Usuario> listaUsuarios;
-
-    public static void agregarUsuario(Usuario usuario) {
-        listaUsuarios.add(usuario);
+    public void guardar(Usuario unUsuario) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().persist(unUsuario);
+        tx.commit();
     }
 
-    private RepoUsuario() {
-        listaUsuarios = new ArrayList<>();
+    public void eliminar(Usuario unUsuario) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().remove(unUsuario);
+        tx.commit();
     }
 
-    public static List<Usuario> buscarTodos() {
-        return listaUsuarios;
+    public void modificar(Usuario unUsuario) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().merge(unUsuario);
+        tx.commit();
     }
 
-    public static RepoUsuario getInstancia() {
-        if (instancia == null) {
-            instancia = new RepoUsuario();
-        }
-        return instancia;
+    public Usuario buscarPorId(Integer id) {
+        return entityManager().find(Usuario.class, id);
+    }
+
+    public List<Usuario> buscarTodos() {
+        return entityManager().createQuery("from " + Usuario.class.getName()).getResultList();
     }
 }

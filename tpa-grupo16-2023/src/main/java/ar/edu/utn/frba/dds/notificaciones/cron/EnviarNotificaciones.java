@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.notificaciones.cron;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.notificaciones.SinApuros;
-import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoUsuarioDeprecado;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -12,8 +12,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ar.edu.utn.frba.dds.repositorios.RepoUsuario.buscarTodos;
-
 public class EnviarNotificaciones  implements Job {
 
     @Override
@@ -22,7 +20,7 @@ public class EnviarNotificaciones  implements Job {
         System.out.print(LocalDateTime.now());
 
         List<Usuario> usuariosSinApuros =
-                RepoUsuario.buscarTodos().stream()
+                RepoUsuarioDeprecado.buscarTodos().stream()
                         .filter(u -> u.getConfiguracionNotificacion() instanceof SinApuros)
                         .collect(Collectors.toList());
 

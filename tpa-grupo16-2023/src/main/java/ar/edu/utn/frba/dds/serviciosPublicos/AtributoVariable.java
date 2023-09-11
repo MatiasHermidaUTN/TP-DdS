@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +10,7 @@ import javax.persistence.*;
 @Table
 @Getter
 @Setter
-public class AtributoVariable {
-
-    @Id
-    @GeneratedValue
-    private Integer atributo_id;
+public class AtributoVariable extends Persistente {
 
     @Column
     private String nombre_atributo;

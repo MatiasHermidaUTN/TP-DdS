@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table
-public class Establecimiento {
-
-    @Id
-    @GeneratedValue
-    private Integer establecimiento_id;
+public class Establecimiento extends Persistente {
 
     @Column
     private String nombre;

@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.serviciosPublicos;
 
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -10,11 +11,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table
-public class OrganismoDeControl {
-
-    @Id
-    @GeneratedValue
-    private Integer organismo_id;
+public class OrganismoDeControl extends Persistente {
 
     @Column
     private String nombre;

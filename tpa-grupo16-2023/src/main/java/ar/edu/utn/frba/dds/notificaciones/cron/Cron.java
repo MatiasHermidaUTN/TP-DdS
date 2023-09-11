@@ -4,7 +4,7 @@ import ar.edu.utn.frba.dds.notificaciones.SinApuros;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-//Fue reemplazado por CronGlobal
+//Fue reemplazado por CronGlobal. Deprecado.
 public class Cron {
     private SchedulerFactory crearScheduler = new StdSchedulerFactory();
     private Scheduler scheduler;

@@ -3,7 +3,7 @@ package ar.edu.utn.frba.dds;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.localizacion.*;
-import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoPrestacionDeprecado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ar.edu.utn.frba.dds.services.georef.AdapterGeoref;
@@ -88,7 +88,7 @@ public class GeoRefTest {
     }
     @Test
     public void incidentesCercanos() {
-        List<Prestacion> listaDePrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+        List<Prestacion> listaDePrestaciones = RepoPrestacionDeprecado.getInstancia().getListaPrestaciones();
         List<Incidente> incidentes = listaDePrestaciones.stream().
                 flatMap(prestacion -> prestacion.getIncidentes().stream()).
                 toList();

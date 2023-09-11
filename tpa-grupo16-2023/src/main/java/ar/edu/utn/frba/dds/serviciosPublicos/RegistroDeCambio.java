@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.serviciosPublicos;
 
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.converters.LocalDateTimeAttributeConverter;
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -9,11 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
-public class RegistroDeCambio {
-
-    @Id
-    @GeneratedValue
-    private Integer registro_id;
+public class RegistroDeCambio extends Persistente {
 
     @Getter
     @Convert(converter = LocalDateTimeAttributeConverter.class)

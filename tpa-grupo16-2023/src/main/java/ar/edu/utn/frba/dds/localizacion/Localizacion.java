@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.localizacion;
 
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -7,11 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table
 @Getter
-public class Localizacion {
-
-    @Id
-    @GeneratedValue
-    private Integer localizacion_id;
+public class Localizacion extends Persistente {
 
     @Embedded
     private Ubicacion ubicacion;

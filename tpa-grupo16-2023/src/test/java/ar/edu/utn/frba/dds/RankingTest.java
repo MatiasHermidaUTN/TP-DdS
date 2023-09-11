@@ -8,12 +8,11 @@ import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
-import ar.edu.utn.frba.dds.notificaciones.SinApuros;
 import ar.edu.utn.frba.dds.ranking.*;
-import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
-import ar.edu.utn.frba.dds.repositorios.RepoIncidente;
-import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
-import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoEntidadDeprecado;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoIncidenteDeprecado;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoPrestacionDeprecado;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoUsuarioDeprecado;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -23,9 +22,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class RankingTest {
-    RepoPrestacion repoPrestacion = RepoPrestacion.getInstancia();
-    RepoEntidad repoEntidad = RepoEntidad.getInstancia();
-    RepoIncidente repoIncidente = RepoIncidente.getInstancia();
+    RepoPrestacionDeprecado repoPrestacion = RepoPrestacionDeprecado.getInstancia();
+    RepoEntidadDeprecado repoEntidad = RepoEntidadDeprecado.getInstancia();
+    RepoIncidenteDeprecado repoIncidente = RepoIncidenteDeprecado.getInstancia();
 
     Entidad entidadA = new Entidad("Entidad A");
     Entidad entidadB = new Entidad("Entidad B");
@@ -54,15 +53,15 @@ public class RankingTest {
     Prestacion prestacionC1 = new Prestacion(establecimientoC, servicioC1);
 
     public void initRankingMayorIncidentesReportados(){
-        RepoPrestacion.agregarPrestacion(prestacionA1);
-        RepoPrestacion.agregarPrestacion(prestacionA2);
-        RepoPrestacion.agregarPrestacion(prestacionB1);
-        RepoPrestacion.agregarPrestacion(prestacionB2);
-        RepoPrestacion.agregarPrestacion(prestacionC1);
+        RepoPrestacionDeprecado.agregarPrestacion(prestacionA1);
+        RepoPrestacionDeprecado.agregarPrestacion(prestacionA2);
+        RepoPrestacionDeprecado.agregarPrestacion(prestacionB1);
+        RepoPrestacionDeprecado.agregarPrestacion(prestacionB2);
+        RepoPrestacionDeprecado.agregarPrestacion(prestacionC1);
 
-        RepoEntidad.agregarEntidad(entidadC);
-        RepoEntidad.agregarEntidad(entidadA);
-        RepoEntidad.agregarEntidad(entidadB);
+        RepoEntidadDeprecado.agregarEntidad(entidadC);
+        RepoEntidadDeprecado.agregarEntidad(entidadA);
+        RepoEntidadDeprecado.agregarEntidad(entidadB);
 
         //establecimiento A
         this.establecimientoA.setEntidad(entidadA);
@@ -127,19 +126,19 @@ public class RankingTest {
     }
 
     public void initRankingPromedio(){
-        RepoIncidente.agregarIncidente(incidenteA1);
-        RepoIncidente.agregarIncidente(incidenteA2);
-        RepoIncidente.agregarIncidente(incidenteA3);
-        RepoIncidente.agregarIncidente(incidenteA4);
-        RepoIncidente.agregarIncidente(incidenteB1);
-        RepoIncidente.agregarIncidente(incidenteB2);
-        RepoIncidente.agregarIncidente(incidenteB3);
-        RepoIncidente.agregarIncidente(incidenteC1);
-        RepoIncidente.agregarIncidente(incidenteC2);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteA1);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteA2);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteA3);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteA4);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteB1);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteB2);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteB3);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteC1);
+        RepoIncidenteDeprecado.agregarIncidente(incidenteC2);
 
-        RepoEntidad.agregarEntidad(entidadB);
-        RepoEntidad.agregarEntidad(entidadC);
-        RepoEntidad.agregarEntidad(entidadA);
+        RepoEntidadDeprecado.agregarEntidad(entidadB);
+        RepoEntidadDeprecado.agregarEntidad(entidadC);
+        RepoEntidadDeprecado.agregarEntidad(entidadA);
 
         //establecimiento A
         this.establecimientoA.setEntidad(entidadA);
@@ -267,10 +266,10 @@ public class RankingTest {
         configuracionNotificacion2.setNotificador(new AdapterMailSender());
         juanPerez2.setConfiguracionNotificacion(configuracionNotificacion2);
 
-        RepoUsuario.agregarUsuario(juanPerez);
-        RepoUsuario.agregarUsuario(juanPerez2);
+        RepoUsuarioDeprecado.agregarUsuario(juanPerez);
+        RepoUsuarioDeprecado.agregarUsuario(juanPerez2);
 
-        List<Usuario> usuarioList = RepoUsuario.getInstancia().getListaUsuarios(); //TODO este RepoUsuario se deberia hacer con Hibernate
+        List<Usuario> usuarioList = RepoUsuarioDeprecado.getInstancia().getListaUsuarios(); //TODO este RepoUsuario se deberia hacer con Hibernate
         for (Usuario usuario : usuarioList) {
             String msjInformeSemanal;
             //TODO hacerlo polimorfico con composicion? (por si se agreagan mas tipos de usuarios)

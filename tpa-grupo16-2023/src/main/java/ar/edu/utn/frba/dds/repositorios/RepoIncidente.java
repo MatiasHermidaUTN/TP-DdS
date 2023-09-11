@@ -1,42 +1,41 @@
 package ar.edu.utn.frba.dds.repositorios;
 
+import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
-import lombok.Getter;
+import ar.edu.utn.frba.dds.incidentes.Prestacion;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
-import java.util.ArrayList;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepoIncidente {
-    private static RepoIncidente instancia = null;
-    @Getter
-    private static List<Incidente> listaIncidentes;
+public class RepoIncidente implements WithSimplePersistenceUnit {
 
-    public static void agregarIncidente(Incidente incidente) {
-        listaIncidentes.add(incidente);
+    public void guardar(Incidente unIncidente) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().persist(unIncidente);
+        tx.commit();
     }
 
-    private RepoIncidente() {
-        listaIncidentes = new ArrayList<>();
+    public void eliminar(Incidente unIncidente) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().remove(unIncidente);
+        tx.commit();
     }
 
-    public static RepoIncidente getInstancia() {
-        if (instancia == null) {
-            instancia = new RepoIncidente();
-        }
-        return instancia;
+    public void modificar(Incidente unIncidente) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().merge(unIncidente);
+        tx.commit();
     }
 
-    /*private MayorImpactoProblematicas rankingImpactoProblematicas;
-    private MayorIncidentesReportados rankingMayorIncidentesReportados;
-    private MayorPromedioCierre rankingMayorPromedioCierre;
+    public Incidente buscarPorId(Integer id) {
+        return entityManager().find(Incidente.class, id);
+    }
 
-    public void generarRankingImpactoProblematicas() {
-        rankingImpactoProblematicas.generarRanking(listaIncidentes);
+    public List<Incidente> buscarTodos() {
+        return entityManager().createQuery("from " + Incidente.class.getName()).getResultList();
     }
-    public void generarRankingMayorIncidentesReportados() {
-        rankingMayorIncidentesReportados.generarRanking(listaIncidentes);
-    }
-    public void generarRankingMayorPromedioCierre() {
-        rankingMayorPromedioCierre.generarRanking();
-    }*/
 }

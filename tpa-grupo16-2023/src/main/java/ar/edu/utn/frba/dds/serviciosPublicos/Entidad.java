@@ -5,25 +5,21 @@ import ar.edu.utn.frba.dds.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.incidentes.Incidente;
 import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
-import ar.edu.utn.frba.dds.repositorios.RepoIncidente;
+import ar.edu.utn.frba.dds.persistencia.Persistente;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoIncidenteDeprecado;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
 @Table
 @Getter
-public class Entidad {
-
-    @Id
-    @GeneratedValue
-    private Integer entidad_id;
+public class Entidad extends Persistente {
 
     @Column
     private String nombre;
@@ -81,7 +77,7 @@ public class Entidad {
     public void avisar_a_usuarios() {}
 
     public double getPromedioCierreRanking(LocalDateTime fechaDeSemana) {
-        List<Incidente> incidentes = RepoIncidente.getInstancia().getListaIncidentes().stream()
+        List<Incidente> incidentes = RepoIncidenteDeprecado.getInstancia().getListaIncidentes().stream()
                 .filter(unIncidete -> unIncidete.seOriginoEnEntidad(this))
                 .filter(incidente -> incidente.seCerroEnLaSemanaDeLaFecha(fechaDeSemana))
                 .toList();

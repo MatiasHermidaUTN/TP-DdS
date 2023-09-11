@@ -10,11 +10,9 @@ import ar.edu.utn.frba.dds.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.notificaciones.AdapterMailSender;
 import ar.edu.utn.frba.dds.notificaciones.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.notificaciones.CuandoSucede;
-import ar.edu.utn.frba.dds.notificaciones.SinApuros;
-import ar.edu.utn.frba.dds.notificaciones.cron.DiaSemana;
-import ar.edu.utn.frba.dds.repositorios.RepoComunidad;
-import ar.edu.utn.frba.dds.repositorios.RepoPrestacion;
-import ar.edu.utn.frba.dds.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoComunidadDeprecado;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoPrestacionDeprecado;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoUsuarioDeprecado;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -32,7 +30,7 @@ public class NewIncidentsControllerTest {
 
     public void crearIncidente(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura) {
 
-        RepoComunidad.getInstancia();
+        RepoComunidadDeprecado.getInstancia();
 
         List<Comunidad> comunidades = usuarioApertura.getPerfiles()
                 .stream()
@@ -48,7 +46,7 @@ public class NewIncidentsControllerTest {
                     .forEach(perfil -> perfil.getUsuario().recibirNotificacionDeAperturaDeIncidente(incidente));
         }
 
-        List<Usuario> usuarioList = RepoUsuario.getListaUsuarios(); //TODO este RepoUsuario se deberia hacer con Hibernate
+        List<Usuario> usuarioList = RepoUsuarioDeprecado.getListaUsuarios(); //TODO este RepoUsuario se deberia hacer con Hibernate
         usuarioList.stream()
                 .filter(
                         unUsuario -> unUsuario.getServiciosInteres().contains(servicio) &&
@@ -62,7 +60,7 @@ public class NewIncidentsControllerTest {
 
     public void crear_o_agregar_prestacion(Establecimiento establecimiento_a_buscar, Servicio servicio_a_buscar, Incidente incidente){
 
-        List<Prestacion> listaPrestaciones = RepoPrestacion.getInstancia().getListaPrestaciones();
+        List<Prestacion> listaPrestaciones = RepoPrestacionDeprecado.getInstancia().getListaPrestaciones();
 
         List <Prestacion> listaPrestacionesDelEstablecimiento = listaPrestaciones.stream()
                 .filter(prestacion -> prestacion.getEstablecimiento().getNombre() == establecimiento_a_buscar.getNombre())
@@ -71,7 +69,7 @@ public class NewIncidentsControllerTest {
         if(listaPrestacionesDelEstablecimiento == null){
             Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
             nuevaPrestacion.agregarIncidente(incidente);
-            RepoPrestacion.agregarPrestacion(nuevaPrestacion);
+            RepoPrestacionDeprecado.agregarPrestacion(nuevaPrestacion);
         }
         else {
             Prestacion prestacionDelServicioDelEstablecimiento =  listaPrestacionesDelEstablecimiento.stream()
@@ -82,7 +80,7 @@ public class NewIncidentsControllerTest {
             if(prestacionDelServicioDelEstablecimiento == null){
                 Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
                 nuevaPrestacion.agregarIncidente(incidente);
-                RepoPrestacion.agregarPrestacion(nuevaPrestacion);
+                RepoPrestacionDeprecado.agregarPrestacion(nuevaPrestacion);
             }
             else {
                 prestacionDelServicioDelEstablecimiento.agregarIncidente(incidente);

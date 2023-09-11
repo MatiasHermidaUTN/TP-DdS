@@ -1,28 +1,40 @@
 package ar.edu.utn.frba.dds.repositorios;
 
 import ar.edu.utn.frba.dds.comunidades.Comunidad;
-import lombok.Getter;
+import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
-import java.util.ArrayList;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepoComunidad {
-    private static RepoComunidad instancia = null;
-    @Getter
-    private static List<Comunidad> listaComunidad;
+public class RepoComunidad implements WithSimplePersistenceUnit {
 
-    public static void agregarComunidad(Comunidad comunidad) {
-        listaComunidad.add(comunidad);
+    public void guardar(Comunidad unaComunidad) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().persist(unaComunidad);
+        tx.commit();
     }
 
-    private RepoComunidad() {
-        listaComunidad = new ArrayList<>();
+    public void eliminar(Comunidad unaComunidad) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().remove(unaComunidad);
+        tx.commit();
     }
 
-    public static RepoComunidad getInstancia() {
-        if (instancia == null) {
-            instancia = new RepoComunidad();
-        }
-        return instancia;
+    public void modificar(Comunidad unaComunidad) {
+        EntityTransaction tx = entityManager().getTransaction();
+        tx.begin();
+        entityManager().merge(unaComunidad);
+        tx.commit();
+    }
+
+    public Comunidad buscarPorId(Integer id) {
+        return entityManager().find(Comunidad.class, id);
+    }
+
+    public List<Comunidad> buscarTodos() {
+        return entityManager().createQuery("from " + Comunidad.class.getName()).getResultList();
     }
 }

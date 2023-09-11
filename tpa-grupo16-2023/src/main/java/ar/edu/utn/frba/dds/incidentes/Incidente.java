@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.incidentes;
 import ar.edu.utn.frba.dds.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.converters.LocalDateTimeAttributeConverter;
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -19,11 +20,7 @@ import java.time.temporal.TemporalAdjusters;
 @Table
 @Getter
 @Setter
-public class Incidente {
-
-    @Id
-    @GeneratedValue
-    private Integer incidente_id;
+public class Incidente extends Persistente {
 
     @ManyToOne
     @JoinColumn(name = "comunidad_id", referencedColumnName = "comunidad_id")

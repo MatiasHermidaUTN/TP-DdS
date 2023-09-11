@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.incidentes;
 
+import ar.edu.utn.frba.dds.persistencia.Persistente;
 import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
@@ -16,11 +17,7 @@ import java.util.List;
 @Table
 @Getter
 @Setter
-public class Prestacion {
-
-    @Id
-    @GeneratedValue
-    private Integer prestacion_id;
+public class Prestacion extends Persistente {
 
     @ManyToOne
     @JoinColumn(name = "establecimiento_id", referencedColumnName = "establecimiento_id")

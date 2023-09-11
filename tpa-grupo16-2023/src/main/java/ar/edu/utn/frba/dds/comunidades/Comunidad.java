@@ -1,7 +1,8 @@
 package ar.edu.utn.frba.dds.comunidades;
 
 import ar.edu.utn.frba.dds.incidentes.Incidente;
-import ar.edu.utn.frba.dds.repositorios.RepoComunidad;
+import ar.edu.utn.frba.dds.persistencia.Persistente;
+import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoComunidadDeprecado;
 import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +15,7 @@ import java.util.List;
 @Entity
 @Table
 @Getter
-public class Comunidad {
-
-    @Id
-    @GeneratedValue
-    private Integer comunidad_id;
+public class Comunidad extends Persistente {
 
     @Setter
     @Column(name = "comunidad_nombre")
@@ -38,7 +35,7 @@ public class Comunidad {
         this.miembros = new ArrayList<>();
         this.serviciosDeComunidad = new ArrayList<>();
         this.incidentes = new ArrayList<>();
-        RepoComunidad.getInstancia().agregarComunidad(this);
+        RepoComunidadDeprecado.getInstancia().agregarComunidad(this);
     }
 
     public Comunidad() {
