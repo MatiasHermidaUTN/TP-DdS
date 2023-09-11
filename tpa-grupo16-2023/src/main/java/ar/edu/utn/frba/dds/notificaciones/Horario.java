@@ -19,8 +19,8 @@ public class Horario extends Persistente {
     @Column(name = "dia")
     private DiaSemana dia;
 
-    @Transient
-    private Integer hora; // aca como se haria el mapeo del string? Hay un tipo de dato HOUR o algo asi?
+    @Column
+    private Integer hora;
 
     public Horario(DiaSemana dia, Integer hora) {
         this.dia = dia;
