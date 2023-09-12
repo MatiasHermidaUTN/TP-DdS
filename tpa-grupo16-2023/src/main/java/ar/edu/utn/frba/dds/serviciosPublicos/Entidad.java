@@ -25,7 +25,7 @@ public class Entidad extends Persistente {
     private String nombre;
 
     @OneToOne
-    @JoinColumn(name = "localizacion_id", referencedColumnName = "localizacion_id")
+    @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     @Setter
     private Localizacion localizacion;
 

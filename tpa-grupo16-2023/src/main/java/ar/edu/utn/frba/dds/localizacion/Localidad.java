@@ -17,7 +17,7 @@ public class Localidad {
     public Ubicacion centroide;
 
     @ManyToOne
-    @JoinColumn(name = "departamento_id", referencedColumnName = "departamento_id")
+    @JoinColumn(name = "departamento_id", referencedColumnName = "id")
     public Departamento departamento;
 
     @Override

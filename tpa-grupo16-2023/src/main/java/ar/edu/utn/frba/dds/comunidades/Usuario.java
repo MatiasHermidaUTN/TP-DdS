@@ -43,7 +43,7 @@ public class Usuario extends Persistente {
     private List<Perfil> perfiles;
 
     @OneToOne
-    @JoinColumn(name = "localizacion_id", referencedColumnName = "localizacion_id")
+    @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     private Localizacion localizacion;
 
     @Transient

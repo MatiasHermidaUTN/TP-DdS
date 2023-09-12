@@ -29,7 +29,7 @@ public class Servicio extends Persistente {
     private List<RegistroDeCambio> registro;
 
     @ManyToOne
-    @JoinColumn(name = "establecimiento_id", referencedColumnName = "establecimiento_id")
+    @JoinColumn(name = "establecimiento_id", referencedColumnName = "id")
     private Establecimiento establecimiento;
 
     public Servicio() {

@@ -20,11 +20,11 @@ import java.util.List;
 public class Prestacion extends Persistente {
 
     @ManyToOne
-    @JoinColumn(name = "establecimiento_id", referencedColumnName = "establecimiento_id")
+    @JoinColumn(name = "establecimiento_id", referencedColumnName = "id")
     private Establecimiento establecimiento;
 
     @ManyToOne
-    @JoinColumn(name = "servicio_id", referencedColumnName = "servicio_id")
+    @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     private Servicio servicio;
 
     @Transient

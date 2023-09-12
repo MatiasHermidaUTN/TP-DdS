@@ -25,7 +25,7 @@ public class RegistroDeCambio extends Persistente {
     private EstadoServicio estadoServicio;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id")
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuarioQueLoCambio;
 
     public RegistroDeCambio(EstadoServicio nuevoEstadoServicio, LocalDateTime now, Usuario usuario) {

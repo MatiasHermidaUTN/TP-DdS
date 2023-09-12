@@ -26,7 +26,7 @@ import java.time.temporal.TemporalAdjusters;
 public class Incidente extends Persistente {
 
     @ManyToOne
-    @JoinColumn(name = "comunidad_id", referencedColumnName = "comunidad_id")
+    @JoinColumn(name = "comunidad_id", referencedColumnName = "id")
     private Comunidad comunidad; // esto lo agregue porque no le gustaba al inteliij que use el nombreComunidad
 
     @Transient
@@ -42,11 +42,11 @@ public class Incidente extends Persistente {
     private Servicio servicio;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_apertura", referencedColumnName = "usuario_id")
+    @JoinColumn(name = "usuario_apertura", referencedColumnName = "id")
     private Usuario usuarioApertura;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_cierre", referencedColumnName = "usuario_id")
+    @JoinColumn(name = "usuario_cierre", referencedColumnName = "id")
     private Usuario usuarioCierre;
 
     @Convert(converter = LocalDateTimeConverter.class)
@@ -62,7 +62,7 @@ public class Incidente extends Persistente {
     private EstadoIncidente estado;
 
     @ManyToOne
-    @JoinColumn(name = "prestacion_id", referencedColumnName = "prestacion_id")
+    @JoinColumn(name = "prestacion_id", referencedColumnName = "id")
     private Prestacion prestacion;
 
     // private static Integer id = 0;

@@ -20,11 +20,11 @@ public class Establecimiento extends Persistente {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "entidad_id", referencedColumnName = "entidad_id")
+    @JoinColumn(name = "entidad_id", referencedColumnName = "id")
     private Entidad entidad;
 
     @OneToOne
-    @JoinColumn(name = "localizacion_id", referencedColumnName = "localizacion_id")
+    @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     private Localizacion localizacion;
 
     @Transient

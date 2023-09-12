@@ -28,7 +28,7 @@ public class NotificacionPorWhatsappTest {
         this.servicio.setNombre("Baño");
         this.incidente.setEstablecimiento(establecimiento);
         this.incidente.setServicio(servicio);
-        this.whatsappSender = mock(WhatsappSender.class);
+        this.whatsappSender = (Notificador) mock(WhatsappSender.class);
     }
 
     @Test
