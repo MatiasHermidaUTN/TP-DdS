@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 @Entity
 @Table
 @Getter
+@Setter
 public class Entidad extends Persistente {
 
     @Column
     private String nombre;
 
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.ALL})
     @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
-    @Setter
     private Localizacion localizacion;
 
     @Transient

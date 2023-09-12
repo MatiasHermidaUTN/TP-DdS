@@ -17,7 +17,7 @@ public class Departamento {
     public Ubicacion centroide;
 
     @ManyToOne
-    @JoinColumn(name = "provincia_id", referencedColumnName = "id")
+    @JoinColumn(name = "provincia_id", referencedColumnName = "provincia_id")
     public Provincia provincia;
 
     @Override
