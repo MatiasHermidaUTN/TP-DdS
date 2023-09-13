@@ -46,7 +46,7 @@ public class Comunidad extends Persistente {
         this.serviciosDeComunidad = new ArrayList<>();
         this.establecimientosDeComunidad = new ArrayList<>();
         this.incidentes = new ArrayList<>();
-        RepoComunidadDeprecado.getInstancia().agregarComunidad(this);
+        //RepoComunidadDeprecado.getInstancia().agregarComunidad(this);
     }
 
     public Comunidad() {

@@ -13,7 +13,8 @@ public class Localizacion extends Persistente {
     @Embedded
     private Ubicacion ubicacion;
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "localidad_id", referencedColumnName = "localidad_id")
     private Localidad localidad;
 
     public Localizacion(Localidad localidad, Ubicacion ubicacion) {

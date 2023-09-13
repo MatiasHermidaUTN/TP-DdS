@@ -81,13 +81,13 @@ public class Usuario extends Persistente {
         this.localizacion = localizacion;
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
-        RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
+        //RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
     }
     public Usuario() {
         this.perfiles = new ArrayList<>();
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
-        RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
+        //RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
     }
 
     public Usuario(String mail, String usuario, String contrasenia) {
@@ -97,7 +97,7 @@ public class Usuario extends Persistente {
         this.perfiles = new ArrayList<>();
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
-        RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
+        //RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
     }
 
     public void agregarIncidenteNuevo(Incidente incidente) {

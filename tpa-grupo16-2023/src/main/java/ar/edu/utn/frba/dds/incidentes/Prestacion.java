@@ -19,11 +19,11 @@ import java.util.List;
 @Setter
 public class Prestacion extends Persistente {
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "establecimiento_id", referencedColumnName = "id")
     private Establecimiento establecimiento;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     private Servicio servicio;
 
