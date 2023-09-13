@@ -42,7 +42,7 @@ public class Usuario extends Persistente {
     @Transient
     private List<Perfil> perfiles;
 
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.ALL})
     @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     private Localizacion localizacion;
 

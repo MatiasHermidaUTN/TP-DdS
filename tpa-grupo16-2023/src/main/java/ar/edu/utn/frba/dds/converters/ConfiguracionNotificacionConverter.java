@@ -11,7 +11,7 @@ import javax.persistence.Converter;
 public class ConfiguracionNotificacionConverter implements AttributeConverter<ConfiguracionNotificacion, String> {
     @Override
     public String convertToDatabaseColumn(ConfiguracionNotificacion configuracionNotificacion) {
-        return configuracionNotificacion.getClass().getName();
+        return configuracionNotificacion.getClass().getSimpleName();
     }
 
     @Override
