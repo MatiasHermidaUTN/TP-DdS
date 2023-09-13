@@ -57,6 +57,9 @@ public class FinalizarTransaccionController implements Handler {
 
         transaccion.setComunidadesDesactivadas(comunidadesDesactivadas);
 
+        for (Comunidad comunidad : comunidadesDesactivadas) {
+            transaccion.getComunidades().removeIf(com -> com.getId().equals(comunidad.getId()));
+        }
 
         transaccion.setFechaFinTransaccion(LocalDate.now());
 

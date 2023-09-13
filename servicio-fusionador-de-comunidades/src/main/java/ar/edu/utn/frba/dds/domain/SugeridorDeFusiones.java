@@ -24,6 +24,7 @@ public class SugeridorDeFusiones {
 
         for(Comunidad comunidad1 : comunidades) {
             for(Comunidad comunidad2 : comunidades) {
+
                 if (comunidad1.equals(comunidad2)) continue;
 
                 if ( !this.estaEnNuevasPropuestas(comunidad1, nuevasPropuestas)
@@ -33,15 +34,16 @@ public class SugeridorDeFusiones {
                     PropuestaFusion propuesta = new PropuestaFusion();
                     propuesta.setComunidad1(comunidad1);
                     propuesta.setComunidad2(comunidad2);
+
+                    if(this.propuestaRealizadaRecientemente(propuesta, propuestasFusionesAntiguas))
+                        continue;
+
                     nuevasPropuestas.add(propuesta);
                 }
             }
         }
 
-        return nuevasPropuestas
-                .stream()
-                .filter(prop -> !this.propuestaRealizadaRecientemente(prop, propuestasFusionesAntiguas))
-                .toList();
+        return nuevasPropuestas;
     }
 
     public Boolean propuestaRealizadaRecientemente(PropuestaFusion propuesta, List<PropuestaFusion> propuestasFusionesAntiguas) {
