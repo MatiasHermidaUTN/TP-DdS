@@ -28,3 +28,6 @@ target/**
 # IJ files
 *.iml
 .idea/**
+
+# Data base Config
+src/main/resources/META-INF/persistence.xml
