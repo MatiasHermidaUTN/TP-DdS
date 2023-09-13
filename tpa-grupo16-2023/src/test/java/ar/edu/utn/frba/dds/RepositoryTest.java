@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.comunidades.Usuario;
 import ar.edu.utn.frba.dds.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.localizacion.Ubicacion;
@@ -62,7 +63,7 @@ public class RepositoryTest {
     public void crearUsuarioTest() {
         Ubicacion ubicacion = new Ubicacion(99.0,99.0);
         Localizacion localizacion = new Localizacion(ubicacion);
-        Usuario nuevoUsuario = new Usuario("mailABM@gmail.com", "UsuarioABM", "contraseniaABM", localizacion);
+        Usuario nuevoUsuario = new Usuario("mailX@gmail.com", "UsuarioX", "contraseniaX", localizacion);
 
         CuandoSucede configNotificacion = new CuandoSucede();
         nuevoUsuario.setConfiguracionNotificacion(configNotificacion);
@@ -99,9 +100,38 @@ public class RepositoryTest {
         System.out.println("El nombre del usuario modificado es: "+ usuarioBuscadoModificado.getUsuario());
 
         repoUsuario.eliminar(usuarioBuscado);
-        System.out.println("Se eliminó una entidad");
+        System.out.println("Se eliminó un usuario");
 
         Assertions.assertEquals(null, repoUsuario.buscarPorId(usuarioBuscadoModificado.getId()));
+    }
+
+    @Test
+    public void crearComunidadTest() {
+        Comunidad nuevaComunidad = new Comunidad("ComunidadX");
+
+        repoComunidad.guardar(nuevaComunidad);
+    }
+    @Test
+    public void testABMComunidad() {
+        Comunidad comunidadAMB = new Comunidad("ComunidadAMB");
+
+        repoComunidad.guardar(comunidadAMB);
+        System.out.println("Se guarda una Comunidad");
+
+        Comunidad comunidadBuscada = repoComunidad.buscarPorId(comunidadAMB.getId());
+        System.out.println("El nombre de la comunidad buscada es: " + comunidadBuscada.getNombre());
+
+        comunidadBuscada.setNombre("ComunidadABMModificada");
+        repoComunidad.modificar(comunidadBuscada);
+        System.out.println("Se modifico una comunidad");
+
+        Comunidad comunidadBuscadaModificada = repoComunidad.buscarPorId(comunidadBuscada.getId());
+        System.out.println("El nombre de la comunidad modificada es: "+ comunidadBuscadaModificada.getNombre());
+
+        repoComunidad.eliminar(comunidadBuscada);
+        System.out.println("Se eliminó una comunidad");
+
+        Assertions.assertEquals(null, repoComunidad.buscarPorId(comunidadBuscadaModificada.getId()));
     }
 
 }
