@@ -1,16 +1,17 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.incidentes.Incidente;
-import ar.edu.utn.frba.dds.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.models.incidentes.Incidente;
+import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.localizacion.*;
-import ar.edu.utn.frba.dds.repositorios.reposDeprecados.RepoPrestacionDeprecado;
+import ar.edu.utn.frba.dds.models.localizacion.*;
+import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoPrestacionDeprecado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ar.edu.utn.frba.dds.services.georef.AdapterGeoref;
+import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
 
 import java.util.List;
 
-import static ar.edu.utn.frba.dds.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
+import static ar.edu.utn.frba.dds.models.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
 
 
 public class GeoRefTest {

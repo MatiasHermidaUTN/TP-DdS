@@ -1,13 +1,13 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.comunidades.Perfil;
-import ar.edu.utn.frba.dds.comunidades.Usuario;
-import ar.edu.utn.frba.dds.incidentes.Incidente;
-import ar.edu.utn.frba.dds.localizacion.Localizacion;
-import ar.edu.utn.frba.dds.localizacion.Ubicacion;
-import ar.edu.utn.frba.dds.notificaciones.medios.AdapterMailSender;
-import ar.edu.utn.frba.dds.serviciosPublicos.Establecimiento;
-import ar.edu.utn.frba.dds.serviciosPublicos.Servicio;
+import ar.edu.utn.frba.dds.models.comunidades.Perfil;
+import ar.edu.utn.frba.dds.models.comunidades.Usuario;
+import ar.edu.utn.frba.dds.models.incidentes.Incidente;
+import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
+import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
+import ar.edu.utn.frba.dds.models.notificaciones.medios.AdapterMailSender;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.edu.utn.frba.dds.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
+import static ar.edu.utn.frba.dds.models.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
 
 public class NotificacionPorMailTest {
 

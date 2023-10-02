@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.validador.Validador;
-import ar.edu.utn.frba.dds.validador.reglas.*;
+import ar.edu.utn.frba.dds.models.validador.Validador;
+import ar.edu.utn.frba.dds.models.validador.reglas.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

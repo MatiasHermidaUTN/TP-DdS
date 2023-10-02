@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.lectorCSV.DatosCSV;
-import ar.edu.utn.frba.dds.lectorCSV.LectorCSV;
+import ar.edu.utn.frba.dds.models.lectorCSV.DatosCSV;
+import ar.edu.utn.frba.dds.models.lectorCSV.LectorCSV;
 import org.junit.jupiter.api.Test;
 
 

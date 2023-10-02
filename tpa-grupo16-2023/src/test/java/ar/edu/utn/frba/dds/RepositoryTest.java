@@ -1,11 +1,10 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.localizacion.Localizacion;
-import ar.edu.utn.frba.dds.localizacion.Ubicacion;
-import ar.edu.utn.frba.dds.repositorios.RepoEntidad;
-import ar.edu.utn.frba.dds.serviciosPublicos.Entidad;
+import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
+import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
+import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
