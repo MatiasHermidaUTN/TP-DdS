@@ -16,14 +16,14 @@ public class RepoPrestacion implements WithSimplePersistenceUnit {
         tx.commit();
     }
 
-    public void eliminar(Usuario unaPrestacion) {
+    public void eliminar(Prestacion unaPrestacion) {
         EntityTransaction tx = entityManager().getTransaction();
         tx.begin();
         entityManager().remove(unaPrestacion);
         tx.commit();
     }
 
-    public void modificar(Usuario unaPrestacion) {
+    public void modificar(Prestacion unaPrestacion) {
         EntityTransaction tx = entityManager().getTransaction();
         tx.begin();
         entityManager().merge(unaPrestacion);
