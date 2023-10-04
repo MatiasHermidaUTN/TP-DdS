@@ -1,26 +1,23 @@
 package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
-import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
-import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
-import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
-import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
 import io.javalin.http.Context;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IncidentesController {
-    private RepoIncidente repoIncidente;
+public class ComunidadController {
+    private RepoComunidad repoComunidad;
 
-    public IncidentesController(RepoIncidente repoIncidente) {
-        this.repoIncidente = repoIncidente;
+    public ComunidadController(RepoComunidad repoComunidad) {
+        this.repoComunidad = repoComunidad;
     }
 
     public void index(Context context){
         Map<String, Object> model = new HashMap<>();
-        List<Incidente> incidentes = this.repoIncidente.buscarPorComunidad(Integer.parseInt(context.pathParam("comunidad_id")));
+//        List<Incidente> incidentes = this.repoComunidad.buscarPorComunidad(Integer.parseInt(context.pathParam("comunidad_id")));
 
 //        // buscamos el nombre del servicio y del establecimiento
 //        Prestacion prestacion = RepoPrestacion.buscarPorId();
@@ -28,8 +25,8 @@ public class IncidentesController {
 //        Establecimiento establecimiento = repoEstablecimiento.buscarPorId(prestacion.getEstablecimientoId());
 //        Servicio servicio = repoServicio.buscarPorId(prestacion.getEstablecimientoId())
 
-        model.put("incidentes", incidentes);
-        context.render("incidentes/incidentes.hbs", model);
+//        model.put("incidentes", incidentes);
+//        context.render("incidentes/incidentes.hbs", model);
     }
 
     public void show(Context context){

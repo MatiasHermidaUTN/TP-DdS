@@ -1,0 +1,29 @@
+{{#partial "contenido" }}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Id Incidente</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tbody>
+            {{#each incidentes}}
+                <tr>
+                    <td>{{this.id}}</td>
+<!--                    <td>{{this.cantTareas}}</td>-->
+<!--                    <td>-->
+<!--                       <a class="btn btn-secondary" href="/servicios/{{this.id}}/cerrar"><i class="fa-solid fa-pen-to-square"></i></a>-->
+<!--                        <a class="btn btn-secondary" href="/servicios/{{this.id}}/tareas"><i class="fa-solid fa-list-check"></i></a>-->
+<!--                    </td>-->
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+<!--    <div align="center">-->
+<!--        <a class="btn btn-primary" href="/servicios/crear">Crear incidente</a>-->
+<!--    </div>-->
+
+{{/partial}}
+{{> templates/base }}

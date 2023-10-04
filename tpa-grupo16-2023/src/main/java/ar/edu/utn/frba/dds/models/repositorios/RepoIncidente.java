@@ -36,4 +36,11 @@ public class RepoIncidente implements WithSimplePersistenceUnit {
     public List<Incidente> buscarTodos() {
         return entityManager().createQuery("from " + Incidente.class.getName()).getResultList();
     }
+
+    public List buscarPorComunidad(Integer id) {
+        return entityManager()
+                .createQuery("from " + Incidente.class.getName() + " where comunidad_id = :comunidad")
+                .setParameter("comunidad", id)
+                .getResultList();
+    }
 }

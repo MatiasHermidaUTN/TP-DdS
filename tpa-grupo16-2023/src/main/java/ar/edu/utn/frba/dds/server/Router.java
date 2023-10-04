@@ -1,5 +1,9 @@
 package ar.edu.utn.frba.dds.server;
 
+import ar.edu.utn.frba.dds.controllers.ComunidadController;
+import ar.edu.utn.frba.dds.controllers.FactoryController;
+import ar.edu.utn.frba.dds.controllers.IncidentesController;
+
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Router {
@@ -19,23 +23,25 @@ public class Router {
                 + ctx.pathParam("nombre")
         ));
 
-        /*
+
         Server.app().routes(() -> {
 
-            get("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::index);
-            get("servicios/crear", ((ServiciosController) FactoryController.controller("Servicios"))::create);
-            get("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::show);
-            get("servicios/{id}/editar", ((ServiciosController) FactoryController.controller("Servicios"))::edit);
-            post("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::update);
-            post("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::save);
-            delete("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::delete);
 
-            path("servicios/{id}/tareas", () -> {
-                get(((TareasController) FactoryController.controller("Tareas"))::index);
-                //TODO
-            });
+//            get("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::index);
+//            get("servicios/crear", ((ServiciosController) FactoryController.controller("Servicios"))::create);
+//            get("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::show);
+//            get("servicios/{id}/editar", ((ServiciosController) FactoryController.controller("Servicios"))::edit);
+//            post("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::update);
+//            post("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::save);
+//            delete("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::delete);
+            //get("comunidad/{id}", ((ComunidadController) FactoryController.controller("Comunidad"))::show);
+
+            get("comunidad/{id}/incidentes", ((IncidentesController) FactoryController.controller("incidente"))::index);
+
+//            path("servicios/{id}/tareas", () -> {
+//                get(((TareasController) FactoryController.controller("Tareas"))::index);
+//                //TODO
+//            });
         });
-
-         */
     }
 }

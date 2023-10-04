@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
+import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.CuandoSucede;
@@ -11,6 +12,9 @@ import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RepositoryTest {
     RepoComunidad repoComunidad = new RepoComunidad();
@@ -134,4 +138,12 @@ public class RepositoryTest {
         Assertions.assertEquals(null, repoComunidad.buscarPorId(comunidadBuscadaModificada.getId()));
     }
 
+    @Test
+    public void buscarIncidentesPorComunidad() {
+        List<Incidente> incidentes = new ArrayList<>();
+        incidentes =  repoIncidente.buscarPorComunidad(2);
+
+        for(Incidente incidente : incidentes)
+            System.out.println(incidente.getId());
+    }
 }
