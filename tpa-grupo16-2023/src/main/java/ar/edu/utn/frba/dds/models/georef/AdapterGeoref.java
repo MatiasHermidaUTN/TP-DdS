@@ -1,8 +1,7 @@
 package ar.edu.utn.frba.dds.models.georef;
 
-import ar.edu.utn.frba.dds.localizacion.*;
-import ar.edu.utn.frba.dds.models.georef.entities.RtaUbicacion;
 import ar.edu.utn.frba.dds.models.localizacion.*;
+import ar.edu.utn.frba.dds.models.georef.entities.RtaUbicacion;
 
 import java.io.IOException;
 import java.util.List;

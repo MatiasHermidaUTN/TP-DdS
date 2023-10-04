@@ -1,8 +1,12 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
+import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
-import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
+import ar.edu.utn.frba.dds.models.notificaciones.estrategias.CuandoSucede;
+import ar.edu.utn.frba.dds.models.notificaciones.medios.AdapterMailSender;
+import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

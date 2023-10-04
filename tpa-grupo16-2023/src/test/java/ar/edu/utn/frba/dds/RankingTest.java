@@ -12,7 +12,6 @@ import ar.edu.utn.frba.dds.models.ranking.InformeSemanal;
 import ar.edu.utn.frba.dds.models.ranking.MayorImpactoProblematicas;
 import ar.edu.utn.frba.dds.models.ranking.MayorIncidentesReportados;
 import ar.edu.utn.frba.dds.models.ranking.MayorPromedioCierre;
-import ar.edu.utn.frba.dds.ranking.*;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoEntidadDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoIncidenteDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoPrestacionDeprecado;

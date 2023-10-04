@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds.models.georef;
 
 import ar.edu.utn.frba.dds.models.georef.entities.*;
-import ar.edu.utn.frba.dds.services.georef.entities.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
