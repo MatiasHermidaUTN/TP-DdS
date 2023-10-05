@@ -42,12 +42,12 @@ public class NotificacionPorMailTest {
         this.servicioA.setNombre("Baño");
         this.servicioB.setNombre("Rampa");
         this.servicioC.setNombre("Baño");
-        this.incidenteA.setEstablecimiento(establecimientoA);
-        this.incidenteA.setServicio(servicioA);
-        this.incidenteB.setEstablecimiento(establecimientoA);
-        this.incidenteB.setServicio(servicioB);
-        this.incidenteC.setEstablecimiento(establecimientoB);
-        this.incidenteC.setServicio(servicioC);
+//        this.incidenteA.setEstablecimiento(establecimientoA);
+//        this.incidenteA.setServicio(servicioA);
+//        this.incidenteB.setEstablecimiento(establecimientoA);
+//        this.incidenteB.setServicio(servicioB);
+//        this.incidenteC.setEstablecimiento(establecimientoB);
+//        this.incidenteC.setServicio(servicioC);
     }
 
     @Test

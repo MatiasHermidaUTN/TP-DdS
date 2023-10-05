@@ -20,13 +20,7 @@ public class IncidentesController {
 
     public void index(Context context){
         Map<String, Object> model = new HashMap<>();
-        List<Incidente> incidentes = this.repoIncidente.buscarPorComunidad(Integer.parseInt(context.pathParam("comunidad_id")));
-
-//        // buscamos el nombre del servicio y del establecimiento
-//        Prestacion prestacion = RepoPrestacion.buscarPorId();
-//
-//        Establecimiento establecimiento = repoEstablecimiento.buscarPorId(prestacion.getEstablecimientoId());
-//        Servicio servicio = repoServicio.buscarPorId(prestacion.getEstablecimientoId())
+        List<Incidente> incidentes = this.repoIncidente.buscarPorComunidad(Integer.parseInt(context.pathParam("id")));
 
         model.put("incidentes", incidentes);
         context.render("incidentes/incidentes.hbs", model);

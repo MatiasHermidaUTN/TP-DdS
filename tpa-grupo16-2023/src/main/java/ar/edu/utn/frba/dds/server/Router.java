@@ -36,7 +36,7 @@ public class Router {
 //            delete("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::delete);
             //get("comunidad/{id}", ((ComunidadController) FactoryController.controller("Comunidad"))::show);
 
-            get("comunidad/{id}/incidentes", ((IncidentesController) FactoryController.controller("incidente"))::index);
+            get("comunidades/{id}/incidentes", ((IncidentesController) FactoryController.controller("incidente"))::index);
 
 //            path("servicios/{id}/tareas", () -> {
 //                get(((TareasController) FactoryController.controller("Tareas"))::index);

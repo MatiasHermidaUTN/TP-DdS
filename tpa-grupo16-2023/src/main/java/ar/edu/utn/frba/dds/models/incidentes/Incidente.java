@@ -35,11 +35,12 @@ public class Incidente extends Persistente {
     @Column
     public String observaciones;
 
-    @Transient
-    private Establecimiento establecimiento;
+    // El establecimiento y servicio asociados estan en la prestacion. Esto quedaria deprecado.
+    // @Transient
+    // private Establecimiento establecimiento;
 
-    @Transient
-    private Servicio servicio;
+    // @Transient
+    // private Servicio servicio;
 
     @ManyToOne
     @JoinColumn(name = "usuario_apertura", referencedColumnName = "id")
@@ -71,9 +72,9 @@ public class Incidente extends Persistente {
     // }
 
     public Incidente(Establecimiento establecimiento, String nombreComunidad, Servicio servicio, Usuario usuarioApertura) {
-        this.establecimiento = establecimiento;
+        // this.establecimiento = establecimiento;
         this.nombreComunidad = nombreComunidad;
-        this.servicio = servicio;
+        // this.servicio = servicio;
         this.usuarioApertura = usuarioApertura;
         this.horarioApertura = LocalDateTime.now();
         this.estado = EstadoIncidente.ABIERTO;
@@ -134,6 +135,22 @@ public class Incidente extends Persistente {
     }
 
     public boolean seOriginoEnEntidad(Entidad entidad) {
-        return this.establecimiento.getEntidad().equals(entidad);
+        return this.getEstablecimiento().getEntidad().equals(entidad);
+    }
+
+    public String getEstablecimientoNombre() {
+        return this.getPrestacion().getEstablecimiento().getNombre();
+    }
+
+    public String getServicioNombre() {
+        return this.getPrestacion().getServicio().getNombre();
+    }
+
+    public Establecimiento getEstablecimiento() {
+        return this.getPrestacion().getEstablecimiento();
+    }
+
+    public Servicio getServicio() {
+        return this.getPrestacion().getServicio();
     }
 }
