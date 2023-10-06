@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class Departamento {
 
     @Id
-    @GeneratedValue
-    public Integer departamento_id;
+    @Column(name = "departamento_id")
+    public Integer id;
 
     @Column(name = "departamento_nombre")
     public String nombre;
@@ -23,7 +23,7 @@ public class Departamento {
     @Override
     public String toString() {
         return "Departamento{" +
-                "id='" + departamento_id.toString() + '\'' +
+                "id='" + id.toString() + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", centroide=" + centroide.toString() +
                 ", provincia=" + provincia.toString() +

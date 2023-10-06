@@ -9,8 +9,8 @@ import javax.persistence.*;
 public class Provincia {
 
     @Id
-    @GeneratedValue
-    public Integer provincia_id;
+    @Column(name = "provincia_id")
+    public Integer id;
 
     @Getter
     @Column(name = "provincia_nombre")
@@ -22,7 +22,7 @@ public class Provincia {
     @Override
     public String toString() {
         return "Provincia{" +
-                "id='" + provincia_id.toString() + '\'' +
+                "id='" + id.toString() + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", centroide=" + centroide.toString() +
                 '}';

@@ -2,17 +2,21 @@ package ar.edu.utn.frba.dds;
 
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
+import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
+import ar.edu.utn.frba.dds.models.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
-import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
-import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
+import ar.edu.utn.frba.dds.models.localizacion.*;
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.CuandoSucede;
 import ar.edu.utn.frba.dds.models.notificaciones.medios.AdapterMailSender;
 import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +26,14 @@ public class RepositoryTest {
     RepoIncidente repoIncidente = new RepoIncidente();
     RepoPrestacion repoPrestacion = new RepoPrestacion();
     RepoUsuario repoUsuario = new RepoUsuario();
+    RepoProvincia repoProvincia = new RepoProvincia();
+    RepoDepartamento repoDepartamento = new RepoDepartamento();
+    RepoLocalidad repoLocalidad = new RepoLocalidad();
+
+    AdapterGeoref adapterGeoref = AdapterGeoref.instancia();
 
     @BeforeEach
-    public void init() {
+    public void initb() {
 
     }
 
@@ -145,5 +154,46 @@ public class RepositoryTest {
 
         for(Incidente incidente : incidentes)
             System.out.println(incidente.getId());
+    }
+
+    @Test
+    public void cargaDatosGeoref() throws IOException {
+        List<Provincia> provincias = adapterGeoref.obtenerListadoProvincias();
+        repoProvincia.guardarMuchas(provincias);
+        for (Provincia unaProvincia : provincias) {
+            List<Departamento> departamentos = adapterGeoref.obtenerListadoDepartamentos(unaProvincia);
+            repoDepartamento.guardarMuchos(departamentos);
+            for (Departamento unDepartamento : departamentos) {
+                List<Localidad> localidades = adapterGeoref.obtenerListadoLocalidades(unDepartamento);
+                repoLocalidad.guardarMuchas(localidades);
+            }
+        }
+    }
+    @Test
+    public void cargarDatos() throws IOException{
+        Localidad unaLocalidad = repoLocalidad.buscarPorNombre("almagro");
+        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion("av corrientes 4600", unaLocalidad);
+        Localizacion localizacion = new Localizacion(unaLocalidad, unaUbicacion);
+
+        Usuario nuevoUsuario = new Usuario("mailX@gmail.com", "UsuarioX", "contraseniaX", localizacion);
+
+        CuandoSucede configNotificacion = new CuandoSucede();
+        nuevoUsuario.setConfiguracionNotificacion(configNotificacion);
+
+        AdapterMailSender notificador = new AdapterMailSender();
+        nuevoUsuario.setNotificador(notificador);
+
+        repoUsuario.guardar(nuevoUsuario);
+
+//        Incidente nuevoIncidente = new Incidente();
+//
+//        nuevoIncidente.setHorarioApertura(LocalDateTime.now());
+//        nuevoIncidente.setHorarioCierre(LocalDateTime.now().minusHours(10));
+//        nuevoIncidente.setObservaciones("Esto es una observacion");
+//        nuevoIncidente.setUsuarioApertura(nuevoUsuario);
+//        nuevoIncidente.setUsuarioCierre(nuevoUsuario);
+//
+//
+//        repoIncidente.guardar(nuevoIncidente);
     }
 }

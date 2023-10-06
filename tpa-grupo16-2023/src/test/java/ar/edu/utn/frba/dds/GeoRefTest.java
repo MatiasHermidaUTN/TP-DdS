@@ -25,33 +25,33 @@ public class GeoRefTest {
     public void obtenerProvincias() throws Exception {
         List<Provincia> provincias  = adapterGeoref.obtenerListadoProvincias();
         for(Provincia unaProvincia : provincias){
-            System.out.print(unaProvincia.provincia_id.toString() + ") ");
-            System.out.print(unaProvincia.centroide.toString() + "_");
-            System.out.print(unaProvincia.nombre + " - ");
+            System.out.print(unaProvincia.nombre + " id: ");
+            System.out.print(unaProvincia.id.toString() + " con centroide: ");
+            System.out.print(unaProvincia.centroide.toString() + "\n");
         }
     }
     @Test
     public void obtenerDepartamentos() throws Exception {
         Provincia provinciaElegida = new Provincia();
-        provinciaElegida.provincia_id = 54;
+        provinciaElegida.id = 54;
         provinciaElegida.nombre = "Misiones";
         List<Departamento> departamentos = adapterGeoref.obtenerListadoDepartamentos(provinciaElegida);
-        System.out.println("\n\nLos departamentos de la provincia " + provinciaElegida.provincia_id.toString() + ") " + provinciaElegida.nombre + " son:");
+        System.out.println("Los departamentos de la provincia id: [" + provinciaElegida.id.toString() + "] " + provinciaElegida.nombre + " son:");
         for (Departamento unDepartamento : departamentos) {
-            System.out.print(unDepartamento.departamento_id.toString() + ") ");
             System.out.print(unDepartamento.nombre + ", de la provincia ");
-            System.out.print(unDepartamento.provincia.nombre + " \n ");
+            System.out.print(unDepartamento.provincia.nombre + " con id:");
+            System.out.print(unDepartamento.id.toString() + "\n");
         }
     }
     @Test
     public void obtenerLocalidades() throws Exception {
         Departamento departamentoElegido = new Departamento();
-        departamentoElegido.departamento_id = 54063;
+        departamentoElegido.id = 54063;
         departamentoElegido.nombre = "Iguazú";
         List<Localidad> localidades = adapterGeoref.obtenerListadoLocalidades(departamentoElegido);
-        System.out.println("\n\nLas localidades del departamento " + departamentoElegido.departamento_id.toString() + ") " + departamentoElegido.nombre + " son:");
+        System.out.println("\n\nLas localidades del departamento " + departamentoElegido.id.toString() + ") " + departamentoElegido.nombre + " son:");
         for (Localidad unaLocalidad : localidades) {
-            System.out.print(unaLocalidad.localidad_id.toString() + ") ");
+            System.out.print(unaLocalidad.id.toString() + ") ");
             System.out.print(unaLocalidad.nombre + ", del departamento ");
             System.out.print(unaLocalidad.departamento.nombre + " \n");
         }
@@ -70,7 +70,7 @@ public class GeoRefTest {
     @Test
     public void obtenerUbicacion() throws Exception {
         Localidad localidadElegida = new Localidad();
-        localidadElegida.nombre = "san nicolas";
+        localidadElegida.nombre = "almagro";
         String direccion = "av corrientes 1050";
         Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion(direccion, localidadElegida);
         System.out.println("\n\nunaUbicacion = " + unaUbicacion.toString());

@@ -81,7 +81,7 @@ public class GeorefServiceRetrofit {
         Response<ListadoDeDepartamentos> responseListadoDeDepartamentos = null;
         while(requestConError){
             GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-            Call<ListadoDeDepartamentos> requestListadoDeDepartamentos = georefServiceQuerys.departamentos(provincia.provincia_id.toString(), "id,nombre,centroide,provincia");
+            Call<ListadoDeDepartamentos> requestListadoDeDepartamentos = georefServiceQuerys.departamentos(provincia.id.toString(), "id,nombre,centroide,provincia");
             responseListadoDeDepartamentos = requestListadoDeDepartamentos.execute();
             intentos++;
             if (!responseListadoDeDepartamentos.isSuccessful() && intentos < 15) {
@@ -101,7 +101,7 @@ public class GeorefServiceRetrofit {
         Response<ListadoDeLocalidades> responseListadoDeLocalidades = null;
         while(requestConError){
             GeorefServiceQuerys georefServiceQuerys = this.retrofit.create(GeorefServiceQuerys.class);
-            Call<ListadoDeLocalidades> requestListadoDeLocalidades = georefServiceQuerys.localidades(departamento.departamento_id.toString(), "id,nombre,centroide,departamento");
+            Call<ListadoDeLocalidades> requestListadoDeLocalidades = georefServiceQuerys.localidades(departamento.id.toString(), "id,nombre,centroide,departamento");
             responseListadoDeLocalidades = requestListadoDeLocalidades.execute();
             intentos++;
             if (!responseListadoDeLocalidades.isSuccessful() && intentos < 15) {
