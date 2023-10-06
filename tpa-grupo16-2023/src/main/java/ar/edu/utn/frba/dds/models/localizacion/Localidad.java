@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class Localidad {
 
     @Id
-    @GeneratedValue
-    public Integer localidad_id;
+    @Column(name = "localidad_id")
+    public Long id;
 
     @Column(name = "localidad_nombre")
     public String nombre;
@@ -23,7 +23,7 @@ public class Localidad {
     @Override
     public String toString() {
         return "Localidad{" +
-                "id='" + localidad_id.toString() + '\'' +
+                "id='" + id.toString() + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", centroide=" + centroide.toString() +
                 ", departamento=" + departamento.toString() +
