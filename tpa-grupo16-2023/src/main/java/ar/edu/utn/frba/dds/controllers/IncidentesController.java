@@ -104,8 +104,6 @@ public class IncidentesController {
     }
     public void crearIncidente(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura) {
 
-        RepoComunidadDeprecado.getInstancia();
-
         List<Comunidad> comunidades = usuarioApertura.getPerfiles()
                 .stream()
                 .map(perfil -> perfil.getComunidad()).toList();

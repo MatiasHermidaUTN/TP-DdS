@@ -4,6 +4,8 @@ import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
 import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.models.validador.Resultado;
+import ar.edu.utn.frba.dds.models.validador.Validador;
 import io.javalin.http.Context;
 
 import java.util.HashMap;
@@ -12,9 +14,11 @@ import java.util.Map;
 
 public class UsuariosController {
     private RepoUsuario repoUsuario;
+    private Validador validador;
 
-    public UsuariosController(RepoUsuario repoUsuario) {
+    public UsuariosController(RepoUsuario repoUsuario, Validador validador) {
         this.repoUsuario = repoUsuario;
+        this.validador = validador;
     }
 
     public void index(Context context){
@@ -32,8 +36,22 @@ public class UsuariosController {
         context.render("usuarios/register.hbs", model);
     }
 
-    public void save(Context context){
-        // TODO
+    public void guardar(Context context){
+
+        String usuario = context.formParam("usuario");
+        String contrasenia = context.formParam("contrasenia");
+        String email = context.formParam("email");
+        validador.cargarConfig1();
+        Resultado resultado = validador.logear(usuario, contrasenia);
+        if(resultado.isValor()){
+            repoUsuario.guardar(new Usuario(email, usuario, contrasenia));
+            context.result("El usuario ha sido registrado correctamente");
+            context.redirect("/login");
+        }
+        else {
+            context.result(resultado.getMensajeError());
+            context.redirect("/register");
+        }
     }
 
     public void edit(Context context){

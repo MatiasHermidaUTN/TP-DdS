@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds.models.validador;
 
-import ar.edu.utn.frba.dds.models.validador.reglas.Regla;
+import ar.edu.utn.frba.dds.models.validador.reglas.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,5 +34,17 @@ public class Validador
 
     public Validador() {
         this.reglas = new ArrayList<>();
+    }
+
+    public void cargarConfig1(){
+        agregarRegla(new EsFuerte(),
+                new CredencialesPorDefecto(),
+                new Longitud(8,64),
+                new TieneMayus(),
+                new TieneMinus(),
+                new TieneNumero(),
+                new TieneCaracEspeciales(),
+                new NoRepiteCaracteres()
+        );
     }
 }

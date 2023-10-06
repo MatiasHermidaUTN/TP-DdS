@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
 import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
 import ar.edu.utn.frba.dds.models.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.models.validador.Validador;
 
 public class FactoryController {
 
@@ -13,7 +14,7 @@ public class FactoryController {
             case "incidente": controller = new IncidentesController(new RepoIncidente());
             break;
 
-            case "usuario": controller = new UsuariosController(new RepoUsuario());
+            case "usuario": controller = new UsuariosController(new RepoUsuario(), new Validador());
             break;
 
             case "prestacion": controller = new PrestacionController(new RepoPrestacion());
