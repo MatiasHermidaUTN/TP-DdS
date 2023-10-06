@@ -31,7 +31,10 @@ public class IncidentesController {
     }
 
     public void create(Context context){
-        // TODO
+        Incidente incidente = null;
+        Map<String, Object> model = new HashMap<>();
+        model.put("incidente", incidente);
+        context.render("incidentes/incidente.hbs", model);
     }
 
     public void save(Context context){
@@ -43,6 +46,10 @@ public class IncidentesController {
     }
 
     public void delete(Context context){
+        // TODO
+    }
+
+    public void cerrar(Context context){
         // TODO
     }
 

@@ -29,8 +29,8 @@ public class Incidente extends Persistente {
     @JoinColumn(name = "comunidad_id", referencedColumnName = "id")
     private Comunidad comunidad; // esto lo agregue porque no le gustaba al inteliij que use el nombreComunidad
 
-    @Transient
-    private String nombreComunidad;
+    //@Transient
+    //private String nombreComunidad;
 
     @Column
     public String observaciones;
@@ -62,7 +62,7 @@ public class Incidente extends Persistente {
     @Column(name = "estado_incidente")
     private EstadoIncidente estado;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "prestacion_id", referencedColumnName = "id")
     private Prestacion prestacion;
 
@@ -73,7 +73,7 @@ public class Incidente extends Persistente {
 
     public Incidente(Establecimiento establecimiento, String nombreComunidad, Servicio servicio, Usuario usuarioApertura) {
         // this.establecimiento = establecimiento;
-        this.nombreComunidad = nombreComunidad;
+        //this.nombreComunidad = nombreComunidad;
         // this.servicio = servicio;
         this.usuarioApertura = usuarioApertura;
         this.horarioApertura = LocalDateTime.now();

@@ -11,7 +11,7 @@ public class FactoryNotificacion {
         String titulo = "Incidente en " + incidente.getEstablecimiento().getNombre();
         String cuerpo = "Ocurrió un incidente con el/la " + incidente.getServicio().getNombre()
                 + " de " + incidente.getEstablecimiento().getNombre() + ". El/la " + incidente.getServicio().getNombre()
-                + " ahora no se encuentra disponible. Origen: " + incidente.getNombreComunidad();
+                + " ahora no se encuentra disponible. Origen: " + incidente.getComunidad().getNombre();
 
         return new Notificacion(titulo, cuerpo);
     }
@@ -21,7 +21,7 @@ public class FactoryNotificacion {
         String titulo = "Resolución de incidente en " + incidente.getEstablecimiento().getNombre();
         String cuerpo = "El incidente con el/la " + incidente.getServicio().getNombre()
                 + " de " + incidente.getEstablecimiento().getNombre() + " ya fue resuelto. El/la " + incidente.getServicio().getNombre()
-                + " ahora se encuentra disponible. Origen: " + incidente.getNombreComunidad();
+                + " ahora se encuentra disponible. Origen: " + incidente.getComunidad().getNombre();
 
         return new Notificacion(titulo, cuerpo);
     }
@@ -33,11 +33,11 @@ public class FactoryNotificacion {
         str.append("Ocurrieron los siguientes incidentes:<ul>");
         if(!incidentesNuevos.isEmpty()) {
             incidentesNuevos.stream().forEach(i -> str.append("<li>El/la " + i.getServicio().getNombre()
-                    + " de " + i.getEstablecimiento().getNombre() + " no se encuentra disponible. Origen: "+ i.getNombreComunidad() + "</li>"));
+                    + " de " + i.getEstablecimiento().getNombre() + " no se encuentra disponible. Origen: "+ i.getComunidad().getNombre() + "</li>"));
         }
         if(!incidentesConcluidos.isEmpty()) {
             incidentesConcluidos.stream().forEach(i -> str.append("<li>El/la " + i.getServicio().getNombre()
-                    + " de " + i.getEstablecimiento().getNombre() + " ya se encuentra disponible. Origen: "+ i.getNombreComunidad() + "</li>"));
+                    + " de " + i.getEstablecimiento().getNombre() + " ya se encuentra disponible. Origen: "+ i.getComunidad().getNombre() + "</li>"));
         }
         str.append("</ul>Eso es todo. Lo mantendremos informado en sus horarios elegidos.");
         String cuerpo = str.toString();
@@ -53,7 +53,7 @@ public class FactoryNotificacion {
         if(!incidentes.isEmpty()) {
             incidentes.stream().forEach(i -> str.append("<li>El/la " + i.getServicio().getNombre()
                     + " de " + i.getEstablecimiento().getNombre() + " presenta un incidente y se encuentra en sus cercanias."
-                    + " Le sugerimos que se acerce a revisar el estado del mismo. Origen: "+ i.getNombreComunidad() + "</li>"));
+                    + " Le sugerimos que se acerce a revisar el estado del mismo. Origen: "+ i.getComunidad().getNombre() + "</li>"));
         }
         str.append("</ul>Eso es todo. Muchas Gracias.");
         String cuerpo = str.toString();

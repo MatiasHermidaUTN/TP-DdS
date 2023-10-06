@@ -3,8 +3,8 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>Id Incidente</th>
-                <th></th>
-                <th></th>
+                <th>Servicio</th>
+                <th>Establecimiento</th>
             </tr>
             <tbody>
             {{#each incidentes}}
@@ -12,10 +12,10 @@
                     <td>{{this.id}}</td>
                     <td>{{this.getServicioNombre}}</td>
                     <td>{{this.getEstablecimientoNombre}}</td>
-<!--                    <td>-->
-<!--                       <a class="btn btn-secondary" href="/servicios/{{this.id}}/cerrar"><i class="fa-solid fa-pen-to-square"></i></a>-->
-<!--                        <a class="btn btn-secondary" href="/servicios/{{this.id}}/tareas"><i class="fa-solid fa-list-check"></i></a>-->
-<!--                    </td>-->
+                    <td>
+                       <a class="btn btn-secondary" href="/incidentes/{{this.id}}/cerrar"><i class="fas fa-times"></i></a>
+<!--                        <a class="btn btn-secondary" href="/incidentes/{{this.id}}/edit"><i class="fa-solid fa-list-check"></i></a>-->
+                    </td>
                 </tr>
             {{/each}}
             </tbody>
@@ -23,8 +23,9 @@
     </div>
 
 <!--    <div align="center">-->
-<!--        <a class="btn btn-primary" href="/servicios/crear">Crear incidente</a>-->
+<!--        <a class="btn btn-primary" href="/comunidades/{id}/incidentes/crear">Crear incidente</a> -->
 <!--    </div>-->
+<!--    no se como conseguir el id de la comunidad para hacer el crear nuevo incidente (en esa comunidad)-->
 
 {{/partial}}
 {{> templates/base }}

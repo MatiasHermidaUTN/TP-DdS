@@ -26,22 +26,9 @@ public class Router {
 
         Server.app().routes(() -> {
 
-
-//            get("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::index);
-//            get("servicios/crear", ((ServiciosController) FactoryController.controller("Servicios"))::create);
-//            get("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::show);
-//            get("servicios/{id}/editar", ((ServiciosController) FactoryController.controller("Servicios"))::edit);
-//            post("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::update);
-//            post("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::save);
-//            delete("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::delete);
-            //get("comunidad/{id}", ((ComunidadController) FactoryController.controller("Comunidad"))::show);
-
             get("comunidades/{id}/incidentes", ((IncidentesController) FactoryController.controller("incidente"))::index);
+            get("incidentes/{id}/cerrar", ((IncidentesController) FactoryController.controller("incidente"))::cerrar);
 
-//            path("servicios/{id}/tareas", () -> {
-//                get(((TareasController) FactoryController.controller("Tareas"))::index);
-//                //TODO
-//            });
         });
     }
 }
