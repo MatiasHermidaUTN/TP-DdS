@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
 import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
+import ar.edu.utn.frba.dds.models.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
 
 public class FactoryController {
@@ -14,6 +15,9 @@ public class FactoryController {
 
             case "usuario": controller = new UsuariosController(new RepoUsuario());
             break;
+
+            case "prestacion": controller = new PrestacionController(new RepoPrestacion());
+                break;
         }
         return controller;
     }

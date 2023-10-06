@@ -66,11 +66,6 @@ public class Incidente extends Persistente {
     @JoinColumn(name = "prestacion_id", referencedColumnName = "id")
     private Prestacion prestacion;
 
-    // private static Integer id = 0;
-    // private Integer obtenerID() {
-        // return id++;
-    // }
-
     public Incidente(Establecimiento establecimiento, String nombreComunidad, Servicio servicio, Usuario usuarioApertura) {
         // this.establecimiento = establecimiento;
         //this.nombreComunidad = nombreComunidad;
@@ -78,7 +73,6 @@ public class Incidente extends Persistente {
         this.usuarioApertura = usuarioApertura;
         this.horarioApertura = LocalDateTime.now();
         this.estado = EstadoIncidente.ABIERTO;
-        // this.idIncidente = obtenerID();
     }
 
     public Incidente(){
