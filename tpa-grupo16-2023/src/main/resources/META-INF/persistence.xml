@@ -13,7 +13,7 @@
             <property name="hibernate.archive.autodetection" value="class"/>
 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/dds2" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3309/dds2" />
             <property name="hibernate.connection.username" value="root" />
             <property name="hibernate.connection.password" value="tpadds16" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
@@ -21,7 +21,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="use_sql_comments" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
 
     </persistence-unit>
