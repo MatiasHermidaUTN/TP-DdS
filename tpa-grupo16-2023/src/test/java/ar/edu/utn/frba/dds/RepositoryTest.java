@@ -170,12 +170,11 @@ public class RepositoryTest {
         }
     }
     @Test
-    public void cargarDatos() {
-        Ubicacion ubicacion1 = new Ubicacion(99.0,99.0);
-        Ubicacion ubicacion2 = new Ubicacion(20.0,109.0);
-        Ubicacion ubicacion3 = new Ubicacion(80.0,40.0);
-        Ubicacion ubicacion4 = new Ubicacion(30.0,70.0);
-        Localizacion localizacion = new Localizacion(ubicacion1);
+    public void cargarDatos() throws IOException{
+        Localidad unaLocalidad = repoLocalidad.buscarPorNombre("almagro");
+        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion("av corrientes 4600", unaLocalidad);
+        Localizacion localizacion = new Localizacion(unaLocalidad, unaUbicacion);
+
         Usuario nuevoUsuario = new Usuario("mailX@gmail.com", "UsuarioX", "contraseniaX", localizacion);
 
         CuandoSucede configNotificacion = new CuandoSucede();
@@ -186,15 +185,15 @@ public class RepositoryTest {
 
         repoUsuario.guardar(nuevoUsuario);
 
-        Incidente nuevoIncidente = new Incidente();
-
-        nuevoIncidente.setHorarioApertura(LocalDateTime.now());
-        nuevoIncidente.setHorarioCierre(LocalDateTime.now().minusHours(10));
-        nuevoIncidente.setObservaciones("Esto es una observacion");
-        nuevoIncidente.setUsuarioApertura(nuevoUsuario);
-        nuevoIncidente.setUsuarioCierre(nuevoUsuario);
-
-
-        repoIncidente.guardar(nuevoIncidente);
+//        Incidente nuevoIncidente = new Incidente();
+//
+//        nuevoIncidente.setHorarioApertura(LocalDateTime.now());
+//        nuevoIncidente.setHorarioCierre(LocalDateTime.now().minusHours(10));
+//        nuevoIncidente.setObservaciones("Esto es una observacion");
+//        nuevoIncidente.setUsuarioApertura(nuevoUsuario);
+//        nuevoIncidente.setUsuarioCierre(nuevoUsuario);
+//
+//
+//        repoIncidente.guardar(nuevoIncidente);
     }
 }

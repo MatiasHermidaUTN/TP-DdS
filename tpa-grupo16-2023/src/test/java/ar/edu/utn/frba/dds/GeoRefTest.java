@@ -70,7 +70,7 @@ public class GeoRefTest {
     @Test
     public void obtenerUbicacion() throws Exception {
         Localidad localidadElegida = new Localidad();
-        localidadElegida.nombre = "san nicolas";
+        localidadElegida.nombre = "almagro";
         String direccion = "av corrientes 1050";
         Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion(direccion, localidadElegida);
         System.out.println("\n\nunaUbicacion = " + unaUbicacion.toString());

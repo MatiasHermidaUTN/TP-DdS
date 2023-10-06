@@ -1,7 +1,9 @@
 package ar.edu.utn.frba.dds.models.repositorios;
 
+import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.localizacion.Localidad;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import net.bytebuddy.asm.Advice;
 
 import javax.persistence.EntityTransaction;
 import java.util.List;
@@ -38,6 +40,12 @@ public class RepoLocalidad implements WithSimplePersistenceUnit {
         tx.commit();
     }
 
+    public Localidad buscarPorNombre(String nombre) {
+        return  (Localidad) entityManager()
+                .createQuery("from " + Localidad.class.getName() + " where localidad_nombre = :nombre")
+                .setParameter("nombre", nombre)
+                .getSingleResult();
+    }
     public Localidad buscarPorId(Integer id) {
         return entityManager().find(Localidad.class, id);
     }
