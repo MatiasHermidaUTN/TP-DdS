@@ -46,11 +46,11 @@ public class UsuariosController {
         if(resultado.isValor()){
             repoUsuario.guardar(new Usuario(email, usuario, contrasenia));
             context.result("El usuario ha sido registrado correctamente");
-            context.redirect("/login");
+            //context.redirect("/login");
         }
         else {
             context.result(resultado.getMensajeError());
-            context.redirect("/register");
+            //context.redirect("/register");
         }
     }
 
