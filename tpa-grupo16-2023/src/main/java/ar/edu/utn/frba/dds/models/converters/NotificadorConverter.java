@@ -11,6 +11,8 @@ import javax.persistence.Converter;
 public class NotificadorConverter implements AttributeConverter<Notificador, String> {
     @Override
     public String convertToDatabaseColumn(Notificador notificador) {
+        if(notificador == null)
+            return "";
         if(notificador.getClass().getSimpleName().equals("AdapterMailSender"))
             return "mail";
         else if(notificador.getClass().getSimpleName().equals("AdapterWhatsappSender"))
