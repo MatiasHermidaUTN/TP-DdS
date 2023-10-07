@@ -20,7 +20,9 @@ public class Router {
             get("comunidades/{id}/incidentes", ((IncidentesController) FactoryController.controller("incidente"))::index);
             get("incidentes/{id}/cerrar", ((IncidentesController) FactoryController.controller("incidente"))::cerrar);
             get("register", ((UsuariosController) FactoryController.controller("usuario"))::registrar);
-            post("register", ((UsuariosController) FactoryController.controller("usuario"))::guardar);
+            post("register", ((UsuariosController) FactoryController.controller("usuario"))::guardar_usuario);
+            get("login", ((UsuariosController) FactoryController.controller("usuario"))::logear);
+            post("login", ((UsuariosController) FactoryController.controller("usuario"))::procesar_login);
         });
     }
 }
