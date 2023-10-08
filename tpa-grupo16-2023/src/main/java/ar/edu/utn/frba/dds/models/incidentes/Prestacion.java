@@ -44,7 +44,14 @@ public class Prestacion extends Persistente {
         this.incidentes.remove(incidente);
     }
 
-
+    @Override
+    public String toString() {
+        return "{" +
+                "\"establecimiento\":" + establecimiento +
+                ", \"servicio\":" + servicio +
+                ", \"incidentes\":" + incidentes +
+                '}';
+    }
 }
 
 

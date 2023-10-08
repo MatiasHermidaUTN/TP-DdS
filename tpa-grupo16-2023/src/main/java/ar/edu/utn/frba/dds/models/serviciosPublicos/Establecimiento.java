@@ -59,4 +59,13 @@ public class Establecimiento extends Persistente {
         this.servicios.remove(servicio);
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"nombre\":\"" + nombre + '\"' +
+                ", \"entidad\":" + entidad +
+                ", \"localizacion\":" + localizacion +
+                ", \"servicios\":" + servicios +
+                '}';
+    }
 }

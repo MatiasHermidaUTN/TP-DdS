@@ -79,4 +79,21 @@ public class Comunidad extends Persistente {
                 .toList()
                 .get(0);
     }
+
+    public Integer getCantPerfilesAfectados() {
+        return this.miembros.stream().filter(Perfil::esAfectado).toList().size();
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"nombre\":\"" + nombre + '\"' +
+                ", \"miembros\":" + miembros +
+                ", \"serviciosDeComunidad\":" + serviciosDeComunidad +
+                ", \"establecimientosDeComunidad\":" + establecimientosDeComunidad +
+                ", \"incidentes\":" + incidentes +
+                ", \"gradoDeConfianza\":" + gradoDeConfianza +
+                ", \"activa\":" + activa +
+                '}';
+    }
 }

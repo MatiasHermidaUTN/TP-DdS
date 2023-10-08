@@ -64,4 +64,15 @@ public class Servicio extends Persistente {
     public void eliminarAtributoVar(String nombre){
         this.atributosVariables.removeIf(atributo -> atributo.getNombre_atributo() == nombre);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"nombre\":\"" + nombre + '\"' +
+                ", \"atributosVariables\":" + atributosVariables +
+                ", \"estado\":" + estado +
+                ", \"registro\":" + registro +
+                ", \"establecimiento\":" + establecimiento +
+                '}';
+    }
 }

@@ -120,4 +120,15 @@ public class Entidad extends Persistente {
         //TODO entrega 4
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"nombre\":\"" + nombre + "\"" +
+                ", \"localizacion\":" + localizacion +
+                ", \"establecimientos\":" + establecimientos +
+                ", \"atributosVariables\":" + atributosVariables +
+                ", \"usuariosAsignados\":" + usuariosAsignados +
+                '}';
+    }
 }

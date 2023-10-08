@@ -81,7 +81,11 @@ public class Incidente extends Persistente {
     }
 
     public double minutosEntreAperturaYCierre() {
-        return ChronoUnit.MINUTES.between(horarioApertura, horarioCierre);
+        if (horarioCierre == null) {
+            return 0;
+        } else {
+            return ChronoUnit.MINUTES.between(horarioApertura, horarioCierre);
+        }
     }
 
     public boolean seReportoEnLaSemanaDeLaFecha(LocalDateTime unaFecha) {
@@ -133,18 +137,40 @@ public class Incidente extends Persistente {
     }
 
     public String getEstablecimientoNombre() {
-        return this.getPrestacion().getEstablecimiento().getNombre();
+        return this.prestacion.getEstablecimiento().getNombre();
     }
 
     public String getServicioNombre() {
-        return this.getPrestacion().getServicio().getNombre();
+        return this.prestacion.getServicio().getNombre();
     }
 
     public Establecimiento getEstablecimiento() {
-        return this.getPrestacion().getEstablecimiento();
+        return this.prestacion.getEstablecimiento();
     }
 
     public Servicio getServicio() {
-        return this.getPrestacion().getServicio();
+        return this.prestacion.getServicio();
+    }
+
+    public Integer getMiembrosAfectados() {
+        return this.comunidad.getCantPerfilesAfectados();
+    }
+
+    public Boolean estaResuelto() {
+        return this.estado == EstadoIncidente.RESUELTO;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"comunidad\":" + comunidad +
+                ", \"observaciones\":\"" + observaciones + '\"' +
+                ", \"usuarioApertura\":" + usuarioApertura +
+                ", \"usuarioCierre\":" + usuarioCierre +
+                ", \"horarioApertura\":\"" + horarioApertura + '\"' +
+                ", \"horarioCierre\":\"" + horarioCierre + '\"' +
+                ", \"estado\":\"" + estado + '\"' +
+                ", \"prestacion\":" + prestacion +
+                '}';
     }
 }

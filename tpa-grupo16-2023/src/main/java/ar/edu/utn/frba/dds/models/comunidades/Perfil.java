@@ -38,9 +38,23 @@ public class Perfil extends Persistente {
         this.comunidad = comunidad;
         this.tipoPerfil = tipoPerfil;
     }
+
     public Perfil() {
     }
 
 
+    public boolean esAfectado() {
+        return this.tipoMiembro == TipoMiembro.AFECTADO;
+    }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"nickname\":\"" + nickname + '\"' +
+//                ", \"comunidad\":" + comunidad +
+                ", \"tipoPerfil\":" + tipoPerfil +
+                ", \"tipoMiembro\":" + tipoMiembro +
+                ", \"usuario\":" + usuario +
+                '}';
+    }
 }
