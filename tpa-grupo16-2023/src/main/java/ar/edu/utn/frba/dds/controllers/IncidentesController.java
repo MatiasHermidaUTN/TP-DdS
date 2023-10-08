@@ -95,6 +95,7 @@ public class IncidentesController {
             if(prestacionDelServicioDelEstablecimiento == null){
                 Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
                 nuevaPrestacion.agregarIncidente(incidente);
+                // incidente.setPrestacion(nuevaPrestacion); chequear
                 repoPrestacion.guardar(nuevaPrestacion);
             }
             else {
@@ -144,8 +145,6 @@ public class IncidentesController {
         new RepoComunidad().buscarPorId(comunidad_id).getMiembros()
                 .forEach(perfil -> perfil.getUsuario().recibirNotificacionDeCierreDeIncidente(incidenteACerrar));
 
-        // guardarlo en la base
-        repoIncidente.merge(incidenteACerrar);
     }
 
 }

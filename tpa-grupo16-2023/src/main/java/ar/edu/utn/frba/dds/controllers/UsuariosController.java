@@ -41,9 +41,7 @@ public class UsuariosController {
     }
 
     public void registrar(Context context){
-        Usuario usuario = null;
         Map<String, Object> model = new HashMap<>();
-        model.put("usuario", usuario);
         context.render("usuarios/register.hbs", model);
     }
 
@@ -57,20 +55,18 @@ public class UsuariosController {
         if(resultado.isValor()){
             crearUsuario(email, usuario, contrasenia);
             context.result("El usuario ha sido registrado correctamente");
-            Thread.sleep(4000);
-            context.redirect("/login");
+//            Thread.sleep(4000);
+//            context.redirect("/login");
         }
         else {
             context.result(resultado.getMensajeError());
-            Thread.sleep(4000);
-            context.redirect("/register");
+//            Thread.sleep(4000);
+//            context.redirect("/register");
         }
     }
 
     public void logear(Context context){
-        Usuario usuario = null;
         Map<String, Object> model = new HashMap<>();
-        model.put("usuario", usuario);
         context.render("usuarios/login.hbs", model);
     }
 
