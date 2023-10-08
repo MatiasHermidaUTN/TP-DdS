@@ -10,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @Getter
+@Setter
 public abstract class Persistente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
