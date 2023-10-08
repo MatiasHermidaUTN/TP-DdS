@@ -36,8 +36,9 @@ public class Establecimiento extends Persistente {
         this.servicios = new ArrayList<Servicio>();
     }
 
-    public Establecimiento(String nombre, Localizacion localizacion) {
+    public Establecimiento(String nombre, Entidad entidad, Localizacion localizacion) {
         this.nombre = nombre;
+        this.entidad = entidad;
         this.localizacion = localizacion;
         this.servicios = new ArrayList<Servicio>();
     }

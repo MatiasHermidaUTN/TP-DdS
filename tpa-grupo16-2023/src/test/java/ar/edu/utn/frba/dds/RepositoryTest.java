@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.controllers.UsuariosController;
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
@@ -10,6 +11,8 @@ import ar.edu.utn.frba.dds.models.notificaciones.estrategias.CuandoSucede;
 import ar.edu.utn.frba.dds.models.notificaciones.medios.AdapterMailSender;
 import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
+import ar.edu.utn.frba.dds.models.validador.Validador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +32,10 @@ public class RepositoryTest {
     RepoProvincia repoProvincia = new RepoProvincia();
     RepoDepartamento repoDepartamento = new RepoDepartamento();
     RepoLocalidad repoLocalidad = new RepoLocalidad();
-
+    RepoLocalizacion repoLocalizacion = new RepoLocalizacion();
+    RepoEstablecimiento repoEstablecimiento = new RepoEstablecimiento();
     AdapterGeoref adapterGeoref = AdapterGeoref.instancia();
-
+    UsuariosController usuariosController = new UsuariosController(repoUsuario, repoLocalidad, adapterGeoref, new Validador());
     @BeforeEach
     public void initb() {
 
@@ -171,19 +175,27 @@ public class RepositoryTest {
     }
     @Test
     public void cargarDatos() throws IOException{
-        Localidad unaLocalidad = repoLocalidad.buscarPorNombre("almagro");
-        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion("av corrientes 4600", unaLocalidad);
-        Localizacion localizacion = new Localizacion(unaLocalidad, unaUbicacion);
+//        Localidad unaLocalidad = repoLocalidad.buscarPorNombre("almagro");
+//        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion("av corrientes 4600", unaLocalidad);
+//        Localizacion localizacion = new Localizacion(unaLocalidad, unaUbicacion);
+//
+//        Usuario nuevoUsuario = new Usuario("mailX@gmail.com", "UsuarioX", "contraseniaX", localizacion);
+//
+//        CuandoSucede configNotificacion = new CuandoSucede();
+//        nuevoUsuario.setConfiguracionNotificacion(configNotificacion);
+//
+//        AdapterMailSender notificador = new AdapterMailSender();
+//        nuevoUsuario.setNotificador(notificador);
 
-        Usuario nuevoUsuario = new Usuario("mailX@gmail.com", "UsuarioX", "contraseniaX", localizacion);
+        usuariosController.agregarLocalizacionUsuario(1, "loyola 30", "almagro");
+//        repoUsuario.guardar(nuevoUsuario);
 
-        CuandoSucede configNotificacion = new CuandoSucede();
-        nuevoUsuario.setConfiguracionNotificacion(configNotificacion);
+//        Entidad nuevaEntidad = new Entidad("EntidadCarga");
+//        nuevaEntidad.setLocalizacion(localizacion);
+//        repoEntidad.guardar(nuevaEntidad);
 
-        AdapterMailSender notificador = new AdapterMailSender();
-        nuevoUsuario.setNotificador(notificador);
-
-        repoUsuario.guardar(nuevoUsuario);
+        // para crear una prestacion hay que tener un Establecimiento y un Servicio
+        // para tener un Establecimiento: nombre, Entidad, Localizacion,
 
 //        Incidente nuevoIncidente = new Incidente();
 //
@@ -195,5 +207,15 @@ public class RepositoryTest {
 //
 //
 //        repoIncidente.guardar(nuevoIncidente);
+    }
+
+    public void crearEstablecimento(String nombre, Integer idEntidad, Integer idLocalizacion) {
+        Entidad entidadEstablecimiento = repoEntidad.buscarPorId(idEntidad);
+        Localizacion entidadLocalizacion = repoLocalizacion.buscarPorId(idLocalizacion);
+        Establecimiento nuevoEstablecimiento = new Establecimiento(nombre, entidadEstablecimiento, entidadLocalizacion);
+        repoEstablecimiento.guardar(nuevoEstablecimiento);
+
+        //Esto tendria que estar dentro de un Establecimiento controller si es que se utiliza
+
     }
 }

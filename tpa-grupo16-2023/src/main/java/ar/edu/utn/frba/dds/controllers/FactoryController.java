@@ -1,9 +1,7 @@
 package ar.edu.utn.frba.dds.controllers;
 
-import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
-import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
-import ar.edu.utn.frba.dds.models.repositorios.RepoPrestacion;
-import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
+import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.validador.Validador;
 
 public class FactoryController {
@@ -14,7 +12,7 @@ public class FactoryController {
             case "incidente": controller = new IncidentesController(new RepoIncidente());
             break;
 
-            case "usuario": controller = new UsuariosController(new RepoUsuario(), new Validador());
+            case "usuario": controller = new UsuariosController(new RepoUsuario(),new RepoLocalidad(), AdapterGeoref.instancia(), new Validador());
             break;
 
             case "prestacion": controller = new PrestacionController(new RepoPrestacion());
