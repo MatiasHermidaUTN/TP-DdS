@@ -15,6 +15,7 @@ import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class Usuario extends Persistente {
     @Column
     private Integer telefono;
 
-    @Transient
+    @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Perfil> perfiles;
 
     @OneToOne(cascade = { CascadeType.ALL})
@@ -80,13 +81,11 @@ public class Usuario extends Persistente {
         this.localizacion = localizacion;
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
-        //RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
     }
     public Usuario() {
         this.perfiles = new ArrayList<>();
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
-        //RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
     }
 
     public Usuario(String mail, String usuario, String contrasenia) {

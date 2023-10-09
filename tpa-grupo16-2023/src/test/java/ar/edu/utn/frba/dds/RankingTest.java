@@ -31,8 +31,8 @@ public class RankingTest {
     RepoIncidenteDeprecado repoIncidente = RepoIncidenteDeprecado.getInstancia();
 
     RepoEntidad repoEntidad2 = new RepoEntidad();
-    RepoEstablecimientos repoEstablecimientos2 = new RepoEstablecimientos();
-    RepoServicios repoServicios2 = new RepoServicios();
+    RepoEstablecimiento repoEstablecimientos2 = new RepoEstablecimiento();
+    //RepoServicios repoServicios2 = new RepoServicios();
     RepoPrestacion repoPrestacion2 = new RepoPrestacion();
     RepoIncidente repoIncidente2 = new RepoIncidente();
 

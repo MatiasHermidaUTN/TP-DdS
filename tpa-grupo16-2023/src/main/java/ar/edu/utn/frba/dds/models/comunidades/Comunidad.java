@@ -48,7 +48,10 @@ public class Comunidad extends Persistente {
     }
 
     public Comunidad() {
-
+        this.miembros = new ArrayList<>();
+        this.serviciosDeComunidad = new ArrayList<>();
+        this.establecimientosDeComunidad = new ArrayList<>();
+        this.incidentes = new ArrayList<>();
     }
 
     public void agregarMiembros(Perfil ... perfiles){

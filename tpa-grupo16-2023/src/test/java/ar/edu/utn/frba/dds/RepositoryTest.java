@@ -35,7 +35,7 @@ public class RepositoryTest {
     RepoLocalizacion repoLocalizacion = new RepoLocalizacion();
     RepoEstablecimiento repoEstablecimiento = new RepoEstablecimiento();
     AdapterGeoref adapterGeoref = AdapterGeoref.instancia();
-    UsuariosController usuariosController = new UsuariosController(repoUsuario, repoLocalidad, adapterGeoref, new Validador());
+    UsuariosController usuariosController = new UsuariosController(repoUsuario, repoLocalidad, repoComunidad, adapterGeoref, new Validador());
     @BeforeEach
     public void initb() {
 

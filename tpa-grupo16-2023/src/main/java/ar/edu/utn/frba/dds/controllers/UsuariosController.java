@@ -1,11 +1,14 @@
 package ar.edu.utn.frba.dds.controllers;
 
-import ar.edu.utn.frba.dds.models.comunidades.Usuario;
+import ar.edu.utn.frba.dds.models.comunidades.*;
+import ar.edu.utn.frba.dds.models.converters.TipoMiembroConverter;
+import ar.edu.utn.frba.dds.models.converters.TipoPerfilConverter;
 import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.localizacion.Localidad;
 import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
+import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
 import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
 import ar.edu.utn.frba.dds.models.repositorios.RepoLocalidad;
 import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
@@ -22,14 +25,16 @@ import java.util.Objects;
 public class UsuariosController {
     private RepoUsuario repoUsuario;
     private RepoLocalidad repoLocalidad;
+    private RepoComunidad repoComunidad;
     private AdapterGeoref adapterGeoref;
     private Validador validador;
 
-    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, AdapterGeoref adapterGeoref, Validador validador) {
+    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, RepoComunidad repoComunidad, AdapterGeoref adapterGeoref, Validador validador) {
         this.repoUsuario = repoUsuario;
         this.validador = validador;
         this.repoLocalidad = repoLocalidad;
         this.adapterGeoref = adapterGeoref;
+        this.repoComunidad = repoComunidad;
     }
 
     public void index(Context context){
@@ -84,6 +89,45 @@ public class UsuariosController {
             Thread.sleep(4000);
             context.redirect("/usuarios/" + user.getId() + "/perfiles");
         }
+    }
+
+    public void mostrar_perfiles(Context context){
+        Map<String, Object> model = new HashMap<>();
+        List<Perfil> perfiles = this.repoUsuario.buscarPorId(Integer.valueOf(context.pathParam("usuario_id"))).getPerfiles();
+        model.put("perfiles", perfiles);
+        model.put("usuario_id",context.pathParam("usuario_id"));
+        context.render("usuarios/perfiles.hbs", model);
+    }
+
+    public void crear_perfil(Context context){
+        Map<String, Object> model = new HashMap<>();
+        model.put("usuario_id",context.pathParam("usuario_id"));
+        model.put("comunidades", this.repoComunidad.buscarTodos());
+        model.put("tipoMiembros", TipoMiembro.values());
+        model.put("tipoPerfiles", TipoPerfil.values());
+        context.render("usuarios/crear_perfil.hbs", model);
+    }
+
+    public void procesar_creacion_perfil(Context context){
+        // Obtengo los inputs del usuario en el formulario
+        String nickname = context.formParam("nickname");
+        TipoPerfil tipoPerfil = TipoPerfilConverter.convertirAObjeto(context.formParam("tipoPerfil"));
+        TipoMiembro tipoMiembro = TipoMiembroConverter.convertirAObjeto(context.formParam("tipoMiembro"));
+        Integer comunidad_id = Integer.valueOf(context.formParam("comunidad"));
+        Comunidad comunidad = this.repoComunidad.buscarPorId(comunidad_id);
+
+        // Los cargo en una nueva instancia de Perfil
+        Perfil nuevoPerfil = new Perfil(nickname, comunidad, tipoPerfil);
+        nuevoPerfil.setTipoMiembro(tipoMiembro);
+
+        // Guardo el Perfil en la base (se lo asigno al usuario, no hay repoPerfil)
+        Usuario usuario = this.repoUsuario.buscarPorId(Integer.valueOf(context.pathParam("usuario_id")));
+        usuario.agregarPerfil(nuevoPerfil);
+        this.repoUsuario.modificar(usuario);
+
+        // Guardo el Perfil en la comunidad
+        comunidad.agregarMiembros(nuevoPerfil);
+        this.repoComunidad.modificar(comunidad);
     }
 
     public void edit(Context context){

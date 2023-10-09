@@ -12,7 +12,7 @@ public class FactoryController {
             case "incidente": controller = new IncidentesController(new RepoIncidente());
             break;
 
-            case "usuario": controller = new UsuariosController(new RepoUsuario(),new RepoLocalidad(), AdapterGeoref.instancia(), new Validador());
+            case "usuario": controller = new UsuariosController(new RepoUsuario(),new RepoLocalidad(), new RepoComunidad(), AdapterGeoref.instancia(), new Validador());
             break;
 
             case "prestacion": controller = new PrestacionController(new RepoPrestacion());

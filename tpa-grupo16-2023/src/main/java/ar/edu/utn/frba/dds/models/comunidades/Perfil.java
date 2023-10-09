@@ -57,4 +57,5 @@ public class Perfil extends Persistente {
                 ", \"usuario\":" + usuario +
                 '}';
     }
+
 }
