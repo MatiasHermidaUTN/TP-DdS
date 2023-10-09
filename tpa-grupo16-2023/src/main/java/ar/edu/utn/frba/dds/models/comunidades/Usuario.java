@@ -39,7 +39,7 @@ public class Usuario extends Persistente {
     @Column
     private Integer telefono;
 
-    @OneToMany(cascade = {CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Perfil> perfiles;
 
     @OneToOne(cascade = { CascadeType.ALL})
