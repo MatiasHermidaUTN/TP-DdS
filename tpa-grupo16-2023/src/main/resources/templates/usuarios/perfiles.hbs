@@ -1,0 +1,34 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Crear Perfil</div>
+                <div class="card-body">
+                    <form method="POST" action="/usuarios/{{usuario_id}}/perfiles">
+                        <div class="mb-3">
+                            <label for="nickname" class="form-label">Nickname</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Ingrese el nickname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipoPerfil" class="form-label">Tipo de Perfil</label>
+                            <input type="text" class="form-control" id="tipoPerfil" name="tipoPerfil" placeholder="Ingrese el tipo de perfil">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipoMiembro" class="form-label">Tipo de Miembro</label>
+                            <input type="text" class="form-control" id="tipoMiembro" name="tipoMiembro" placeholder="Ingrese el tipo de miembro">
+                        </div>
+                        <div class="mb-3">
+                            <label for="comunidad" class="form-label">Comunidad</label>
+                            <select class="form-select" id="comunidad" name="comunidad">
+                                {{#each comunidades}}
+                                    <option value="{{id}}">{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Crear Perfil</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -53,7 +53,7 @@ public class UsuariosController {
         validador.cargarConfig1();
         Resultado resultado = validador.logear(usuario, contrasenia);
         if(resultado.isValor()){
-            crearUsuario(email, usuario, contrasenia);
+            repoUsuario.guardar(new Usuario(email, usuario, contrasenia));
             context.result("El usuario ha sido registrado correctamente");
 //            Thread.sleep(4000);
 //            context.redirect("/login");
@@ -73,7 +73,8 @@ public class UsuariosController {
     public void procesar_login(Context context) throws InterruptedException {
         String usuario = context.formParam("usuario");
         String contrasenia = context.formParam("contrasenia");
-        if(!existeUsuario(usuario, contrasenia)){
+        Usuario user = repoUsuario.buscarPorUsuarioYContrasenia(usuario, contrasenia);
+        if(user == null){
             context.result("No existe el usuario, por favor volve a intentarlo.");
             Thread.sleep(4000);
             //context.redirect("/login");
@@ -81,17 +82,8 @@ public class UsuariosController {
         else{
             context.result("Usuario logeado correctamente.");
             Thread.sleep(4000);
-            //context.redirect("/perfiles_menu");
+            context.redirect("/usuarios/" + user.getId() + "/perfiles");
         }
-    }
-
-    public Boolean existeUsuario(String usuario, String contrasenia){
-        List<Usuario> usuarios = this.repoUsuario.buscarTodos();
-        for(Usuario user : usuarios){
-            if(Objects.equals(user.getUsuario(), usuario) && Objects.equals(user.getContrasenia(), contrasenia))
-                return true;
-        }
-        return false;
     }
 
     public void edit(Context context){
@@ -108,10 +100,6 @@ public class UsuariosController {
 
     public void asignarParametros(Usuario usuario, Context context){
         // TODO
-    }
-
-    public void crearUsuario(String mail, String usuario, String contrasenia) {
-        repoUsuario.guardar(new Usuario(mail, usuario, contrasenia));
     }
 
     public void agregarLocalizacionUsuario(Integer idUsuario, String direccion, String localidad) throws IOException {
