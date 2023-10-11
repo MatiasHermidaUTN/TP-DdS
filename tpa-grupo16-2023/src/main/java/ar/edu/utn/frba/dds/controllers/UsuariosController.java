@@ -82,7 +82,7 @@ public class UsuariosController {
         if(user == null){
             context.result("No existe el usuario, por favor volve a intentarlo.");
             Thread.sleep(4000);
-            //context.redirect("/login");
+            //context.redirect("/login"); si se ejecuta esto, no se muestra el mensaje de error
         }
         else{
             context.result("Usuario logeado correctamente.");
@@ -128,6 +128,8 @@ public class UsuariosController {
         // Guardo el Perfil en la comunidad
         comunidad.agregarMiembros(nuevoPerfil);
         this.repoComunidad.modificar(comunidad);
+
+        context.redirect("/usuarios/" + context.pathParam("usuario_id") +"/perfiles");
     }
 
     public void edit(Context context){

@@ -1,16 +1,26 @@
 {{#partial "contenido" }}
 
-    <h1>Lista de Perfiles</h1>
-    <ul>
+    <h1 class="text-center mt-4">Tus Perfiles</h1>
+
+    <ul class="list-group mt-4">
         {{#each perfiles}}
-            <li>
-                <strong>Nickname:</strong> {{this.nickname}}<br>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1"><strong>Nickname:</strong> {{this.nickname}}</h5>
+                </div>
+                <div>
+                    <a class="btn btn-primary" href="/usuarios/{{usuario_id}}/perfiles/{{this.id}}">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
+                </div>
             </li>
         {{/each}}
     </ul>
 
-    <div align="center">
-        <a class="btn btn-primary" href="/usuarios/{{usuario_id}}/perfiles/crear">Crear perfil</a>
+    <div class="text-center mt-4">
+        <a class="btn btn-primary" href="/usuarios/{{usuario_id}}/perfiles/crear">
+            <i class="fas fa-plus"></i> Crear Perfil
+        </a>
     </div>
 
 {{/partial}}

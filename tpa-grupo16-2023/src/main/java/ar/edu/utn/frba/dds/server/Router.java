@@ -19,6 +19,8 @@ public class Router {
 
             get("comunidades/{id}/incidentes", ((IncidentesController) FactoryController.controller("incidente"))::index);
             get("incidentes/{id}/cerrar", ((IncidentesController) FactoryController.controller("incidente"))::cerrar);
+            get("incidentes/{id}", ((IncidentesController) FactoryController.controller("incidente"))::show);
+            get("incidentes/{id}/editar", ((IncidentesController) FactoryController.controller("incidente"))::edit);
 
             get("register", ((UsuariosController) FactoryController.controller("usuario"))::registrar);
             post("register", ((UsuariosController) FactoryController.controller("usuario"))::guardar_usuario);

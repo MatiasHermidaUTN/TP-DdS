@@ -27,10 +27,7 @@ public class Incidente extends Persistente {
 
     @ManyToOne
     @JoinColumn(name = "comunidad_id", referencedColumnName = "id")
-    private Comunidad comunidad; // esto lo agregue porque no le gustaba al inteliij que use el nombreComunidad
-
-    //@Transient
-    //private String nombreComunidad;
+    private Comunidad comunidad;
 
     @Column
     public String observaciones;

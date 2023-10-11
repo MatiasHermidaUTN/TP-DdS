@@ -1,62 +1,25 @@
+/* Fondo gris oscuro */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #333;
+    background-color: #303030;
     color: #fff;
-    text-align: center;
-    padding: 20px 0;
 }
 
-main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+/* Botones resaltados en azul */
+.btn-primary {
+    background-color: #007BFF;
+    border-color: #007BFF;
 }
 
-.incidentes h2, .crear-incidente h2 {
-    color: #333;
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
 }
 
-.incidentes {
-    margin-bottom: 20px;
+/* Detalles de texto en azul */
+a {
+    color: #007BFF;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.crear-incidente input[type="text"] {
-    width: 70%;
-    padding: 10px;
-    margin-right: 10px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #555;
+a:hover {
+    color: #0056b3;
 }

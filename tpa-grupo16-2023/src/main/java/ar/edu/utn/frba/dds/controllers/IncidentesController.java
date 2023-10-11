@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+
 public class IncidentesController {
     private RepoIncidente repoIncidente;
 
@@ -40,21 +41,24 @@ public class IncidentesController {
     }
 
     public void show(Context context){
-        // TODO
+        Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+        Map<String, Object> model = new HashMap<>();
+        model.put("incidente", incidente);
+        context.render("incidentes/incidente.hbs", model);
     }
 
     public void create(Context context){
         Incidente incidente = null;
         Map<String, Object> model = new HashMap<>();
         model.put("incidente", incidente);
-        context.render("incidentes/incidente.hbs", model);
+        context.render("incidentes/crear_incidente.hbs", model);
     }
 
     public void save(Context context){
         // TODO
     }
 
-    public void edit(Context context){
+    public void edit(Context context) {
         // TODO
     }
 
