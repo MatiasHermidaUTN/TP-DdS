@@ -34,8 +34,9 @@ public class RepositoryTest {
     RepoLocalidad repoLocalidad = new RepoLocalidad();
     RepoLocalizacion repoLocalizacion = new RepoLocalizacion();
     RepoEstablecimiento repoEstablecimiento = new RepoEstablecimiento();
+    RepoPerfil repoPerfil = new RepoPerfil();
     AdapterGeoref adapterGeoref = AdapterGeoref.instancia();
-    UsuariosController usuariosController = new UsuariosController(repoUsuario, repoLocalidad, repoComunidad, adapterGeoref, new Validador());
+    UsuariosController usuariosController = new UsuariosController(repoUsuario, repoLocalidad, repoComunidad, repoPerfil, adapterGeoref, new Validador());
     @BeforeEach
     public void initb() {
 
@@ -136,17 +137,17 @@ public class RepositoryTest {
         System.out.println("Se guarda una Comunidad");
 
         Comunidad comunidadBuscada = repoComunidad.buscarPorId(comunidadAMB.getId());
-        System.out.println("El nombre de la comunidad buscada es: " + comunidadBuscada.getNombre());
+        System.out.println("El nombre de la comunidad.hbs buscada es: " + comunidadBuscada.getNombre());
 
         comunidadBuscada.setNombre("ComunidadABMModificada");
         repoComunidad.modificar(comunidadBuscada);
-        System.out.println("Se modifico una comunidad");
+        System.out.println("Se modifico una comunidad.hbs");
 
         Comunidad comunidadBuscadaModificada = repoComunidad.buscarPorId(comunidadBuscada.getId());
-        System.out.println("El nombre de la comunidad modificada es: "+ comunidadBuscadaModificada.getNombre());
+        System.out.println("El nombre de la comunidad.hbs modificada es: "+ comunidadBuscadaModificada.getNombre());
 
         repoComunidad.eliminar(comunidadBuscada);
-        System.out.println("Se eliminó una comunidad");
+        System.out.println("Se eliminó una comunidad.hbs");
 
         Assertions.assertEquals(null, repoComunidad.buscarPorId(comunidadBuscadaModificada.getId()));
     }

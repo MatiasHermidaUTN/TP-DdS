@@ -6,10 +6,7 @@ import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
-import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
-import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
-import ar.edu.utn.frba.dds.models.repositorios.RepoPrestacion;
-import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoComunidadDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoPrestacionDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoUsuarioDeprecado;
@@ -27,9 +24,11 @@ import java.util.stream.Collectors;
 
 public class IncidentesController {
     private RepoIncidente repoIncidente;
+    private RepoPerfil repoPerfil;
 
-    public IncidentesController(RepoIncidente repoIncidente) {
+    public IncidentesController(RepoIncidente repoIncidente, RepoPerfil repoPerfil) {
         this.repoIncidente = repoIncidente;
+        this.repoPerfil = repoPerfil;
     }
 
     public void index(Context context){

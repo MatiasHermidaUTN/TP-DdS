@@ -51,7 +51,7 @@ public class Perfil extends Persistente {
     public String toString() {
         return "{" +
                 "\"nickname\":\"" + nickname + '\"' +
-//                ", \"comunidad\":" + comunidad +
+//                ", \"comunidad.hbs\":" + comunidad.hbs +
                 ", \"tipoPerfil\":" + tipoPerfil +
                 ", \"tipoMiembro\":" + tipoMiembro +
                 ", \"usuario\":" + usuario +

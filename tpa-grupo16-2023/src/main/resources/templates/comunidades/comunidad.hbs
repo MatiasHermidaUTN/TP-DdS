@@ -1,0 +1,39 @@
+{{#partial "contenido"}}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h1>Comunidad {{comunidad.nombre}}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Grado de Confianza:</strong> {{comunidad.gradoDeConfianza}}</p>
+            <p><strong>Estado de la Comunidad:</strong> {{estadoComunidad}}</p>
+
+            <h3>Miembros de la Comunidad:</h3>
+            <ul>
+                {{#each comunidad.miembros}}
+                    <li>{{this.nickname}}</li>
+                {{/each}}
+            </ul>
+
+            <h3>Servicios de la Comunidad:</h3>
+            <ul>
+                {{#each comunidad.serviciosDeComunidad}}
+                    <li>{{this.nombre}}</li>
+                {{/each}}
+            </ul>
+
+            <h3>Establecimientos de la Comunidad:</h3>
+            <ul>
+                {{#each comunidad.establecimientosDeComunidad}}
+                    <li>{{this.nombre}}</li>
+                {{/each}}
+            </ul>
+
+            <div class="text-center mt-4">
+                <a class="btn btn-primary" href="/comunidades/{{comunidad.id}}/incidentes">
+                    <i class="fas fa-arrow-right"></i> Incidentes
+                </a>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

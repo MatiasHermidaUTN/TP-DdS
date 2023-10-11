@@ -1,0 +1,22 @@
+{{#partial "contenido"}}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h1>Detalle del Perfil</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Nickname:</strong> {{perfil.nickname}}</p>
+            <p><strong>Comunidad:</strong> {{perfil.comunidad.nombre}}</p>
+            <p><strong>Tipo de Perfil:</strong> {{perfil.tipoPerfil}}</p>
+            <p><strong>Tipo de Miembro:</strong> {{perfil.tipoMiembro}}</p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="/comunidades/{{perfil.comunidad.id}}">
+                <i class="fas fa-arrow-right"></i> Acceder a la Comunidad
+            </a>
+            <a class="btn btn-secondary" href="/usuarios/{{usuario_id}}/perfiles">
+                <i class="fas fa-list"></i> Volver a la Lista de Perfiles
+            </a>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

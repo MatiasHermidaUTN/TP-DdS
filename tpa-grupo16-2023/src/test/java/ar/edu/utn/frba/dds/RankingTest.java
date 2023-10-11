@@ -287,10 +287,10 @@ public class RankingTest {
         this.incidenteA3.setEstado(EstadoIncidente.RESUELTO);
         this.incidenteA4.setHorarioApertura(LocalDateTime.of(2023, 7, 30, 12, 0));  //Domingo 30/7 (prestacionA2)(misma semana)
 
-        incidenteA1.setComunidad(comunidadA1);  //comunidad con 1 afectado
-        incidenteA2.setComunidad(comunidadA1);  //comunidad con 1 afectado
-        incidenteA3.setComunidad(comunidadA2);  //comunidad con 1 afectado
-        incidenteA4.setComunidad(comunidadA2);  //comunidad con 1 afectado
+        incidenteA1.setComunidad(comunidadA1);  //comunidad.hbs con 1 afectado
+        incidenteA2.setComunidad(comunidadA1);  //comunidad.hbs con 1 afectado
+        incidenteA3.setComunidad(comunidadA2);  //comunidad.hbs con 1 afectado
+        incidenteA4.setComunidad(comunidadA2);  //comunidad.hbs con 1 afectado
         // 4 afectados * [ (30 + 60) t resolucion de incidentes + 2 incidentes no resueltos * CNF{1.5*60} ] = 1080
 
         //establecimiento B
@@ -312,9 +312,9 @@ public class RankingTest {
         this.incidenteB2.setHorarioApertura(LocalDateTime.of(2023, 7, 25, 12, 0));  //Martes 25/7 (prestacionB2)
         this.incidenteB3.setHorarioApertura(LocalDateTime.of(2023, 7, 18, 12, 0));  //Martes 18/7 (prestacionB2)(en otra semana)
 
-        incidenteB1.setComunidad(comunidadB1);  //comunidad con 1 afectado y 1 observador
-        incidenteB2.setComunidad(comunidadB1);  //comunidad con 1 afectado y 1 observador
-        incidenteB3.setComunidad(comunidadB1);  //comunidad con 1 afectado y 1 observador (pero este es de otra semana)
+        incidenteB1.setComunidad(comunidadB1);  //comunidad.hbs con 1 afectado y 1 observador
+        incidenteB2.setComunidad(comunidadB1);  //comunidad.hbs con 1 afectado y 1 observador
+        incidenteB3.setComunidad(comunidadB1);  //comunidad.hbs con 1 afectado y 1 observador (pero este es de otra semana)
         // 2 afectados * [ (0) t resolucion de incidentes + 2 incidentes no resueltos * CNF{1.5*60} ] = 360
 
 
@@ -333,8 +333,8 @@ public class RankingTest {
         this.incidenteC1.setHorarioApertura(LocalDateTime.of(2023, 7, 24, 12, 0));  //Lunes 24/7 (prestacionC1)
         this.incidenteC2.setHorarioApertura(LocalDateTime.of(2023, 7, 24, 20, 0));  //Lunes 24/7 (prestacionC1)(menos de 24hs del anterior ABIERTO)
 
-        incidenteC1.setComunidad(comunidadC1);  //comunidad con 2 afectados
-        incidenteC2.setComunidad(comunidadC1);  //comunidad con 2 afectados
+        incidenteC1.setComunidad(comunidadC1);  //comunidad.hbs con 2 afectados
+        incidenteC2.setComunidad(comunidadC1);  //comunidad.hbs con 2 afectados
         // 4 afectados * [ (0) t resolucion de incidentes + 2 incidentes no resueltos * CNF{1.5*60} ] = 720
 
         //TODO guardo en el repo

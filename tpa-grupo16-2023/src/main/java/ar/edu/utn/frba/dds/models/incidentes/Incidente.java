@@ -160,7 +160,7 @@ public class Incidente extends Persistente {
     @Override
     public String toString() {
         return "{" +
-                "\"comunidad\":" + comunidad +
+                "\"comunidad.hbs\":" + comunidad +
                 ", \"observaciones\":\"" + observaciones + '\"' +
                 ", \"usuarioApertura\":" + usuarioApertura +
                 ", \"usuarioCierre\":" + usuarioCierre +

@@ -68,7 +68,6 @@ public class Comunidad extends Persistente {
     }
 
     public void eliminarServicio(Servicio servicio){
-
         this.serviciosDeComunidad.remove(servicio);
     }
 

@@ -8,10 +8,7 @@ import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.localizacion.Localidad;
 import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
-import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
-import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
-import ar.edu.utn.frba.dds.models.repositorios.RepoLocalidad;
-import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
+import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.validador.Resultado;
 import ar.edu.utn.frba.dds.models.validador.Validador;
 import io.javalin.http.Context;
@@ -26,24 +23,23 @@ public class UsuariosController {
     private RepoUsuario repoUsuario;
     private RepoLocalidad repoLocalidad;
     private RepoComunidad repoComunidad;
+    private RepoPerfil repoPerfil;
     private AdapterGeoref adapterGeoref;
     private Validador validador;
 
-    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, RepoComunidad repoComunidad, AdapterGeoref adapterGeoref, Validador validador) {
+    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, RepoComunidad repoComunidad, RepoPerfil repoPerfil, AdapterGeoref adapterGeoref, Validador validador) {
         this.repoUsuario = repoUsuario;
         this.validador = validador;
         this.repoLocalidad = repoLocalidad;
         this.adapterGeoref = adapterGeoref;
         this.repoComunidad = repoComunidad;
+        this.repoPerfil = repoPerfil;
     }
 
     public void index(Context context){
         // TODO
     }
 
-    public void show(Context context){
-        // TODO
-    }
 
     public void registrar(Context context){
         Map<String, Object> model = new HashMap<>();
@@ -81,12 +77,16 @@ public class UsuariosController {
         Usuario user = repoUsuario.buscarPorUsuarioYContrasenia(usuario, contrasenia);
         if(user == null){
             context.result("No existe el usuario, por favor volve a intentarlo.");
-            Thread.sleep(4000);
-            //context.redirect("/login"); si se ejecuta esto, no se muestra el mensaje de error
+            //Thread.sleep(4000);
+            context.redirect("/login"); //si se ejecuta esto, no se muestra el mensaje de error
         }
         else{
             context.result("Usuario logeado correctamente.");
-            Thread.sleep(4000);
+            //Thread.sleep(4000);
+
+            // Guardo el id del usuario en una cookie
+            context.cookie("usuario_id", String.valueOf(user.getId()));
+
             context.redirect("/usuarios/" + user.getId() + "/perfiles");
         }
     }
@@ -97,6 +97,16 @@ public class UsuariosController {
         model.put("perfiles", perfiles);
         model.put("usuario_id",context.pathParam("usuario_id"));
         context.render("usuarios/perfiles.hbs", model);
+    }
+
+    public void mostrar_perfil(Context context){
+        String perfil_id = context.pathParam("perfil_id");
+        context.cookie("perfil_id", perfil_id);
+        Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(perfil_id));
+        Map<String, Object> model = new HashMap<>();
+        model.put("perfil", perfil);
+        model.put("usuario_id", context.cookie("usuario_id")); // funciona la cookie :)
+        context.render("usuarios/perfil.hbs", model);
     }
 
     public void crear_perfil(Context context){
@@ -122,10 +132,11 @@ public class UsuariosController {
 
         // Guardo el Perfil en la base (se lo asigno al usuario, no hay repoPerfil)
         Usuario usuario = this.repoUsuario.buscarPorId(Integer.valueOf(context.pathParam("usuario_id")));
+        nuevoPerfil.setUsuario(usuario);
         usuario.agregarPerfil(nuevoPerfil);
         this.repoUsuario.modificar(usuario);
 
-        // Guardo el Perfil en la comunidad
+        // Guardo el Perfil en la comunidad.hbs
         comunidad.agregarMiembros(nuevoPerfil);
         this.repoComunidad.modificar(comunidad);
 

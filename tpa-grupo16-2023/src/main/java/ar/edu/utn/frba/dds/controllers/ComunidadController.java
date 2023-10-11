@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
 import io.javalin.http.Context;
@@ -16,21 +17,23 @@ public class ComunidadController {
     }
 
     public void index(Context context){
-        Map<String, Object> model = new HashMap<>();
-//        List<Incidente> incidentes = this.repoComunidad.buscarPorComunidad(Integer.parseInt(context.pathParam("comunidad_id")));
-
-//        // buscamos el nombre del servicio y del establecimiento
-//        Prestacion prestacion = RepoPrestacion.buscarPorId();
-//
-//        Establecimiento establecimiento = repoEstablecimiento.buscarPorId(prestacion.getEstablecimientoId());
-//        Servicio servicio = repoServicio.buscarPorId(prestacion.getEstablecimientoId())
-
-//        model.put("incidentes", incidentes);
-//        context.render("incidentes/incidentes.hbs", model);
+        // TODO
     }
 
     public void show(Context context){
-        // TODO
+        Comunidad comunidad = this.repoComunidad.buscarPorId(Integer.valueOf(context.pathParam("comunidad_id")));
+        Map<String, Object> model = new HashMap<>();
+        model.put("comunidad", comunidad);
+
+        Boolean activa = comunidad.getActiva();
+        String estadoComunidad = "";
+        if(activa != null && activa)
+            estadoComunidad = "SI";
+        else if(activa != null)
+            estadoComunidad = "NO";
+        model.put("estadoComunidad", estadoComunidad);
+
+        context.render("comunidades/comunidad.hbs", model);
     }
 
     public void create(Context context){
