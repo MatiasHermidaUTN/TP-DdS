@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoComunidadDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoPrestacionDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoUsuarioDeprecado;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import io.javalin.http.Context;
@@ -25,10 +26,26 @@ import java.util.stream.Collectors;
 public class IncidentesController {
     private RepoIncidente repoIncidente;
     private RepoPerfil repoPerfil;
+    private RepoEntidad repoEntidad;
+    private RepoEstablecimiento repoEstablecimiento;
+    private RepoServicio repoServicio;
+    private RepoUsuario repoUsuario;
+    private RepoComunidad repoComunidad;
 
-    public IncidentesController(RepoIncidente repoIncidente, RepoPerfil repoPerfil) {
+    public IncidentesController(RepoIncidente repoIncidente,
+                                RepoPerfil repoPerfil,
+                                RepoEntidad repoEntidad,
+                                RepoEstablecimiento repoEstablecimiento,
+                                RepoServicio repoServicio,
+                                RepoUsuario repoUsuario,
+                                RepoComunidad repoComunidad) {
         this.repoIncidente = repoIncidente;
         this.repoPerfil = repoPerfil;
+        this.repoEntidad = repoEntidad;
+        this.repoServicio = repoServicio;
+        this.repoEstablecimiento = repoEstablecimiento;
+        this.repoUsuario = repoUsuario;
+        this.repoComunidad = repoComunidad;
     }
 
     public void index(Context context){
@@ -46,11 +63,26 @@ public class IncidentesController {
         context.render("incidentes/incidente.hbs", model);
     }
 
-    public void create(Context context){
-        Incidente incidente = null;
+    public void crear(Context context){
         Map<String, Object> model = new HashMap<>();
-        model.put("incidente", incidente);
-        context.render("incidentes/crear_incidente.hbs", model);
+        List<Entidad> entidades = this.repoEntidad.buscarTodos();
+        List<Establecimiento> establecimientos = this.repoEstablecimiento.buscarTodos();
+        List<Servicio> servicios = this.repoServicio.buscarTodos();
+        model.put("entidades", entidades);
+        model.put("establecimientos", establecimientos);
+        model.put("servicios", servicios);
+        context.render("incidentes/crear.hbs", model);
+    }
+
+    public void procesar_creacion(Context context){
+        Perfil perfilApertura = this.repoPerfil.buscarPorId(Integer.valueOf(context.cookie("perfil_id")));
+        Establecimiento establecimiento = this.repoEstablecimiento.buscarPorId(Integer.valueOf(context.formParam("establecimiento")));
+        Servicio servicio = this.repoServicio.buscarPorId(Integer.valueOf(context.formParam("servicio")));
+        String observaciones = context.formParam("observaciones");
+        Incidente incidente = crearIncidenteParaPerfil(establecimiento, servicio, perfilApertura, observaciones);
+        this.repoIncidente.guardar(incidente);
+
+        context.redirect("/comunidades/" + perfilApertura.getComunidad().getId() + "/incidentes");
     }
 
     public void save(Context context){
@@ -66,10 +98,20 @@ public class IncidentesController {
     }
 
     public void cerrar(Context context){
-        // TODO
-        //cerrarEnComunidad(); como saco los parametros necesarios para este metodo ???
-        //repoIncidente.modificar(incidente); aca tengo que ver de donde saco el incidente a cerrar
-        context.redirect("/comunidades/1/incidentes"); // el comunidad_id aca esta hardcodeado, hay que cambiarlo
+        Incidente incidenteACerrar = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+        Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(context.cookie("perfil_id")));
+
+        incidenteACerrar.setUsuarioCierre(this.repoUsuario.buscarPorId(perfil.getUsuario().getId()));
+        incidenteACerrar.setHorarioCierre(LocalDateTime.now());
+        incidenteACerrar.setEstado(EstadoIncidente.RESUELTO);
+
+        // notificar a cada miembro
+        perfil.getComunidad().getMiembros()
+                .forEach(miembro -> miembro.getUsuario().recibirNotificacionDeCierreDeIncidente(incidenteACerrar));
+
+
+        repoIncidente.modificar(incidenteACerrar);
+        context.redirect("/comunidades/" + perfil.getComunidad().getId() + "/incidentes");
     }
 
     public void asignarParametros(Incidente incidente, Context context){
@@ -88,6 +130,7 @@ public class IncidentesController {
             Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
             nuevaPrestacion.agregarIncidente(incidente);
             repoPrestacion.guardar(nuevaPrestacion);
+            incidente.setPrestacion(nuevaPrestacion);
         }
         else {
             Prestacion prestacionDelServicioDelEstablecimiento =  listaPrestacionesDelEstablecimiento.stream()
@@ -98,14 +141,44 @@ public class IncidentesController {
             if(prestacionDelServicioDelEstablecimiento == null){
                 Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
                 nuevaPrestacion.agregarIncidente(incidente);
-                // incidente.setPrestacion(nuevaPrestacion); chequear
+                incidente.setPrestacion(nuevaPrestacion);
                 repoPrestacion.guardar(nuevaPrestacion);
             }
             else {
                 prestacionDelServicioDelEstablecimiento.agregarIncidente(incidente);
+                incidente.setPrestacion(prestacionDelServicioDelEstablecimiento);
             }
         }
     }
+
+    public Incidente crearIncidenteParaPerfil(Establecimiento establecimiento, Servicio servicio, Perfil perfil, String observaciones) {
+
+        Comunidad unaComunidad = perfil.getComunidad();
+        Incidente incidente = new Incidente(establecimiento, unaComunidad.getNombre(), servicio, perfil.getUsuario());
+        incidente.setObservaciones(observaciones);
+        incidente.setComunidad(unaComunidad);
+        unaComunidad.agregarIncidente(incidente);
+
+        crear_o_agregar_prestacion(establecimiento, servicio, incidente);
+
+        // notificar a cada miembro
+        unaComunidad.getMiembros()
+                .forEach(miembro -> miembro.getUsuario().recibirNotificacionDeAperturaDeIncidente(incidente));
+
+        List<Usuario> usuarioList = new RepoUsuario().buscarTodos(); // no se si esta bien
+        usuarioList.stream()
+                .filter(
+                        unUsuario -> unUsuario.getServiciosInteres().contains(servicio) &&
+                                unUsuario.getEntidadesInteres()
+                                        .contains(establecimiento.getEntidad())
+                )
+                // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
+                .forEach(usuario -> usuario.
+                        recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, "Servicio Interes Particular", servicio, perfil.getUsuario())));
+
+        return incidente;
+    }
+
     public void crearIncidente(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura) {
 
         List<Comunidad> comunidades = usuarioApertura.getPerfiles()
@@ -133,21 +206,6 @@ public class IncidentesController {
                 // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
                 .forEach(usuario -> usuario.
                         recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, "Servicio Interes Particular", servicio, usuarioApertura)));
-    }
-
-
-    public void cerrarEnComunidad(Integer incidente_id, Integer usuario_cierre_id, Integer comunidad_id, LocalDateTime horarioCierre) {
-        Incidente incidenteACerrar = repoIncidente.buscarPorId(incidente_id);
-
-        RepoUsuario repoUsuario = new RepoUsuario(); // esto no se si esta bien
-        incidenteACerrar.setUsuarioCierre(repoUsuario.buscarPorId(usuario_cierre_id));
-        incidenteACerrar.setHorarioCierre(LocalDateTime.now());
-        incidenteACerrar.setEstado(EstadoIncidente.RESUELTO);
-
-        // notificar a cada miembro
-        new RepoComunidad().buscarPorId(comunidad_id).getMiembros()
-                .forEach(perfil -> perfil.getUsuario().recibirNotificacionDeCierreDeIncidente(incidenteACerrar));
-
     }
 
 }

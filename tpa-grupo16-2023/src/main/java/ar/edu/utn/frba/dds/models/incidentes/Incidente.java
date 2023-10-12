@@ -74,7 +74,6 @@ public class Incidente extends Persistente {
 
     public Incidente(){
         this.estado = EstadoIncidente.ABIERTO;
-        // this.idIncidente = obtenerID();
     }
 
     public double minutosEntreAperturaYCierre() {

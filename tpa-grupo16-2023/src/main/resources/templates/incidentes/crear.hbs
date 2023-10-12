@@ -1,0 +1,81 @@
+{{#partial "contenido"}}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Crear Incidente</div>
+                    <div class="card-body">
+                        <form method="POST" action="/incidentes/crear">
+
+                            <div class="mb-3">
+                                <label for="entidad" class="form-label">Entidad</label>
+                                <select class="form-select" id="entidad" name="entidad">
+                                    {{#each entidades}}
+                                        <option value="{{id}}">{{nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="establecimiento" class="form-label">Establecimiento</label>
+                                <select class="form-select" id="establecimiento" name="establecimiento">
+                                    {{#each establecimientos}}
+                                        <option value="{{id}}" data-entidad="{{entidadId}}">{{nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="servicio" class="form-label">Servicio</label>
+                                <select class="form-select" id="servicio" name="servicio">
+                                    {{#each servicios}}
+                                        <option value="{{id}}" data-establecimiento="{{establecimientoId}}">{{nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="observaciones" class="form-label">Observaciones</label>
+                                <textarea class="form-control" id="observaciones" name="observaciones" rows="4" placeholder="Ingrese las observaciones"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Crear Incidente</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Evento para filtrar los establecimientos basados en la entidad seleccionada
+            $("#entidad").on("change", function() {
+                var entidadId = $(this).val();
+                $("#establecimiento option").each(function() {
+                    if ($(this).data("entidad") == entidadId || entidadId === "") {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+                $("#establecimiento").val(""); // Reiniciar la selección de establecimiento
+                $("#servicio").empty(); // Limpiar la selección de servicios
+            });
+
+            // Evento para filtrar los servicios basados en el establecimiento seleccionado
+            $("#establecimiento").on("change", function() {
+                var establecimientoId = $(this).val();
+                $("#servicio option").each(function() {
+                    if ($(this).data("establecimiento") == establecimientoId || establecimientoId === "") {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+                $("#servicio").val(""); // Reiniciar la selección de servicio
+            });
+        });
+    </script>
+{{/partial}}
+{{> templates/base }}

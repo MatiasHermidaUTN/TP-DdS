@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.models.comunidades;
 
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.persistencia.Persistente;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class Comunidad extends Persistente {
     private List<Servicio> serviciosDeComunidad;
 
     @ManyToMany
-    private List<Servicio> establecimientosDeComunidad;
+    private List<Establecimiento> establecimientosDeComunidad;
 
     @Transient
     private List<Incidente> incidentes;
