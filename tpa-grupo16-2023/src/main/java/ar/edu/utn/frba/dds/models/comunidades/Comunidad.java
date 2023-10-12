@@ -15,9 +15,9 @@ import java.util.List;
 @Entity
 @Table
 @Getter
+@Setter
 public class Comunidad extends Persistente {
 
-    @Setter
     @Column(name = "comunidad_nombre")
     private String nombre;
 
@@ -98,5 +98,17 @@ public class Comunidad extends Persistente {
                 ", \"gradoDeConfianza\":" + gradoDeConfianza +
                 ", \"activa\":" + activa +
                 '}';
+    }
+
+    public List<Integer> getIdUsuarios() {
+        return this.miembros.stream().map(Perfil::getId).toList();
+    }
+
+    public List<Integer> getIdEstablecimientos() {
+        return this.establecimientosDeComunidad.stream().map(Establecimiento::getId).toList();
+    }
+
+    public List<Integer> getIdServicios() {
+        return this.serviciosDeComunidad.stream().map(Servicio::getId).toList();
     }
 }
