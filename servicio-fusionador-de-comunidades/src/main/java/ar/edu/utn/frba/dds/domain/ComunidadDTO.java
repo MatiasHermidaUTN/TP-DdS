@@ -8,19 +8,19 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Comunidad {
-    private Long id;
+public class ComunidadDTO {
+    private Integer id;
     private String nombre;
-    private List<Long> idUsuarios;
-    private List<Long> idEstablecimientos;
-    private List<Long> idServicios;
+    private List<Integer> idUsuarios;
+    private List<Integer> idEstablecimientos;
+    private List<Integer> idServicios;
     private GradoDeConfianza gradoDeConfianza;
     private Boolean activa;
 
-    public Comunidad() {
-        this.idUsuarios = new ArrayList<Long>();
-        this.idEstablecimientos = new ArrayList<Long>();
-        this.idServicios = new ArrayList<Long>();
+    public ComunidadDTO() {
+        this.idUsuarios = new ArrayList<Integer>();
+        this.idEstablecimientos = new ArrayList<Integer>();
+        this.idServicios = new ArrayList<Integer>();
     }
 
     @Override
@@ -36,3 +36,4 @@ public class Comunidad {
                 '}';
     }
 }
+

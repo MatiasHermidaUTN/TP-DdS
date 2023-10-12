@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class SugeridorDeFusiones {
 
     private Double coincidenciaEnUsuarios = 0.05;
 
-    public List<PropuestaFusion> sugerirFusiones(List<Comunidad> comunidades, List<PropuestaFusion> propuestasFusionesAntiguas) {
-        List<PropuestaFusion> nuevasPropuestas = new ArrayList<>();
+    public List<PropuestaFusionDTO> sugerirFusiones(List<ComunidadDTO> comunidades, List<PropuestaFusionDTO> propuestasFusionesAntiguas) {
+        List<PropuestaFusionDTO> nuevasPropuestas = new ArrayList<>();
 
-        for(Comunidad comunidad1 : comunidades) {
-            for(Comunidad comunidad2 : comunidades) {
+        for(ComunidadDTO comunidad1 : comunidades) {
+            for(ComunidadDTO comunidad2 : comunidades) {
 
                 if (comunidad1.equals(comunidad2)) continue;
 
@@ -31,7 +32,7 @@ public class SugeridorDeFusiones {
                         && !this.estaEnNuevasPropuestas(comunidad2, nuevasPropuestas)
                         && this.esPosibleFusion(comunidad1, comunidad2))
                 {
-                    PropuestaFusion propuesta = new PropuestaFusion();
+                    PropuestaFusionDTO propuesta = new PropuestaFusionDTO();
                     propuesta.setComunidad1(comunidad1);
                     propuesta.setComunidad2(comunidad2);
 
@@ -46,10 +47,10 @@ public class SugeridorDeFusiones {
         return nuevasPropuestas;
     }
 
-    public Boolean propuestaRealizadaRecientemente(PropuestaFusion propuesta, List<PropuestaFusion> propuestasFusionesAntiguas) {
-        List<PropuestaFusion> propuestasRecientes = propuestasFusionesAntiguas
+    public Boolean propuestaRealizadaRecientemente(PropuestaFusionDTO propuesta, List<PropuestaFusionDTO> propuestasFusionesAntiguas) {
+        List<PropuestaFusionDTO> propuestasRecientes = propuestasFusionesAntiguas
                 .stream()
-                .filter(prop -> prop.getFechaPropuestaFusion().isAfter(LocalDate.now().minusMonths(6)))
+                .filter(prop -> prop.getFechaPropuestaFusion().isAfter(LocalDateTime.now().minusMonths(6)))
                 .toList();
 
         return propuestasRecientes
@@ -61,12 +62,12 @@ public class SugeridorDeFusiones {
                                 && prop.getComunidad2().getId().equals(propuesta.getComunidad1().getId())));
     }
 
-    public Boolean estaEnNuevasPropuestas(Comunidad comunidad, List<PropuestaFusion> nuevasPropuestas) {
+    public Boolean estaEnNuevasPropuestas(ComunidadDTO comunidad, List<PropuestaFusionDTO> nuevasPropuestas) {
         return nuevasPropuestas.stream().anyMatch(prop -> prop.getComunidad1().getId().equals(comunidad.getId())
                 || prop.getComunidad2().getId().equals(comunidad.getId()));
     }
 
-    public Boolean esPosibleFusion(Comunidad comunidad1, Comunidad comunidad2) {
+    public Boolean esPosibleFusion(ComunidadDTO comunidad1, ComunidadDTO comunidad2) {
         Boolean b1 = coincideEnEstablecimientos(comunidad1, comunidad2);
         Boolean b2 = coincideEnGradoConfianza(comunidad1, comunidad2);
         Boolean b3 = coincideEnServicios(comunidad1, comunidad2);
@@ -74,8 +75,8 @@ public class SugeridorDeFusiones {
         return b1 && b2 && b3 && b4;
     }
 
-    private Boolean coincideEnEstablecimientos(Comunidad comunidad1, Comunidad comunidad2) {
-        List<Long> listaIdEstablecimientosEnComun = new ArrayList<>();
+    private Boolean coincideEnEstablecimientos(ComunidadDTO comunidad1, ComunidadDTO comunidad2) {
+        List<Integer> listaIdEstablecimientosEnComun = new ArrayList<>();
         listaIdEstablecimientosEnComun.addAll(comunidad1.getIdEstablecimientos());
         listaIdEstablecimientosEnComun.retainAll(comunidad2.getIdEstablecimientos());
 
@@ -88,12 +89,12 @@ public class SugeridorDeFusiones {
         return hayCoincidenciaComunidad1 && hayCoincidenciaComunidad2;
     }
 
-    private Boolean coincideEnGradoConfianza(Comunidad comunidad1, Comunidad comunidad2) {
+    private Boolean coincideEnGradoConfianza(ComunidadDTO comunidad1, ComunidadDTO comunidad2) {
         return comunidad1.getGradoDeConfianza().equals(comunidad2.getGradoDeConfianza());
     }
 
-    private Boolean coincideEnServicios(Comunidad comunidad1, Comunidad comunidad2) {
-        List<Long> listaIdEstablecimientosEnComun = new ArrayList<>();
+    private Boolean coincideEnServicios(ComunidadDTO comunidad1, ComunidadDTO comunidad2) {
+        List<Integer> listaIdEstablecimientosEnComun = new ArrayList<>();
         listaIdEstablecimientosEnComun.addAll(comunidad1.getIdServicios());
         listaIdEstablecimientosEnComun.retainAll(comunidad2.getIdServicios());
 
@@ -106,8 +107,8 @@ public class SugeridorDeFusiones {
         return hayCoincidenciaComunidad1 && hayCoincidenciaComunidad2;
     }
 
-    private Boolean coincideEnUsuarios(Comunidad comunidad1, Comunidad comunidad2) {
-        List<Long> listaIdEstablecimientosEnComun = new ArrayList<>();
+    private Boolean coincideEnUsuarios(ComunidadDTO comunidad1, ComunidadDTO comunidad2) {
+        List<Integer> listaIdEstablecimientosEnComun = new ArrayList<>();
         listaIdEstablecimientosEnComun.addAll(comunidad1.getIdUsuarios());
         listaIdEstablecimientosEnComun.retainAll(comunidad2.getIdUsuarios());
 
