@@ -14,7 +14,7 @@ public class MainWebApp {
 
 
         Integer port = Integer.parseInt(
-                System.getProperty("port", "8080"));
+                System.getProperty("port", "8081"));
         Javalin app = Javalin.create().start(port);
 
         app.post("/api/transaccciones", new ComunidadesController());

@@ -54,4 +54,17 @@ public class PropuestaFusion extends Persistente {
     public void rechazar() {
         this.estado = EstadoPropuestaFusion.RECHAZADA;
     }
+
+    @Override
+    public String toString() {
+        return "PropuestaFusion{" +
+                "comunidad1=" + comunidad1 +
+                ", comunidad2=" + comunidad2 +
+                ", comunidadFusionada=" + comunidadFusionada +
+                ", comunidad1desactivada=" + comunidad1desactivada +
+                ", comunidad2desactivada=" + comunidad2desactivada +
+                ", estado=" + estado +
+                ", fechaDePropuesta=" + fechaDePropuesta +
+                '}';
+    }
 }
