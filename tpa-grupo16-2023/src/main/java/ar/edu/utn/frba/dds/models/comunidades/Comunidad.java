@@ -90,12 +90,13 @@ public class Comunidad extends Persistente {
     @Override
     public String toString() {
         return "{" +
-                "\"nombre\":\"" + nombre + '\"' +
+                "\"id\":" + this.getId() +
+                ", \"nombre\":\"" + nombre + '\"' +
                 ", \"miembros\":" + miembros +
                 ", \"serviciosDeComunidad\":" + serviciosDeComunidad +
                 ", \"establecimientosDeComunidad\":" + establecimientosDeComunidad +
                 ", \"incidentes\":" + incidentes +
-                ", \"gradoDeConfianza\":" + gradoDeConfianza +
+                ", \"gradoDeConfianza\":\"" + gradoDeConfianza + '\"' +
                 ", \"activa\":" + activa +
                 '}';
     }

@@ -13,13 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 public class ComunidadDTO {
-    Integer id;
-    String nombre;
-    List<Integer> idUsuarios;
-    List<Integer> idEstablecimientos;
-    List<Integer> idServicios;
-    GradoDeConfianza gradoDeConfianza;
-    Boolean activa;
+    public Integer id;
+    public String nombre;
+    public List<Integer> idUsuarios;
+    public List<Integer> idEstablecimientos;
+    public List<Integer> idServicios;
+    public GradoDeConfianza gradoDeConfianza;
+    public Boolean activa;
 
 
     public ComunidadDTO(){
@@ -85,5 +85,18 @@ public class ComunidadDTO {
                     .get());
         }
         return servicios;
+    }
+
+    @Override
+    public String toString() {
+        return "ComunidadDTO{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", idUsuarios=" + idUsuarios +
+                ", idEstablecimientos=" + idEstablecimientos +
+                ", idServicios=" + idServicios +
+                ", gradoDeConfianza=" + gradoDeConfianza +
+                ", activa=" + activa +
+                '}';
     }
 }

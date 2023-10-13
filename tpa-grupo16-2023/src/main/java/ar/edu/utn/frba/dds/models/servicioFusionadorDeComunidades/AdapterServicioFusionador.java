@@ -1,8 +1,6 @@
 package ar.edu.utn.frba.dds.models.servicioFusionadorDeComunidades;
 
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
-import ar.edu.utn.frba.dds.models.comunidades.Perfil;
-import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
 import ar.edu.utn.frba.dds.models.servicioFusionadorDeComunidades.Entities.ComunidadDTO;
 import ar.edu.utn.frba.dds.models.servicioFusionadorDeComunidades.Entities.PropuestaFusion;
 import ar.edu.utn.frba.dds.models.servicioFusionadorDeComunidades.Entities.PropuestaFusionDTO;
@@ -38,7 +36,7 @@ public class AdapterServicioFusionador {
 
             comunidadesDTO.add(comunidadDTO);
 
-            System.out.println("comunidadDTO: " + comunidadDTO + "\n");
+//            System.out.println("comunidadDTO: " + comunidadDTO + "\n");
         }
 
         for(PropuestaFusion propuestaFusion : propuestasFusions){
@@ -47,24 +45,26 @@ public class AdapterServicioFusionador {
 
                 propuestasFusionDTO.add(propuestaFusionDTO);
 
-                System.out.println("propuestaFusionDTO: " + propuestaFusionDTO + "\n");
+//                System.out.println("propuestaFusionDTO: " + propuestaFusionDTO + "\n");
             }
         }
 
         transaccion.setComunidades(comunidadesDTO);
         transaccion.setPropuestasFusion(propuestasFusionDTO);
 
-        List<PropuestaFusionDTO> propuestasFusionDTOnuevas = servicioFusionadorRetrofit.sugerirFusiones(transaccion);
+        System.out.println("transaccion: " + transaccion + "\n");
+
+        List<PropuestaFusionDTO> propuestasFusionDTONuevas = servicioFusionadorRetrofit.sugerirFusiones(transaccion);
 
         List<PropuestaFusion> propuestasFusionNuevas = new ArrayList<>();
 
-        for (PropuestaFusionDTO propuestaFusionDTO : propuestasFusionDTOnuevas){
+        for (PropuestaFusionDTO propuestaFusionDTO : propuestasFusionDTONuevas){
             PropuestaFusion propuestaFusion = this.propuestaFusionDTOToPropuestaFusion(propuestaFusionDTO, comunidades);
 
             propuestasFusionNuevas.add(propuestaFusion);
         }
 
-        System.out.println("listPropuestasFusion: " + propuestasFusionNuevas + "\n");
+//        System.out.println("listPropuestasFusion: " + propuestasFusionNuevas + "\n");
 
         return propuestasFusionNuevas;
     }
@@ -74,10 +74,16 @@ public class AdapterServicioFusionador {
 
         propuestaFusionDTO.setComunidad1(this.comunidadToComunidadDTO(propuestaFusion.getComunidad1()));
         propuestaFusionDTO.setComunidad2(this.comunidadToComunidadDTO(propuestaFusion.getComunidad2()));
-        propuestaFusionDTO.setComunidadFusionada(this.comunidadToComunidadDTO(propuestaFusion.getComunidadFusionada()));
-        propuestaFusionDTO.setComunidad1desactivada(this.comunidadToComunidadDTO(propuestaFusion.getComunidad1desactivada()));
-        propuestaFusionDTO.setComunidad2desactivada(this.comunidadToComunidadDTO(propuestaFusion.getComunidad2desactivada()));
-        propuestaFusionDTO.setFechaDePropuesta(propuestaFusion.getFechaDePropuesta());
+
+        if (propuestaFusion.getComunidadFusionada() != null)
+            propuestaFusionDTO.setComunidadFusionada(this.comunidadToComunidadDTO(propuestaFusion.getComunidadFusionada()));
+        if (propuestaFusion.getComunidad1desactivada() != null)
+            propuestaFusionDTO.setComunidad1desactivada(this.comunidadToComunidadDTO(propuestaFusion.getComunidad1desactivada()));
+        if (propuestaFusion.getComunidad2desactivada() != null)
+            propuestaFusionDTO.setComunidad2desactivada(this.comunidadToComunidadDTO(propuestaFusion.getComunidad2desactivada()));
+
+        propuestaFusionDTO.setEstadoPropuestaFusion(propuestaFusion.getEstado());
+        propuestaFusionDTO.setFechaPropuestaFusion(propuestaFusion.getFechaDePropuesta());
 
         return propuestaFusionDTO;
     }
@@ -95,8 +101,8 @@ public class AdapterServicioFusionador {
 
         propuestaFusion.setComunidad1desactivada(this.comunidadDTOToComunidadExistente(propuestaFusionDTO.getComunidad1desactivada(), comunidades));
         propuestaFusion.setComunidad2desactivada(this.comunidadDTOToComunidadExistente(propuestaFusionDTO.getComunidad2desactivada(), comunidades));
-        propuestaFusion.setEstado(propuestaFusionDTO.getEstado());
-        propuestaFusion.setFechaDePropuesta(propuestaFusionDTO.getFechaDePropuesta());
+        propuestaFusion.setEstado(propuestaFusionDTO.getEstadoPropuestaFusion());
+        propuestaFusion.setFechaDePropuesta(propuestaFusionDTO.getFechaPropuestaFusion());
 
         return propuestaFusion;
     }
@@ -104,6 +110,7 @@ public class AdapterServicioFusionador {
     public ComunidadDTO comunidadToComunidadDTO(Comunidad comunidad) {
         ComunidadDTO comunidadDTO = new ComunidadDTO();
 
+        comunidadDTO.setId(comunidad.getId());
         comunidadDTO.setNombre(comunidad.getNombre());
         comunidadDTO.setGradoDeConfianza(comunidad.getGradoDeConfianza());
         comunidadDTO.setActiva(comunidad.getActiva());
@@ -116,7 +123,20 @@ public class AdapterServicioFusionador {
     }
 
     public Comunidad comunidadDTOToComunidadExistente(ComunidadDTO comunidadDTO, List<Comunidad> comunidades) {
-        return comunidades.stream().filter(comunidad1 -> comunidad1.getNombre().equals(comunidadDTO.getNombre())).findFirst().get();
+        Comunidad comunidadDeLista = comunidades.stream().filter(comunidad1 -> comunidad1.getNombre().equals(comunidadDTO.getNombre())).findFirst().get();
+        Comunidad comunidad = new Comunidad();
+
+        comunidad.setId(comunidadDeLista.getId());
+        comunidad.setNombre(comunidadDeLista.getNombre());
+        comunidad.setGradoDeConfianza(comunidadDeLista.getGradoDeConfianza());
+
+        comunidad.setMiembros(comunidadDeLista.getMiembros());
+        comunidad.setEstablecimientosDeComunidad(comunidadDeLista.getEstablecimientosDeComunidad());
+        comunidad.setServiciosDeComunidad(comunidadDeLista.getServiciosDeComunidad());
+
+        comunidad.setActiva(comunidadDTO.getActiva());
+
+        return comunidad;
     }
 
     public Comunidad comunidadDTOToComunidadNoExistente(ComunidadDTO comunidadDTO, Comunidad comunidad1, Comunidad comunidad2) {

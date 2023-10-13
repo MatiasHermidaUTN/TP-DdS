@@ -33,8 +33,6 @@ public class CalcNivelImpactoRetrofit {
         CalcNivelImpactoQuerys calcNivelImpactoQuerys = this.retrofit.create(CalcNivelImpactoQuerys.class);
         Call<List<EntidadesConNivelDeImpacto>> call = calcNivelImpactoQuerys.calcNivImpactoEntidades(entidades);
         Response<List<EntidadesConNivelDeImpacto>> response = call.execute();
-        System.out.println("response: " + response);
-        System.out.println();
         return response.body();
     }
 }

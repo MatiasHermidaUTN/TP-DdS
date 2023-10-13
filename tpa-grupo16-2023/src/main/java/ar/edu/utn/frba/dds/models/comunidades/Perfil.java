@@ -50,10 +50,11 @@ public class Perfil extends Persistente {
     @Override
     public String toString() {
         return "{" +
-                "\"nickname\":\"" + nickname + '\"' +
+                "\"id\":" + this.getId() +
+//                ", \"nickname\":\"" + nickname + '\"' +
 //                ", \"comunidad.hbs\":" + comunidad.hbs +
-                ", \"tipoPerfil\":" + tipoPerfil +
-                ", \"tipoMiembro\":" + tipoMiembro +
+//                ", \"tipoPerfil\":" + tipoPerfil +
+//                ", \"tipoMiembro\":" + tipoMiembro +
                 ", \"usuario\":" + usuario +
                 '}';
     }

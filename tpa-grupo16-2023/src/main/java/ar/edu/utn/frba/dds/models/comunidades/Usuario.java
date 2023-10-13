@@ -155,4 +155,25 @@ public class Usuario extends Persistente {
     public void recibirInformeSemanal(String msjInformeSemanal) {
         configuracionNotificacion.notificarInformeSemanal(msjInformeSemanal, this);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":" + this.getId() +
+//                ", \"email\":\"" + email + '\"' +
+                ", \"usuario\":\"" + usuario + '\"' +
+//                ", \"contrasenia\":\"" + contrasenia + '\"' +
+//                ", \"telefono\":" + telefono +
+//                ", \"perfiles\":" + perfiles +
+//                ", \"localizacion\":" + localizacion +
+//                ", \"entidadesInteres\":" + entidadesInteres +
+//                ", \"serviciosInteres\":" + serviciosInteres +
+//                ", \"tipoUsuario\":" + tipoUsuario +
+//                ", \"configuracionNotificacion\":" + configuracionNotificacion +
+//                ", \"notificador\":" + notificador +
+//                ", \"horarios\":" + horarios +
+//                ", \"incidentesNuevos\":" + incidentesNuevos +
+//                ", \"incidentesConcluidos\":" + incidentesConcluidos +
+                '}';
+    }
 }

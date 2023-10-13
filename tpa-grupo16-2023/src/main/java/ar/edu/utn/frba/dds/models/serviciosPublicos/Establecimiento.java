@@ -62,7 +62,8 @@ public class Establecimiento extends Persistente {
     @Override
     public String toString() {
         return "{" +
-                "\"nombre\":\"" + nombre + '\"' +
+                "\"id\":" + this.getId() +
+                ", \"nombre\":\"" + nombre + '\"' +
                 ", \"entidad\":" + entidad +
                 ", \"localizacion\":" + localizacion +
                 ", \"servicios\":" + servicios +

@@ -50,6 +50,13 @@
       <artifactId>converter-gson</artifactId>
       <version>2.9.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson -->
+    <dependency>
+      <groupId>com.squareup.retrofit2</groupId>
+      <artifactId>converter-jackson</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+
     <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
@@ -125,6 +132,13 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.15.1</version>
+    </dependency>
+
+    <!-- Jackson para JSON para JPA -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>2.13.0</version> <!-- Asegúrate de utilizar la versión más reciente -->
     </dependency>
 
   </dependencies>

@@ -21,15 +21,20 @@ public class ComunidadesController implements Handler {
 
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
+        System.out.println(ctx.body());
         Transaccion transaccion = ctx.bodyAsClass(Transaccion.class);
 
         if (this.checkearDatosDeEntrada(transaccion, ctx)) {
+            System.out.println("Hay errores en los datos de entrada");
+            ctx.result("Hay errores en los datos de entrada");
             ctx.status(HttpStatus.BAD_REQUEST);
             return;// Si hay algun error en los datos de entrada, devuelve true y envia la respuesta HTTP correspondiente
         }
         SugeridorDeFusiones sugeridor = new SugeridorDeFusiones();
 
         List<PropuestaFusionDTO> propuestas = sugeridor.sugerirFusiones(transaccion.getComunidades(), transaccion.getPropuestasFusion());
+
+        System.out.println("propuestas: " + propuestas);
 
         propuestas.stream().forEach(prop -> prop.fusionarComunidades());
 

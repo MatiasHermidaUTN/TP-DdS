@@ -68,7 +68,8 @@ public class Servicio extends Persistente {
     @Override
     public String toString() {
         return "{" +
-                "\"nombre\":\"" + nombre + '\"' +
+                "\"id\":" + this.getId() +
+                ", \"nombre\":\"" + nombre + '\"' +
                 ", \"atributosVariables\":" + atributosVariables +
                 ", \"estado\":" + estado +
                 ", \"registro\":" + registro +
