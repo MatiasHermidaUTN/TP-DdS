@@ -1,9 +1,6 @@
 package ar.edu.utn.frba.dds.server;
 
-import ar.edu.utn.frba.dds.controllers.ComunidadController;
-import ar.edu.utn.frba.dds.controllers.FactoryController;
-import ar.edu.utn.frba.dds.controllers.IncidentesController;
-import ar.edu.utn.frba.dds.controllers.UsuariosController;
+import ar.edu.utn.frba.dds.controllers.*;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -11,7 +8,7 @@ public class Router {
 
     public static void init() {
         Server.app().get("/", ctx -> {
-            ctx.redirect("/register");
+            ctx.redirect("/login");
 
         });
 
@@ -24,6 +21,8 @@ public class Router {
             get("incidentes/{id}/cerrar", ((IncidentesController) FactoryController.controller("incidente"))::cerrar);
             get("incidentes/{id}", ((IncidentesController) FactoryController.controller("incidente"))::show);
             get("incidentes/{id}/editar", ((IncidentesController) FactoryController.controller("incidente"))::edit);
+            //TODO f. Sugerencia de revisión de incidentes
+            get("/incidentesCercanos", ((IncidentesController) FactoryController.controller("incidente"))::incidentesCercanos);
 
             // Registro y Login
             get("register", ((UsuariosController) FactoryController.controller("usuario"))::registrar);
@@ -39,6 +38,15 @@ public class Router {
 
             // Comunidades
             get("/comunidades/{comunidad_id}", ((ComunidadController) FactoryController.controller("comunidad"))::show);
+
+            //rankings
+            //TODO h. Visualización de rankings de incidentes
+            get("/rankings", ((IncidentesController) FactoryController.controller("incidente"))::rankings);
+
+            //carga datos
+            //TODO b. Carga masiva de datos de entidades prestadoras y organismos de control
+            get("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::cargarDatos);
+
         });
     }
 }

@@ -17,6 +17,8 @@ public class FactoryController {
 
             case "comunidad": controller = new ComunidadController(new RepoComunidad());
             break;
+
+            case "cargadorCSV": controller = new CargadorCSVController(new RepoEntidad(), new RepoOrganismoDeControl());
         }
         return controller;
     }

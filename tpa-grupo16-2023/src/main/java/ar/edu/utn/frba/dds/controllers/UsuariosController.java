@@ -55,6 +55,7 @@ public class UsuariosController {
         Resultado resultado = validador.logear(usuario, contrasenia);
         if(resultado.isValor()){
             repoUsuario.guardar(new Usuario(email, usuario, contrasenia));
+<<<<<<< HEAD
             String redirectScript = """
                     <script>
                     window.alert(\"El Usuario ha sido creado correctamente.\");
@@ -63,6 +64,11 @@ public class UsuariosController {
                     """;
 
             context.html(redirectScript);
+=======
+            context.result("El usuario ha sido registrado correctamente");
+//            Thread.sleep(4000);
+            context.redirect("/login");
+>>>>>>> adbeab7da1ea88798a2c8b99d46366e1c473ac70
         }
         else {
             String redirectScript =

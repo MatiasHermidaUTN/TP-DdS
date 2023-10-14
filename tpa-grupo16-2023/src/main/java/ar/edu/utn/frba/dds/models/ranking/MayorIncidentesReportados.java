@@ -1,6 +1,8 @@
 package ar.edu.utn.frba.dds.models.ranking;
 
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
+import ar.edu.utn.frba.dds.models.repositorios.RepoPrestacion;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoEntidadDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoPrestacionDeprecado;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
@@ -11,8 +13,8 @@ import java.util.List;
 public class MayorIncidentesReportados implements GeneradorRanking {
 
     public List<Entidad> generarRanking(LocalDateTime fechaDeSemana) {
-        List<Prestacion> listaDePrestaciones = RepoPrestacionDeprecado.getInstancia().getListaPrestaciones();
-        List<Entidad> listaDeEntidades = RepoEntidadDeprecado.getInstancia().getListaEntidades();
+        List<Prestacion> listaDePrestaciones = new RepoPrestacion().buscarTodos();
+        List<Entidad> listaDeEntidades = new RepoEntidad().buscarTodos();
 
         listaDeEntidades.sort((entidad1, entidad2) -> {
             int cantIncidentesEntidad1 = entidad1.cantIncidentesEnLaSemana(listaDePrestaciones, fechaDeSemana);

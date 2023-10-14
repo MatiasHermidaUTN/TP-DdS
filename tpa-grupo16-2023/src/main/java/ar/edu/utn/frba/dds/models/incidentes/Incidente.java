@@ -63,11 +63,20 @@ public class Incidente extends Persistente {
     @JoinColumn(name = "prestacion_id", referencedColumnName = "id")
     private Prestacion prestacion;
 
-    public Incidente(Establecimiento establecimiento, String nombreComunidad, Servicio servicio, Usuario usuarioApertura) {
+    public Incidente(Establecimiento establecimiento, Comunidad comunidad, Servicio servicio, Usuario usuarioApertura) {
         // this.establecimiento = establecimiento;
-        //this.nombreComunidad = nombreComunidad;
         // this.servicio = servicio;
+        this.comunidad = comunidad;
         this.usuarioApertura = usuarioApertura;
+        this.horarioApertura = LocalDateTime.now();
+        this.estado = EstadoIncidente.ABIERTO;
+    }
+
+    public Incidente(Comunidad comunidad, Usuario usuarioApertura, Prestacion prestacion, String observaciones) {
+        this.comunidad = comunidad;
+        this.usuarioApertura = usuarioApertura;
+        this.prestacion = prestacion;
+        this.observaciones = observaciones;
         this.horarioApertura = LocalDateTime.now();
         this.estado = EstadoIncidente.ABIERTO;
     }
@@ -107,6 +116,7 @@ public class Incidente extends Persistente {
     }
 
     public boolean seCerroEnLaSemanaDeLaFecha(LocalDateTime unaFecha) {
+        if (!this.estaResuelto() || horarioCierre == null) return false;
 
         // Calculate the start of the previous week (Monday at 00:00)
         LocalDateTime inicioDeSemana;

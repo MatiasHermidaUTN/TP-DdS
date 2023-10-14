@@ -3,8 +3,10 @@ package ar.edu.utn.frba.dds.models.calculadorImpactoDeIncidentes;
 import ar.edu.utn.frba.dds.models.calculadorImpactoDeIncidentes.entities.EntidadesConNivelDeImpacto;
 import ar.edu.utn.frba.dds.models.calculadorImpactoDeIncidentes.entities.EntityDTO;
 import ar.edu.utn.frba.dds.models.calculadorImpactoDeIncidentes.entities.IncidentDTO;
+import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class AdapterCalcNivImpacto {
         for(Entidad entidad : entidades){
             // obtengo las prestaciones de la entidad
             List<Prestacion> prestacionesDeEntidad = prestaciones.stream().
-                    filter(prestacion -> prestacion.getEstablecimiento().getEntidad().equals(entidad)).
+                    filter(prestacion -> prestacion.getEstablecimiento().getEntidad().getId().equals(entidad.getId())).
                     toList();
 
             // genero la EntityDTO
@@ -42,14 +44,14 @@ public class AdapterCalcNivImpacto {
             entidadesDTO.add(entidadDTO);
         }
 
-        System.out.println("entidadesDTO: " + entidadesDTO);
-        System.out.println();
+//        System.out.println("entidadesDTO: " + entidadesDTO);
+//        System.out.println();
 
         //CONSULTA A LA API
         List<EntidadesConNivelDeImpacto> listEntidadesNivImpacto = calcNivelImpactoRetrofit.calcNivImpactoEntidades(entidadesDTO);
 
-        System.out.println("listEntidadesNivImpacto: " + listEntidadesNivImpacto);
-        System.out.println();
+//        System.out.println("listEntidadesNivImpacto: " + listEntidadesNivImpacto);
+//        System.out.println();
 
         List<Entidad> entidadesRankeadas = new ArrayList<>();
         for (EntidadesConNivelDeImpacto entidadConNivelDeImpacto : listEntidadesNivImpacto){
@@ -74,13 +76,16 @@ public class AdapterCalcNivImpacto {
         Integer miembrosAfectados = 0;
         List<IncidentDTO> incidentDTOs = new ArrayList<>();
 
-        for (Prestacion prestacion : prestacionesDeEntidad){
-            // obtengo los incidentes de la semana de la entidad
-            List<Incidente> incidentesDeLaSemana = prestacion.getIncidentes().stream().
-                    filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(fechaDeSemana)).
-                    toList();
+        List<Incidente> todosLosIncidentes = new RepoIncidente().buscarTodos();
+        List<Incidente> incidentesDeLaSemana = todosLosIncidentes.stream().
+                filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(fechaDeSemana)).
+                toList();
 
-            for (Incidente incidente : incidentesDeLaSemana){
+        for (Prestacion prestacion : prestacionesDeEntidad){
+            List<Incidente> incidentesDeLaPrestacion = incidentesDeLaSemana.stream().
+                    filter(incidente -> incidente.getPrestacion().getId().equals(prestacion.getId())).toList();
+
+            for (Incidente incidente : incidentesDeLaPrestacion){
                 // sumo los miembros afectados de los incidentes de la semana
                 miembrosAfectados += incidente.getMiembrosAfectados();
 

@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.models.ranking;
 
+import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoEntidadDeprecado;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public class MayorPromedioCierre implements GeneradorRanking {
 
     public List<Entidad> generarRanking(LocalDateTime fechaDeSemana) {
-        List<Entidad> listaDeEntidades = RepoEntidadDeprecado.getInstancia().getListaEntidades();
+        List<Entidad> listaDeEntidades = new RepoEntidad().buscarTodos();
 
         listaDeEntidades.sort((entidad1, entidad2) -> {
             double promedioCierreEntidad1 = entidad1.getPromedioCierreRanking(fechaDeSemana);

@@ -17,15 +17,13 @@ import java.util.List;
 public class MayorImpactoProblematicas implements GeneradorRanking {
 
     public List<Entidad> generarRanking(LocalDateTime fechaDeSemana) {
-//        List<Entidad> listaDeEntidades = new RepoEntidad().buscarTodos();
-//        List<Prestacion> listaDePrestaciones = new RepoPrestacion().buscarTodos();
-        List<Entidad> listaDeEntidades = RepoEntidadDeprecado.getInstancia().getListaEntidades();
-        List<Prestacion> listaDePrestaciones = RepoPrestacionDeprecado.getInstancia().getListaPrestaciones();
+        List<Entidad> listaDeEntidades = new RepoEntidad().buscarTodos();
+        List<Prestacion> listaDePrestaciones = new RepoPrestacion().buscarTodos();
 
-        System.out.println("entidades del repo:" + listaDeEntidades);
-        System.out.println();
-        System.out.println("prestaciones del repo:" + listaDePrestaciones);
-        System.out.println();
+//        System.out.println("entidades del repo:" + listaDeEntidades);
+//        System.out.println();
+//        System.out.println("prestaciones del repo:" + listaDePrestaciones);
+//        System.out.println();
 
         List<Entidad> entidadesRankeadas = null;
         try {
@@ -36,8 +34,8 @@ public class MayorImpactoProblematicas implements GeneradorRanking {
         }
 
         entidadesRankeadas.sort((entidad1, entidad2) -> -1);
-        System.out.println("entidadesRankeadas: " + entidadesRankeadas);
-        System.out.println();
+//        System.out.println("entidadesRankeadas: " + entidadesRankeadas);
+//        System.out.println();
 
         return entidadesRankeadas;
     }
