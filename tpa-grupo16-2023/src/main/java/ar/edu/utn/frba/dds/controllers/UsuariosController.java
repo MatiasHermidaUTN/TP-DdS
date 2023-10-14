@@ -55,14 +55,20 @@ public class UsuariosController {
         Resultado resultado = validador.logear(usuario, contrasenia);
         if(resultado.isValor()){
             repoUsuario.guardar(new Usuario(email, usuario, contrasenia));
-            context.result("El usuario ha sido registrado correctamente");
-//            Thread.sleep(4000);
-//            context.redirect("/login");
+            String redirectScript = """
+                    <script>
+                    window.alert(\"El Usuario ha sido creado correctamente.\");
+                    setTimeout(function() { window.location.href = '/login'; }, 0);
+                    </script>
+                    """;
+
+            context.html(redirectScript);
         }
         else {
-            context.result(resultado.getMensajeError());
-//            Thread.sleep(4000);
-//            context.redirect("/register");
+            String redirectScript =
+                    "<script> window.alert(\"" + resultado.getMensajeError() + ".\");" +
+                    "setTimeout(function() { window.location.href = '/register'; }, 0); </script>";
+            context.html(redirectScript);
         }
     }
 
@@ -76,18 +82,30 @@ public class UsuariosController {
         String contrasenia = context.formParam("contrasenia");
         Usuario user = repoUsuario.buscarPorUsuarioYContrasenia(usuario, contrasenia);
         if(user == null){
-            context.result("No existe el usuario, por favor volve a intentarlo.");
+//            context.result("No existe el usuario, por favor volve a intentarlo.");
             //Thread.sleep(4000);
-            context.redirect("/login"); //si se ejecuta esto, no se muestra el mensaje de error
+//            context.redirect("/login"); //si se ejecuta esto, no se muestra el mensaje de error
+            String redirectScript = """
+                    <script>
+                    window.alert(\"No existe el usuario, por favor volve a intentarlo.\");
+                    setTimeout(function() { window.location.href = '/login'; }, 0);
+                    </script>
+                    """;
+
+            context.html(redirectScript);
         }
         else{
-            context.result("Usuario logeado correctamente.");
+//            context.result("Usuario logeado correctamente.");
             //Thread.sleep(4000);
 
             // Guardo el id del usuario en una cookie
             context.cookie("usuario_id", String.valueOf(user.getId()));
-
-            context.redirect("/usuarios/" + user.getId() + "/perfiles");
+            String redirectScript = """
+                    <script>
+                    window.alert(\"Usuario logeado correctamente.\");
+                    """ +
+                    "setTimeout(function() { window.location.href = '/usuarios/"+ user.getId() +"/perfiles'; }, 0); </script>";
+            context.html(redirectScript);
         }
     }
 
