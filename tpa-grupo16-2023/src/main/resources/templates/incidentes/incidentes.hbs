@@ -7,6 +7,7 @@
                 <th>Id Incidente</th>
                 <th>Servicio</th>
                 <th>Establecimiento</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
             </thead>
@@ -16,6 +17,7 @@
                     <td>{{this.id}}</td>
                     <td>{{this.getServicioNombre}}</td>
                     <td>{{this.getEstablecimientoNombre}}</td>
+                    <td>{{this.getEstado}}</td>
                     <td>
                         <a class="btn btn-primary" href="/incidentes/{{this.id}}">
                             <i class="fas fa-search"></i> Ver

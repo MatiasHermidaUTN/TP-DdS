@@ -39,7 +39,7 @@ public class NewIncidentsControllerTest {
                 .map(perfil -> perfil.getComunidad()).toList();
 
         for(Comunidad unaComunidad : comunidades) {
-            Incidente incidente = new Incidente(establecimiento, unaComunidad.getNombre(), servicio, usuarioApertura);
+            Incidente incidente = new Incidente(establecimiento, unaComunidad, servicio, usuarioApertura);
             unaComunidad.agregarIncidente(incidente);
             crear_o_agregar_prestacion(establecimiento, servicio, incidente);
             
@@ -57,7 +57,7 @@ public class NewIncidentsControllerTest {
                 )
                 // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
                 .forEach(usuario -> usuario.
-                        recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, "Servicio Interes Particular", servicio, usuarioApertura)));
+                        recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, new Comunidad("Servicio Interes Particular"), servicio, usuarioApertura)));
     }
 
     public void crear_o_agregar_prestacion(Establecimiento establecimiento_a_buscar, Servicio servicio_a_buscar, Incidente incidente){

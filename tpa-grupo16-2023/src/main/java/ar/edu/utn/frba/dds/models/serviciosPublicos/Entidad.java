@@ -6,6 +6,7 @@ import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.models.persistencia.Persistente;
+import ar.edu.utn.frba.dds.models.repositorios.RepoIncidente;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoIncidenteDeprecado;
 import lombok.Getter;
 import lombok.Setter;
@@ -77,12 +78,17 @@ public class Entidad extends Persistente {
     public void avisar_a_usuarios() {}
 
     public double getPromedioCierreRanking(LocalDateTime fechaDeSemana) {
-        List<Incidente> incidentes = RepoIncidenteDeprecado.getInstancia().getListaIncidentes().stream()
+        List<Incidente> todosLosIncidentes = new RepoIncidente().buscarTodos();
+        List<Incidente> incidentesDeEntidad = todosLosIncidentes.stream()
                 .filter(unIncidete -> unIncidete.seOriginoEnEntidad(this))
+                .toList();
+        List<Incidente> incidentesCerrados = incidentesDeEntidad.stream()
                 .filter(incidente -> incidente.seCerroEnLaSemanaDeLaFecha(fechaDeSemana))
                 .toList();
 
-        return incidentes.stream().mapToDouble(incidente -> incidente.minutosEntreAperturaYCierre()).sum() / incidentes.size();
+        if (incidentesCerrados.isEmpty()) return 0;
+
+        return incidentesCerrados.stream().mapToDouble(incidente -> incidente.minutosEntreAperturaYCierre()).sum() / incidentesCerrados.size();
     }
 
     public int cantIncidentesEnLaSemana(List<Prestacion> listaDePrestacionesGlobal, LocalDateTime fechaDeSemana) {
@@ -90,24 +96,29 @@ public class Entidad extends Persistente {
         List<Prestacion> prestacionesDeEntidad = listaDePrestacionesGlobal.stream().
                 filter(prestacion -> prestacion.getEstablecimiento().getEntidad().equals(this)).toList();
 
+        List<Incidente> todosLosIncidentes = new RepoIncidente().buscarTodos();
+        List<Incidente> incidentesDeLaSemana = todosLosIncidentes.stream().
+            filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(fechaDeSemana)).
+            toList();
+
         Integer cantidadIncidentesNoRepetidosDeLaSemana = 0;
 
         // Recorremos la lista de prestaciones con los incidentes que se abrieron en la ultima semana
         for (Prestacion prestacion : prestacionesDeEntidad) {
-            List<Incidente> incidentesDeLaSemana = prestacion.getIncidentes().stream().
-                filter(incidente -> incidente.seReportoEnLaSemanaDeLaFecha(fechaDeSemana)).
-                toList();
+            // Filtramos los incidentes que se abrieron en la ultima semana y que corresponden a la prestacion actual
+            List<Incidente> incidentesDeLaPrestacion = incidentesDeLaSemana.stream().
+                    filter(incidente -> incidente.getPrestacion().getId().equals(prestacion.getId())).toList();
 
-            while (incidentesDeLaSemana.size() > 0) {
-                Incidente primerIncidente = incidentesDeLaSemana.get(0);
+            while (incidentesDeLaPrestacion.size() > 0) {
+                Incidente primerIncidente = incidentesDeLaPrestacion.get(0);
 
                 cantidadIncidentesNoRepetidosDeLaSemana++;
-                incidentesDeLaSemana = incidentesDeLaSemana.stream().
+                incidentesDeLaPrestacion = incidentesDeLaPrestacion.stream().
                         filter(otroIncidente -> !otroIncidente.equals(primerIncidente)).toList();
 
-                if (primerIncidente.getEstado().equals(EstadoIncidente.RESUELTO)) continue;
+                if (primerIncidente.estaResuelto()) continue;
 
-                incidentesDeLaSemana = incidentesDeLaSemana.stream().filter(otroIncidente ->
+                incidentesDeLaPrestacion = incidentesDeLaPrestacion.stream().filter(otroIncidente ->
                         Duration.between(primerIncidente.getHorarioApertura(), otroIncidente.getHorarioApertura()).toHours() > 24).
                         toList();
             }
