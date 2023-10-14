@@ -28,9 +28,9 @@ public class ComunidadController {
         Boolean activa = comunidad.getActiva();
         String estadoComunidad = "";
         if(activa != null && activa)
-            estadoComunidad = "SI";
+            estadoComunidad = "ACTIVA";
         else if(activa != null)
-            estadoComunidad = "NO";
+            estadoComunidad = "NO ACTIVA";
         model.put("estadoComunidad", estadoComunidad);
 
         context.render("comunidades/comunidad.hbs", model);
