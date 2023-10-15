@@ -20,8 +20,57 @@ public class LectorCSV {
 
         try {
             // Abre el archivo de texto para leerlo
-
             FileReader archivo = new FileReader(rutaArchivo);
+
+            // Crea un bufferedReader para mejorar el rendimiento de la lectura
+            BufferedReader buffer = new BufferedReader(archivo);
+
+            String linea = buffer.readLine();
+            linea = buffer.readLine();
+
+            // Lee cada línea del archivo
+            while (linea != null) {
+
+                String[] celdas = linea.split(",");
+
+                // mapea todos los atributos a las variables temporales
+                nombre = celdas[1];
+
+                // instancia la clase correspondiente
+                if(Objects.equals(celdas[0], "entidad")){
+                    datosCSV.agregarEntidad(new Entidad(nombre));
+                } else if (Objects.equals(celdas[0], "organismo")) {
+                    datosCSV.agregarOrganismo(new OrganismoDeControl(nombre));
+                }
+                else
+                    System.out.print("No corresponde el tipo. ");
+
+                linea = buffer.readLine();
+            }
+
+            // Cierra el archivo y el buffer
+            buffer.close();
+            archivo.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+        return datosCSV;
+    }
+
+    public DatosCSV leerCSV(String path) throws Exception {
+
+        try {
+            FileReader archivo;
+            // Abre el archivo de texto para leerlo
+
+            if(path.isEmpty()){
+                archivo = new FileReader(rutaArchivo);
+            } else {
+                archivo = new FileReader(path);
+            }
+
 
             // Crea un bufferedReader para mejorar el rendimiento de la lectura
             BufferedReader buffer = new BufferedReader(archivo);

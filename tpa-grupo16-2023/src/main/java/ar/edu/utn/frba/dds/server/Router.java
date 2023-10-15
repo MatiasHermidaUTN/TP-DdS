@@ -45,7 +45,8 @@ public class Router {
 
             //carga datos
             //TODO b. Carga masiva de datos de entidades prestadoras y organismos de control
-            get("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::cargarDatos);
+            get("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::index);
+            post("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::cargarDatos);
 
         });
     }
