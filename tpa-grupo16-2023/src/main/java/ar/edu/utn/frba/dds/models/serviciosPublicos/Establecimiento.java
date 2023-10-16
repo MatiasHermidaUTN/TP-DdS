@@ -18,11 +18,11 @@ public class Establecimiento extends Persistente {
     @Column
     private String nombre;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL})
     @JoinColumn(name = "entidad_id", referencedColumnName = "id")
     private Entidad entidad;
 
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.ALL})
     @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     private Localizacion localizacion;
 
