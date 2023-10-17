@@ -29,12 +29,13 @@ public class Router {
             post("register", ((UsuariosController) FactoryController.controller("usuario"))::guardar_usuario);
             get("login", ((UsuariosController) FactoryController.controller("usuario"))::logear);
             post("login", ((UsuariosController) FactoryController.controller("usuario"))::procesar_login);
+            post("logout", ((UsuariosController) FactoryController.controller("usuario"))::logout);
 
             // Perfiles
-            get("/usuarios/{usuario_id}/perfiles", ((UsuariosController) FactoryController.controller("usuario"))::mostrar_perfiles);
-            get("/usuarios/{usuario_id}/perfiles/crear", ((UsuariosController) FactoryController.controller("usuario"))::crear_perfil);
-            post("/usuarios/{usuario_id}/perfiles/crear", ((UsuariosController) FactoryController.controller("usuario"))::procesar_creacion_perfil);
-            get("/usuarios/{usuario_id}/perfiles/{perfil_id}", ((UsuariosController) FactoryController.controller("usuario"))::mostrar_perfil);
+            get("/usuarios/perfiles", ((UsuariosController) FactoryController.controller("usuario"))::mostrar_perfiles);
+            get("/usuarios/perfiles/crear", ((UsuariosController) FactoryController.controller("usuario"))::crear_perfil);
+            post("/usuarios/perfiles/crear", ((UsuariosController) FactoryController.controller("usuario"))::procesar_creacion_perfil);
+            get("/usuarios/perfiles/{perfil_id}", ((UsuariosController) FactoryController.controller("usuario"))::mostrar_perfil);
 
             // Comunidades
             get("/comunidades/{comunidad_id}", ((ComunidadController) FactoryController.controller("comunidad"))::show);
@@ -52,6 +53,9 @@ public class Router {
             get("/entidades", ((EntidadesController) FactoryController.controller("entidades"))::entidades); // NO SE USA
             get("/establecimientos", ((EntidadesController) FactoryController.controller("entidades"))::establecimientos); // Pueden filtrarse por entidad con query param
             get("/servicios", ((EntidadesController) FactoryController.controller("entidades"))::servicios); // Pueden filtrarse por establecimiento con query param
+
+            // solo para probar templates
+            get("/hola/prueba", ((IncidentesController) FactoryController.controller("incidente"))::prueba);
 
         });
     }

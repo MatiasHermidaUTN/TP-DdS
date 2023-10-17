@@ -6,8 +6,8 @@ public class TipoMiembroConverter {
     public static String convertirAString(TipoMiembro tipoMiembro) {
         String tipo = null;
         switch (tipoMiembro){
-            case AFECTADO: tipo = "AFECTADO";
-            case OBSERVADOR: tipo = "OBSERVADOR";
+            case AFECTADO: tipo = "AFECTADO"; break;
+            case OBSERVADOR: tipo = "OBSERVADOR"; break;
         }
         return tipo;
     }
@@ -15,8 +15,8 @@ public class TipoMiembroConverter {
     public static TipoMiembro convertirAObjeto(String s) {
         TipoMiembro tipo = null;
         switch (s){
-            case "AFECTADO": tipo = TipoMiembro.AFECTADO;
-            case "OBSERVADOR": tipo = TipoMiembro.OBSERVADOR;
+            case "AFECTADO": tipo = TipoMiembro.AFECTADO; break;
+            case "OBSERVADOR": tipo = TipoMiembro.OBSERVADOR; break;
         }
         return tipo;
     }

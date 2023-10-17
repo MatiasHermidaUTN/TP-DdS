@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header">Crear Perfil</div>
                     <div class="card-body">
-                        <form method="POST" action="/usuarios/{{usuario_id}}/perfiles/crear">
+                        <form method="POST" action="/usuarios/perfiles/crear">
                             <div class="mb-3">
                                 <label for="nickname" class="form-label">Nickname</label>
                                 <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Ingrese el nickname">
@@ -35,7 +35,7 @@
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Crear Perfil</button>
-                            <a class="btn btn-primary" href="/usuarios/{{usuario_id}}/perfiles"> Volver</a>
+                            <a class="btn btn-primary" href="/usuarios/perfiles"> Volver</a>
                         </form>
                     </div>
                 </div>

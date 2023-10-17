@@ -59,6 +59,11 @@ public class IncidentesController {
         context.render("incidentes/incidentes.hbs", model);
     }
 
+    public void prueba(Context context) {
+        Map<String, Object> model = new HashMap<>();
+        context.render("template_de_prueba.hbs", model);
+    }
+
     public void show(Context context){
         Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
         Map<String, Object> model = new HashMap<>();

@@ -104,36 +104,42 @@ public class UsuariosController {
                     <script>
                     window.alert(\"Usuario logeado correctamente.\");
                     """ +
-                    "setTimeout(function() { window.location.href = '/usuarios/"+ user.getId() +"/perfiles'; }, 0); </script>";
+                    "setTimeout(function() { window.location.href = '/usuarios/perfiles'; }, 0); </script>";
             context.html(redirectScript);
         }
     }
 
     public void mostrar_perfiles(Context context){
-        Map<String, Object> model = new HashMap<>();
-        List<Perfil> perfiles = this.repoUsuario.buscarPorId(Integer.valueOf(context.pathParam("usuario_id"))).getPerfiles();
-        model.put("perfiles", perfiles);
-        model.put("usuario_id",context.pathParam("usuario_id"));
-        context.render("usuarios/perfiles.hbs", model);
+        if(this.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            List<Perfil> perfiles = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id"))).getPerfiles();
+            model.put("perfiles", perfiles);
+            model.put("usuario_id", context.cookie("usuario_id"));
+            context.render("usuarios/perfiles.hbs", model);
+        }
     }
 
     public void mostrar_perfil(Context context){
-        String perfil_id = context.pathParam("perfil_id");
-        context.cookie("perfil_id", perfil_id);
-        Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(perfil_id));
-        Map<String, Object> model = new HashMap<>();
-        model.put("perfil", perfil);
-        model.put("usuario_id", context.cookie("usuario_id")); // funciona la cookie :)
-        context.render("usuarios/perfil.hbs", model);
+        if(this.comprobarLogueo(context)) {
+            String perfil_id = context.pathParam("perfil_id");
+            context.cookie("perfil_id", perfil_id);
+            Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(perfil_id));
+            Map<String, Object> model = new HashMap<>();
+            model.put("perfil", perfil);
+            model.put("usuario_id", context.cookie("usuario_id")); // funciona la cookie :)
+            context.render("usuarios/perfil.hbs", model);
+        }
     }
 
     public void crear_perfil(Context context){
-        Map<String, Object> model = new HashMap<>();
-        model.put("usuario_id",context.pathParam("usuario_id"));
-        model.put("comunidades", this.repoComunidad.buscarTodos());
-        model.put("tipoMiembros", TipoMiembro.values());
-        model.put("tipoPerfiles", TipoPerfil.values());
-        context.render("usuarios/crear_perfil.hbs", model);
+        if(this.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            model.put("usuario_id", context.cookie("usuario_id"));
+            model.put("comunidades", this.repoComunidad.buscarTodos());
+            model.put("tipoMiembros", TipoMiembro.values());
+            model.put("tipoPerfiles", TipoPerfil.values());
+            context.render("usuarios/crear_perfil.hbs", model);
+        }
     }
 
     public void procesar_creacion_perfil(Context context){
@@ -149,7 +155,7 @@ public class UsuariosController {
         nuevoPerfil.setTipoMiembro(tipoMiembro);
 
         // Guardo el Perfil en la base (se lo asigno al usuario, no hay repoPerfil)
-        Usuario usuario = this.repoUsuario.buscarPorId(Integer.valueOf(context.pathParam("usuario_id")));
+        Usuario usuario = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
         nuevoPerfil.setUsuario(usuario);
         usuario.agregarPerfil(nuevoPerfil);
         this.repoUsuario.modificar(usuario);
@@ -158,7 +164,7 @@ public class UsuariosController {
         comunidad.agregarMiembros(nuevoPerfil);
         this.repoComunidad.modificar(comunidad);
 
-        context.redirect("/usuarios/" + context.pathParam("usuario_id") +"/perfiles");
+        context.redirect("/usuarios/perfiles");
     }
 
     public void edit(Context context){
@@ -188,5 +194,22 @@ public class UsuariosController {
         usuario.setLocalizacion(localizacion);
 
         repoUsuario.modificar(usuario);
+    }
+
+    public void logout(Context context) {
+        context.removeCookie("usuario_id");
+        context.removeCookie("perfil_id");
+        context.redirect("/login");
+    }
+
+    public Boolean comprobarLogueo(Context context) {
+        if(context.cookie("usuario_id") == null) {
+            String hayQueLoguearse = "<script> window.alert(\"Por favor, logueese primero.\");"
+                    + "setTimeout(function() { window.location.href = '/login'; }, 0); </script>";
+            context.html(hayQueLoguearse);
+            return false;
+        } else {
+            return true;
+        }
     }
 }

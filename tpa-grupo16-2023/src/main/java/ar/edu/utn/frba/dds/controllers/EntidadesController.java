@@ -11,7 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EntidadesController {
 

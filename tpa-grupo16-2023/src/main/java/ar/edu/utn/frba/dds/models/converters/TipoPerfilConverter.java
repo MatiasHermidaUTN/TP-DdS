@@ -10,8 +10,8 @@ public class TipoPerfilConverter {
     public static String convertirAString(TipoPerfil tipoPerfil) {
         String tipo = null;
         switch (tipoPerfil){
-            case ADMIN: tipo = "ADMIN";
-            case NORMAL: tipo = "NORMAL";
+            case ADMIN: tipo = "ADMIN"; break;
+            case NORMAL: tipo = "NORMAL"; break;
         }
         return tipo;
     }
@@ -19,8 +19,8 @@ public class TipoPerfilConverter {
     public static TipoPerfil convertirAObjeto(String s) {
         TipoPerfil tipo = null;
         switch (s){
-            case "NORMAL": tipo = TipoPerfil.NORMAL;
-            case "ADMIN": tipo = TipoPerfil.ADMIN;
+            case "NORMAL": tipo = TipoPerfil.NORMAL; break;
+            case "ADMIN": tipo = TipoPerfil.ADMIN; break;
         }
         return tipo;
     }

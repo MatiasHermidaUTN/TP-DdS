@@ -23,3 +23,33 @@ a {
 a:hover {
     color: #0056b3;
 }
+
+/* Header */
+.header {
+    padding: 15px;
+    background-color: blue;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.btn-logout {
+    background-color: #ED3D07;
+    border-color: #ED3D07;
+}
+
+.btn-logout:hover {
+    background-color: #C92A0E;
+    border-color: #C92A0E;
+}
+
+.btn-home {
+    background-color: #0bb582;
+    border-color: #0bb582;
+}
+
+.btn-home:hover {
+    background-color: #0f8a5b;
+    border-color: #0f8a5b;
+}
