@@ -9,7 +9,8 @@
 
                             <div class="mb-3">
                                 <label for="entidad" class="form-label">Entidad</label>
-                                <select class="form-select" id="entidad" name="entidad">
+                                <select class="form-select" type="text" id="entidad" name="entidad" onchange="traerEstablecimientos(this, 'establecimiento', 'servicio')">
+                                        <option disabled selected value="">Entidad</option>
                                     {{#each entidades}}
                                         <option value="{{id}}">{{nombre}}</option>
                                     {{/each}}
@@ -18,19 +19,15 @@
 
                             <div class="mb-3">
                                 <label for="establecimiento" class="form-label">Establecimiento</label>
-                                <select class="form-select" id="establecimiento" name="establecimiento">
-                                    {{#each establecimientos}}
-                                        <option value="{{id}}" data-entidad="{{entidadId}}">{{nombre}}</option>
-                                    {{/each}}
+                                <select class="form-select" type="text" id="establecimiento" name="establecimiento" onchange="traerServicios(this, 'servicio')">
+                                        <option disabled selected value="">Seleccione una entidad</option>
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label for="servicio" class="form-label">Servicio</label>
-                                <select class="form-select" id="servicio" name="servicio">
-                                    {{#each servicios}}
-                                        <option value="{{id}}" data-establecimiento="{{establecimientoId}}">{{nombre}}</option>
-                                    {{/each}}
+                                <select class="form-select" type="text" id="servicio" name="servicio">
+                                        <option disabled selected value="">Seleccione un establecimiento</option>
                                 </select>
                             </div>
 
@@ -48,34 +45,46 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            // Evento para filtrar los establecimientos basados en la entidad seleccionada
-            $("#entidad").on("change", function() {
-                var entidadId = $(this).val();
-                $("#establecimiento option").each(function() {
-                    if ($(this).data("entidad") == entidadId || entidadId === "") {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-                $("#establecimiento").val(""); // Reiniciar la selección de establecimiento
-                $("#servicio").empty(); // Limpiar la selección de servicios
-            });
 
-            // Evento para filtrar los servicios basados en el establecimiento seleccionado
-            $("#establecimiento").on("change", function() {
-                var establecimientoId = $(this).val();
-                $("#servicio option").each(function() {
-                    if ($(this).data("establecimiento") == establecimientoId || establecimientoId === "") {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-                $("#servicio").val(""); // Reiniciar la selección de servicio
-            });
-        });
+    async function traerEstablecimientos(entidad, establecimientos, servicios) {
+    ocultarServicios(servicios);
+    var e = entidad.value;
+    var d = document.getElementById(establecimientos);
+        d.options.length = 0;
+        d.options[0] =   new Option("Establecimiento", "", true);
+        d.options[0].disabled = true;
+        fetch("http://localhost:8080/establecimientos?entidad="+e)
+        .then(response => response.json())
+        .then(data => {
+    var d = document.getElementById(establecimientos);
+        for (const establecimiento of data.establecimientos) {
+            d.options[d.options.length] = new Option(establecimiento.nombre, establecimiento.id);
+                         }})
+    }
+
+    async function traerServicios(establecimiento, servicios) {
+    var e = establecimiento.value;
+    var d = document.getElementById(servicios);
+        d.options.length = 0;
+        d.options[0] =   new Option("Servicio", "", true);
+        d.options[0].disabled = true;
+        fetch("http://localhost:8080/servicios?establecimiento="+e)
+        .then(response => response.json())
+        .then(data => {
+    var d = document.getElementById(servicios);
+        for (const servicio of data.servicios) {
+            d.options[d.options.length] = new Option(servicio.nombre, servicio.id);
+                         }})
+    }
+
+    async function ocultarServicios(servicios) {
+        var d = document.getElementById(servicios);
+        d.options.length = 0;
+        d.options[0] =   new Option("Seleccione un establecimiento", "", true);
+        d.options[0].disabled = true;
+    }
+
     </script>
+
 {{/partial}}
 {{> templates/base }}

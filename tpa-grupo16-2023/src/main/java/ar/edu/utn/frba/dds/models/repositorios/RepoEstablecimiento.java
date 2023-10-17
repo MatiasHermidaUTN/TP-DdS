@@ -36,4 +36,9 @@ public class RepoEstablecimiento implements WithSimplePersistenceUnit {
     public List<Establecimiento> buscarTodos() {
         return entityManager().createQuery("from " + Establecimiento.class.getName()).getResultList();
     }
+
+    public List<Establecimiento> buscarPorEntidad(Integer entidad) {
+        return entityManager().createQuery("from " + Establecimiento.class.getName() + " where entidad_id = " + entidad).getResultList();
+    }
 }
+

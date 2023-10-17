@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.models.repositorios;
 
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
@@ -35,5 +36,9 @@ public class RepoServicio implements WithSimplePersistenceUnit {
 
     public List<Servicio> buscarTodos() {
         return entityManager().createQuery("from " + Servicio.class.getName()).getResultList();
+    }
+
+    public List<Servicio> buscarPorEstablecimiento(Integer establecimiento) {
+        return entityManager().createQuery("from " + Servicio.class.getName() + " where establecimiento_id = " + establecimiento).getResultList();
     }
 }

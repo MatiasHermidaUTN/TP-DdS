@@ -48,6 +48,11 @@ public class Router {
             get("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::index);
             post("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::cargarDatos);
 
+            // Entidades, establecimientos y servicios. Devuelven jsons
+            get("/entidades", ((EntidadesController) FactoryController.controller("entidades"))::entidades); // NO SE USA
+            get("/establecimientos", ((EntidadesController) FactoryController.controller("entidades"))::establecimientos); // Pueden filtrarse por entidad con query param
+            get("/servicios", ((EntidadesController) FactoryController.controller("entidades"))::servicios); // Pueden filtrarse por establecimiento con query param
+
         });
     }
 }
