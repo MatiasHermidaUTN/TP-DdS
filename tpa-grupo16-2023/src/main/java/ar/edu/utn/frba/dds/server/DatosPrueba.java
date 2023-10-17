@@ -1,13 +1,20 @@
 package ar.edu.utn.frba.dds.server;
 
 import ar.edu.utn.frba.dds.models.comunidades.*;
+import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Observacion;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.models.localizacion.Departamento;
+import ar.edu.utn.frba.dds.models.localizacion.Localidad;
+import ar.edu.utn.frba.dds.models.localizacion.Provincia;
 import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+
+import java.io.IOException;
+import java.util.List;
 
 public class DatosPrueba {
     static RepoIncidente repoIncidente = new RepoIncidente();
@@ -19,6 +26,10 @@ public class DatosPrueba {
     static RepoEstablecimiento repoEstablecimiento = new RepoEstablecimiento();
     static RepoServicio repoServicio = new RepoServicio();
 
+    private AdapterGeoref adapterGeoref = AdapterGeoref.instancia();
+    private RepoProvincia repoProvincia = new RepoProvincia();
+    private RepoDepartamento repoDepartamento = new RepoDepartamento();
+    private RepoLocalidad repoLocalidad = new RepoLocalidad();
     public static void cargarDatos() {
         //usuarios
         Usuario usr1 = new Usuario("usr1@mail.com", "Usuario1", "passUsr1!");
@@ -181,5 +192,18 @@ public class DatosPrueba {
         incidente9.agregarObservacion(new Observacion(usr2, "Incidente9"));
         prestacion4.agregarIncidente(incidente9);
         repoIncidente.guardar(incidente9);
+    }
+
+    public void cargaDatosGeoref() throws IOException {
+        List<Provincia> provincias = adapterGeoref.obtenerListadoProvincias();
+        repoProvincia.guardarMuchas(provincias);
+        for (Provincia unaProvincia : provincias) {
+            List<Departamento> departamentos = adapterGeoref.obtenerListadoDepartamentos(unaProvincia);
+            repoDepartamento.guardarMuchos(departamentos);
+            for (Departamento unDepartamento : departamentos) {
+                List<Localidad> localidades = adapterGeoref.obtenerListadoLocalidades(unDepartamento);
+                repoLocalidad.guardarMuchas(localidades);
+            }
+        }
     }
 }

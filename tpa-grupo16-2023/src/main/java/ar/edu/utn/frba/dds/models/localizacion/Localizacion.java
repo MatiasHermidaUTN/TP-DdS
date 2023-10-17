@@ -13,7 +13,7 @@ public class Localizacion extends Persistente {
     @Embedded
     private Ubicacion ubicacion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "localidad_id", referencedColumnName = "localidad_id")
     private Localidad localidad;
 

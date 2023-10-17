@@ -1,5 +1,8 @@
 package ar.edu.utn.frba.dds.models.lectorCSV;
 
+import ar.edu.utn.frba.dds.controllers.EstablecimientoController;
+import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
+import ar.edu.utn.frba.dds.models.repositorios.RepoOrganismoDeControl;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.OrganismoDeControl;
 
@@ -11,7 +14,12 @@ import java.util.Objects;
 public class LectorCSV {
 
     private String nombre;
+    private String establecimientos;
+    private String entidadesControladas;
     private DatosCSV datosCSV;
+    private RepoEntidad repoEntidad = new RepoEntidad();
+    private RepoOrganismoDeControl repoOrganismoDeControl = new RepoOrganismoDeControl();
+    private EstablecimientoController establecimientoController = new EstablecimientoController();
 
 
     String rutaArchivo = "src\\main\\properties\\entidades_organismos.csv";
@@ -25,7 +33,7 @@ public class LectorCSV {
             // Crea un bufferedReader para mejorar el rendimiento de la lectura
             BufferedReader buffer = new BufferedReader(archivo);
 
-            String linea = buffer.readLine();
+            String linea;
             linea = buffer.readLine();
 
             // Lee cada línea del archivo
@@ -75,7 +83,7 @@ public class LectorCSV {
             // Crea un bufferedReader para mejorar el rendimiento de la lectura
             BufferedReader buffer = new BufferedReader(archivo);
 
-            String linea = buffer.readLine();
+            String linea;
             linea = buffer.readLine();
 
             // Lee cada línea del archivo
@@ -85,12 +93,33 @@ public class LectorCSV {
 
                 // mapea todos los atributos a las variables temporales
                 nombre = celdas[1];
+                establecimientos = celdas[3];
+                String[] arrayEstablecimientos = establecimientos.split(";");
+                entidadesControladas = celdas[5];
+
 
                 // instancia la clase correspondiente
                 if(Objects.equals(celdas[0], "entidad")){
-                    datosCSV.agregarEntidad(new Entidad(nombre));
+                    repoEntidad.guardar(new Entidad(nombre));
+//                    datosCSV.agregarEntidad(new Entidad(nombre));
+                    if (!Objects.equals(arrayEstablecimientos[0], "NULL")){
+                        arrayEstablecimientos[0] = arrayEstablecimientos[0].replace("[", "");
+                        arrayEstablecimientos[arrayEstablecimientos.length-1] = arrayEstablecimientos[arrayEstablecimientos.length-1].replace("]", "");
+                        for (Integer i = 0; arrayEstablecimientos.length > i; i+=2){
+                            String localidad = arrayEstablecimientos[i+1];
+                            System.out.println(localidad);
+                            establecimientoController.crearEstablecimento(arrayEstablecimientos[i], repoEntidad.buscarPorNombre(nombre).getId(), localidad);
+                        }
+                    }
                 } else if (Objects.equals(celdas[0], "organismo")) {
-                    datosCSV.agregarOrganismo(new OrganismoDeControl(nombre));
+                    repoOrganismoDeControl.guardar(new OrganismoDeControl(nombre));
+//                    datosCSV.agregarOrganismo(new OrganismoDeControl(nombre));
+                    System.out.println(entidadesControladas);
+                    OrganismoDeControl organismo = repoOrganismoDeControl.buscarPorNombre(nombre);
+                    if(!Objects.equals(entidadesControladas, "NULL")) {
+                        organismo.agregarEntidad(repoEntidad.buscarPorNombre(entidadesControladas));
+                        repoOrganismoDeControl.modificar(organismo);
+                    }
                 }
                 else
                     System.out.print("No corresponde el tipo. ");
