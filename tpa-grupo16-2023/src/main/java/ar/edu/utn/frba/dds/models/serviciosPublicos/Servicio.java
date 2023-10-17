@@ -28,7 +28,7 @@ public class Servicio extends Persistente {
     @Transient
     private List<RegistroDeCambio> registro;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL})
     @JoinColumn(name = "establecimiento_id", referencedColumnName = "id")
     private Establecimiento establecimiento;
 

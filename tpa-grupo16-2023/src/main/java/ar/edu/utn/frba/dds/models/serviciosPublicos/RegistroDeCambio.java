@@ -24,11 +24,11 @@ public class RegistroDeCambio extends Persistente {
     @Column(name = "estado_servicio")
     private EstadoServicio estadoServicio;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL})
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuarioQueLoCambio;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL})
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     private Servicio servicio;
 
