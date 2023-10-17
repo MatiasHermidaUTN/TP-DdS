@@ -104,7 +104,7 @@ public class AdapterCalcNivImpacto {
     private IncidentDTO incidenteToIncidenteDTO(Incidente incidente){
         IncidentDTO incidentDTO = new IncidentDTO();
         // seteo los atributos de incidentDTO
-        incidentDTO.setDescripcion(incidente.getObservaciones());
+        incidentDTO.setDescripcion(incidente.primeraObservacion());
         incidentDTO.setResuelto(incidente.estaResuelto());
         incidentDTO.setTiempoResolucion( (int) incidente.minutosEntreAperturaYCierre());
         return incidentDTO;

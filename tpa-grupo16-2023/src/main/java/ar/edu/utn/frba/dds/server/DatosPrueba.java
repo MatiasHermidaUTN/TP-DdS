@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.server;
 
 import ar.edu.utn.frba.dds.models.comunidades.*;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
+import ar.edu.utn.frba.dds.models.incidentes.Observacion;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
@@ -136,39 +137,48 @@ public class DatosPrueba {
         repoPrestacion.guardar(prestacion5);
 
         //incidentes
-        Incidente incidente1 = new Incidente(comu1, usr1, prestacion1, "Incidente1");
+        Incidente incidente1 = new Incidente(comu1, usr1, prestacion1);
+        incidente1.agregarObservacion(new Observacion(usr1, "Incidente1"));
         prestacion1.agregarIncidente(incidente1);
         repoIncidente.guardar(incidente1);
 
-        Incidente incidente2 = new Incidente(comu2, usr2, prestacion2, "Incidente2");
+        Incidente incidente2 = new Incidente(comu2, usr2, prestacion2);
+        incidente2.agregarObservacion(new Observacion(usr2, "Incidente2"));
         prestacion2.agregarIncidente(incidente2);
         repoIncidente.guardar(incidente2);
 
-        Incidente incidente3 = new Incidente(comu3, usr3, prestacion3, "Incidente3");
+        Incidente incidente3 = new Incidente(comu3, usr3, prestacion3);
+        incidente3.agregarObservacion(new Observacion(usr3, "Incidente3"));
         prestacion3.agregarIncidente(incidente3);
         repoIncidente.guardar(incidente3);
 
-        Incidente incidente4 = new Incidente(comu1, usr2, prestacion4, "Incidente4");
+        Incidente incidente4 = new Incidente(comu1, usr2, prestacion4);
+        incidente4.agregarObservacion(new Observacion(usr2, "Incidente4"));
         prestacion4.agregarIncidente(incidente4);
         repoIncidente.guardar(incidente4);
 
-        Incidente incidente5 = new Incidente(comu2, usr3, prestacion5, "Incidente5");
+        Incidente incidente5 = new Incidente(comu2, usr3, prestacion5);
+        incidente5.agregarObservacion(new Observacion(usr3, "Incidente5"));
         prestacion5.agregarIncidente(incidente5);
         repoIncidente.guardar(incidente5);
 
-        Incidente incidente6 = new Incidente(comu3, usr1, prestacion1, "Incidente6");
+        Incidente incidente6 = new Incidente(comu3, usr1, prestacion1);
+        incidente6.agregarObservacion(new Observacion(usr1, "Incidente6"));
         prestacion1.agregarIncidente(incidente6);
         repoIncidente.guardar(incidente6);
 
-        Incidente incidente7 = new Incidente(comu1, usr3, prestacion2, "Incidente7");
+        Incidente incidente7 = new Incidente(comu1, usr3, prestacion2);
+        incidente7.agregarObservacion(new Observacion(usr3, "Incidente7"));
         prestacion2.agregarIncidente(incidente7);
         repoIncidente.guardar(incidente7);
 
-        Incidente incidente8 = new Incidente(comu2, usr1, prestacion3, "Incidente8");
+        Incidente incidente8 = new Incidente(comu2, usr1, prestacion3);
+        incidente8.agregarObservacion(new Observacion(usr1, "Incidente8"));
         prestacion3.agregarIncidente(incidente8);
         repoIncidente.guardar(incidente8);
 
-        Incidente incidente9 = new Incidente(comu3, usr2, prestacion4, "Incidente9");
+        Incidente incidente9 = new Incidente(comu3, usr2, prestacion4);
+        incidente9.agregarObservacion(new Observacion(usr2, "Incidente9"));
         prestacion4.agregarIncidente(incidente9);
         repoIncidente.guardar(incidente9);
     }

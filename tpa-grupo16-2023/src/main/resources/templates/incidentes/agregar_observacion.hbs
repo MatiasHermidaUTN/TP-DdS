@@ -1,0 +1,23 @@
+{{#partial "contenido"}}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Agregar detalles o comentarios</div>
+                    <div class="card-body">
+                        <form method="POST" action="/incidentes/{{incidente.id}}/comentar">
+
+                            <div class="mb-3">
+                                <label for="observaciones" class="form-label">Observación</label>
+                                <textarea class="form-control" id="observaciones" name="observaciones" rows="4" placeholder="Ingrese las observaciones"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base }}

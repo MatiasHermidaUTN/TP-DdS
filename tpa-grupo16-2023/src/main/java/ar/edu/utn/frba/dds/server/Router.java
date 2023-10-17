@@ -20,7 +20,9 @@ public class Router {
             post("incidentes/crear", ((IncidentesController) FactoryController.controller("incidente"))::procesar_creacion);
             get("incidentes/{id}/cerrar", ((IncidentesController) FactoryController.controller("incidente"))::cerrar);
             get("incidentes/{id}", ((IncidentesController) FactoryController.controller("incidente"))::show);
-            get("incidentes/{id}/editar", ((IncidentesController) FactoryController.controller("incidente"))::edit);
+            get("incidentes/{id}/observaciones", ((IncidentesController) FactoryController.controller("incidente"))::observaciones);
+            get("incidentes/{id}/comentar", ((IncidentesController) FactoryController.controller("incidente"))::agregar_observacion);
+            post("incidentes/{id}/comentar", ((IncidentesController) FactoryController.controller("incidente"))::procesar_observacion);
             //TODO f. Sugerencia de revisión de incidentes
             get("/incidentesCercanos", ((IncidentesController) FactoryController.controller("incidente"))::incidentesCercanos);
 
@@ -53,9 +55,6 @@ public class Router {
             get("/entidades", ((EntidadesController) FactoryController.controller("entidades"))::entidades); // NO SE USA
             get("/establecimientos", ((EntidadesController) FactoryController.controller("entidades"))::establecimientos); // Pueden filtrarse por entidad con query param
             get("/servicios", ((EntidadesController) FactoryController.controller("entidades"))::servicios); // Pueden filtrarse por establecimiento con query param
-
-            // solo para probar templates
-            get("/hola/prueba", ((IncidentesController) FactoryController.controller("incidente"))::prueba);
 
         });
     }

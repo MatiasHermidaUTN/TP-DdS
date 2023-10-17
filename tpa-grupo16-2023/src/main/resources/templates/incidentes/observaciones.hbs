@@ -1,0 +1,27 @@
+{{#partial "contenido"}}
+    <h1 class="text-center mt-4">{{incidente.prestacion.servicio.nombre}} de {{incidente.prestacion.establecimiento.nombre}}</h1>
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr class="d-flex">
+                <th class="col-2">Miembro</th>
+                <th class="col-10">Observación</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each observaciones}}
+                <tr class="d-flex">
+                    <td class="col-2">{{this.usuario.usuario}}</td>
+                    <td class="col-10">{{this.observado}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-4">
+        <a class="btn btn-primary" href="/incidentes/{{incidente.id}}">
+            Volver
+        </a>
+    </div>
+{{/partial}}
+{{> templates/base }}

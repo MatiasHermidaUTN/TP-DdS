@@ -5,25 +5,19 @@ import ar.edu.utn.frba.dds.models.comunidades.Perfil;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
+import ar.edu.utn.frba.dds.models.incidentes.Observacion;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.models.ranking.MayorImpactoProblematicas;
 import ar.edu.utn.frba.dds.models.ranking.MayorIncidentesReportados;
 import ar.edu.utn.frba.dds.models.ranking.MayorPromedioCierre;
 import ar.edu.utn.frba.dds.models.repositorios.*;
-import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoComunidadDeprecado;
-import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoPrestacionDeprecado;
-import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoUsuarioDeprecado;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import io.javalin.http.Context;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 
 public class IncidentesController {
@@ -59,11 +53,6 @@ public class IncidentesController {
         context.render("incidentes/incidentes.hbs", model);
     }
 
-    public void prueba(Context context) {
-        Map<String, Object> model = new HashMap<>();
-        context.render("template_de_prueba.hbs", model);
-    }
-
     public void show(Context context){
         Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
         Map<String, Object> model = new HashMap<>();
@@ -84,10 +73,11 @@ public class IncidentesController {
 
     public void procesar_creacion(Context context){
         Perfil perfilApertura = this.repoPerfil.buscarPorId(Integer.valueOf(context.cookie("perfil_id")));
+        Usuario usuarioApertura = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
         Establecimiento establecimiento = this.repoEstablecimiento.buscarPorId(Integer.valueOf(context.formParam("establecimiento")));
         Servicio servicio = this.repoServicio.buscarPorId(Integer.valueOf(context.formParam("servicio")));
-        String observaciones = context.formParam("observaciones");
-        Incidente incidente = crearIncidenteParaPerfil(establecimiento, servicio, perfilApertura, observaciones);
+        Observacion observacion = new Observacion(usuarioApertura, context.formParam("observaciones"));
+        Incidente incidente = crearIncidenteParaPerfil(establecimiento, servicio, perfilApertura, observacion);
         this.repoIncidente.guardar(incidente);
 
         context.redirect("/comunidades/" + perfilApertura.getComunidad().getId() + "/incidentes");
@@ -160,11 +150,11 @@ public class IncidentesController {
         }
     }
 
-    public Incidente crearIncidenteParaPerfil(Establecimiento establecimiento, Servicio servicio, Perfil perfil, String observaciones) {
+    public Incidente crearIncidenteParaPerfil(Establecimiento establecimiento, Servicio servicio, Perfil perfil, Observacion observacion) {
 
         Comunidad unaComunidad = perfil.getComunidad();
         Incidente incidente = new Incidente(establecimiento, unaComunidad, servicio, perfil.getUsuario());
-        incidente.setObservaciones(observaciones);
+        incidente.agregarObservacion(observacion);
         incidente.setComunidad(unaComunidad);
         unaComunidad.agregarIncidente(incidente);
 
@@ -239,5 +229,30 @@ public class IncidentesController {
         List<Incidente> incidentes = this.repoIncidente.buscarTodos();
         model.put("incidentes", incidentes);
         context.render("incidentes/incidentesCercanos.hbs", model);
+    }
+
+    public void observaciones(Context context) {
+        Map<String, Object> model = new HashMap<>();
+        Incidente incidente = repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+        List<Observacion> observaciones = incidente.getObservaciones();
+        model.put("incidente", incidente);
+        model.put("observaciones", observaciones);
+        context.render("incidentes/observaciones.hbs", model);
+    }
+
+    public void agregar_observacion(Context context) {
+        Map<String, Object> model = new HashMap<>();
+        Incidente incidente = repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+        model.put("incidente", incidente);
+        context.render("incidentes/agregar_observacion.hbs", model);
+    }
+
+    public void procesar_observacion(Context context) {
+        Usuario usuarioQueAgregaObservacion = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
+        Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+        Observacion observacion = new Observacion(usuarioQueAgregaObservacion, context.formParam("observaciones"));
+        incidente.agregarObservacion(observacion);
+        this.repoIncidente.modificar(incidente);
+        context.redirect("/incidentes/" + incidente.getId());
     }
 }

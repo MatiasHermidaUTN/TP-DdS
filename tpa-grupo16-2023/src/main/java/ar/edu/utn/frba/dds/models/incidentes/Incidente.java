@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.models.incidentes;
 
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
+import ar.edu.utn.frba.dds.models.comunidades.Perfil;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 
 import ar.edu.utn.frba.dds.models.persistencia.Persistente;
@@ -18,6 +19,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -29,8 +32,9 @@ public class Incidente extends Persistente {
     @JoinColumn(name = "comunidad_id", referencedColumnName = "id")
     private Comunidad comunidad;
 
-    @Column
-    public String observaciones;
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinColumn(name="incidente_id")
+    public List<Observacion> observaciones;
 
     // El establecimiento y servicio asociados estan en la prestacion. Esto quedaria deprecado.
     // @Transient
@@ -70,9 +74,10 @@ public class Incidente extends Persistente {
         this.usuarioApertura = usuarioApertura;
         this.horarioApertura = LocalDateTime.now();
         this.estado = EstadoIncidente.ABIERTO;
+        this.observaciones = new ArrayList<>();
     }
 
-    public Incidente(Comunidad comunidad, Usuario usuarioApertura, Prestacion prestacion, String observaciones) {
+    public Incidente(Comunidad comunidad, Usuario usuarioApertura, Prestacion prestacion, List<Observacion> observaciones) {
         this.comunidad = comunidad;
         this.usuarioApertura = usuarioApertura;
         this.prestacion = prestacion;
@@ -81,8 +86,26 @@ public class Incidente extends Persistente {
         this.estado = EstadoIncidente.ABIERTO;
     }
 
+    public Incidente(Comunidad comunidad, Usuario usuarioApertura, Prestacion prestacion) {
+        this.comunidad = comunidad;
+        this.usuarioApertura = usuarioApertura;
+        this.prestacion = prestacion;
+        this.observaciones = new ArrayList<>();
+        this.horarioApertura = LocalDateTime.now();
+        this.estado = EstadoIncidente.ABIERTO;
+    }
+
     public Incidente(){
         this.estado = EstadoIncidente.ABIERTO;
+        this.observaciones = new ArrayList<>();
+    }
+
+    public void agregarObservacion(Observacion observacion) {
+        observaciones.add(observacion);
+    }
+
+    public String primeraObservacion(){
+        return observaciones.get(0).getObservado();
     }
 
     public double minutosEntreAperturaYCierre() {
