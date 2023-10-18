@@ -56,8 +56,7 @@ public class Router {
             get("/comunidades/{comunidad_id}", ((ComunidadController) FactoryController.controller("comunidad"))::show);
 
             //rankings
-            //TODO h. Visualización de rankings de incidentes
-            get("/rankings", ((IncidentesController) FactoryController.controller("incidente"))::rankings);
+            get("/rankings", ((InformesController) FactoryController.controller("informes"))::mostrar_informe_reciente);
 
             //carga datos
             //TODO b. Carga masiva de datos de entidades prestadoras y organismos de control

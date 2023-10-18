@@ -1,82 +1,26 @@
 {{#partial "contenido"}}
-    <h1 class="text-center mt-4">Rankings</h1>
-    <h2 class="text-center mt-4">Mayor Promedio de Cierre</h2>
-    <div class="table-responsive mt-4">
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>Puesto</th>
-                <th>Id Entidad</th>
-                <th>Nombre</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each rankingEntidadesMayorPromedioCierre}}
-                <tr>
-                    <td>{{@index}}º</td>
-                    <td>{{this.id}}</td>
-                    <td>{{this.nombre}}</td>
-                </tr>
-            {{/each}}
-            </tbody>
-            <tfoot>
-            <tr>
-                Cuanto más cerca del 0º puesto, peor es el promedio de cierre.
-            </tr>
-            </tfoot>
-        </table>
-    </div>
-    <h2 class="text-center mt-4">Mayor Cantidad de Incidentes Reportados</h2>
-    <div class="table-responsive mt-4">
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>Puesto</th>
-                <th>Id Entidad</th>
-                <th>Nombre</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each rankingEntidadesMayorIncidentesReportados}}
-                <tr>
-                    <td>{{@index}}</td>
-                    <td>{{this.id}}</td>
-                    <td>{{this.nombre}}</td>
-                </tr>
-            {{/each}}
-            </tbody>
-            <tfoot>
-            <tr>
-                Cuanto más cerca del 0º puesto, más incidentes se reportaron.
-            </tr>
-            </tfoot>
-        </table>
-    </div>
-    <h2 class="text-center mt-4">Mayor Impacto de las Problematicas</h2>
-    <div class="table-responsive mt-4">
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>Puesto</th>
-                <th>Id Entidad</th>
-                <th>Nombre</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each rankingEntidadesMayorImpactoProblematicas}}
-                <tr>
-                    <td>{{@index}}</td>
-                    <td>{{this.id}}</td>
-                    <td>{{this.nombre}}</td>
-                </tr>
-            {{/each}}
-            </tbody>
-            <tfoot>
-            <tr>
-                Cuanto más cerca del 0º puesto, más impacto tuvieron las problemáticas.
-            </tr>
-            </tfoot>
-        </table>
-    </div>
+    <h1>Informe Semanal de {{fecha}}</h1>
+
+    <h2>Ranking Mayor Promedio Cierre</h2>
+    <ol>
+        {{#each rankingMayorPromedioCierre}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ol>
+
+    <h2>Ranking Mayor Incidentes Reportados</h2>
+    <ol>
+        {{#each rankingMayorIncidentesReportados}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ol>
+
+    <h2>Ranking Mayor Impacto Problematicas</h2>
+    <ol>
+        {{#each rankingMayorImpactoProblematicas}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ol>
+
 {{/partial}}
 {{> templates/base }}

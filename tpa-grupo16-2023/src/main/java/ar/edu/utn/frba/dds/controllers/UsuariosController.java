@@ -177,21 +177,6 @@ public class UsuariosController {
         context.redirect("/usuarios/perfiles");
     }
 
-    public void edit(Context context){
-        // TODO
-    }
-
-    public void delete(Context context){
-        // TODO
-    }
-
-    public void cerrar(Context context){
-        // TODO
-    }
-
-    public void asignarParametros(Usuario usuario, Context context){
-        // TODO
-    }
 
     public void agregarLocalizacionUsuario(Integer idUsuario, String direccion, String localidad) throws IOException {
         Localidad unaLocalidad = repoLocalidad.buscarPorNombre(localidad);

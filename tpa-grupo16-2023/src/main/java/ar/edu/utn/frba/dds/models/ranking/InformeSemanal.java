@@ -6,6 +6,10 @@ import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.OrganismoDeControl;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -92,5 +96,20 @@ public class InformeSemanal extends Persistente {
 
         entidadesString = entidadesString.substring(0, entidadesString.length() - 2);
         return entidadesString;
+    }
+
+    public List<String> generarListaDeStrings(String input) {
+        List<String> result = new ArrayList<>();
+
+        // Define el patrón de expresión regular para buscar los elementos en el formato dado.
+        Pattern pattern = Pattern.compile("\\d+\\.\\s*([^,]+)");
+        Matcher matcher = pattern.matcher(input);
+
+        // Encuentra todos los elementos que coinciden con el patrón y agrégalos a la lista.
+        while (matcher.find()) {
+            result.add(matcher.group(1).trim());
+        }
+
+        return result;
     }
 }

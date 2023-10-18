@@ -23,6 +23,9 @@ public class FactoryController {
 
             case "entidades": controller = new EntidadesController(new RepoEntidad(), new RepoEstablecimiento(), new RepoServicio());
             break;
+
+            case "informes": controller = new InformesController(new RepoInforme());
+            break;
         }
         return controller;
     }

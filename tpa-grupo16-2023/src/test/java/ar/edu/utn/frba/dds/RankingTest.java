@@ -451,4 +451,14 @@ public class RankingTest {
         System.out.println(informeSemanal.getRankingMayorIncidentesReportadosString());
         System.out.println(informeSemanal.getRankingMayorPromedioCierreString());
     }
+
+    @Test
+    public void mostrarInformeListaStrings() {
+        initRankingMayorIncidentesReportados();
+        InformeSemanal informeSemanal = new InformeSemanal(LocalDateTime.of(2023, 7, 25, 12, 0));
+
+        System.out.println(informeSemanal.generarListaDeStrings(informeSemanal.getRankingMayorImpactoProblematicasString()));
+        System.out.println(informeSemanal.generarListaDeStrings(informeSemanal.getRankingMayorIncidentesReportadosString()));
+        System.out.println(informeSemanal.generarListaDeStrings(informeSemanal.getRankingMayorPromedioCierreString()));
+    }
 }

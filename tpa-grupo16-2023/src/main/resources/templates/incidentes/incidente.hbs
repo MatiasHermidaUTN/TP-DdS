@@ -25,6 +25,11 @@
             <a class="btn btn-primary" href="/incidentes/{{incidente.id}}/comentar">
                 <i class="fas fa-edit"></i> Agregar observacion
             </a>
+            {{#unless incidente.estaResuelto}}
+                <a class="btn btn-danger" href="/incidentes/{{incidente.id}}/cerrar">
+                    <i class="fas fa-times"></i> Cerrar
+                </a>
+            {{/unless}}
             <a class="btn btn-secondary" href="/comunidades/{{incidente.comunidad.id}}/incidentes">
                 <i class="fas fa-list"></i> Volver a la Lista de Incidentes
             </a>

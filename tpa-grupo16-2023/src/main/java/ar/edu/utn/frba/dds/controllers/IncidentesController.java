@@ -207,22 +207,22 @@ public class IncidentesController {
                         recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, new Comunidad("Servicio Interes Particular"), servicio, usuarioApertura)));
     }
 
-    public void rankings(Context context) {
-        MayorPromedioCierre mayorPromedioCierre = new MayorPromedioCierre();
-        MayorIncidentesReportados mayorIncidentesReportados = new MayorIncidentesReportados();
-        MayorImpactoProblematicas mayorImpactoProblematicas = new MayorImpactoProblematicas();
-
-        List<Entidad> rankingEntidadesMayorPromedioCierre = mayorPromedioCierre.generarRanking(LocalDateTime.now());
-        List<Entidad> rankingEntidadesMayorIncidentesReportados = mayorIncidentesReportados.generarRanking(LocalDateTime.now());
-        List<Entidad> rankingEntidadesMayorImpactoProblematicas = mayorImpactoProblematicas.generarRanking(LocalDateTime.now());
-
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("rankingEntidadesMayorPromedioCierre", rankingEntidadesMayorPromedioCierre);
-        model.put("rankingEntidadesMayorIncidentesReportados", rankingEntidadesMayorIncidentesReportados);
-        model.put("rankingEntidadesMayorImpactoProblematicas", rankingEntidadesMayorImpactoProblematicas);
-        context.render("incidentes/rankings.hbs", model);
-    }
+//    public void rankings(Context context) {
+//        MayorPromedioCierre mayorPromedioCierre = new MayorPromedioCierre();
+//        MayorIncidentesReportados mayorIncidentesReportados = new MayorIncidentesReportados();
+//        MayorImpactoProblematicas mayorImpactoProblematicas = new MayorImpactoProblematicas();
+//
+//        List<Entidad> rankingEntidadesMayorPromedioCierre = mayorPromedioCierre.generarRanking(LocalDateTime.now());
+//        List<Entidad> rankingEntidadesMayorIncidentesReportados = mayorIncidentesReportados.generarRanking(LocalDateTime.now());
+//        List<Entidad> rankingEntidadesMayorImpactoProblematicas = mayorImpactoProblematicas.generarRanking(LocalDateTime.now());
+//
+//
+//        Map<String, Object> model = new HashMap<>();
+//        model.put("rankingEntidadesMayorPromedioCierre", rankingEntidadesMayorPromedioCierre);
+//        model.put("rankingEntidadesMayorIncidentesReportados", rankingEntidadesMayorIncidentesReportados);
+//        model.put("rankingEntidadesMayorImpactoProblematicas", rankingEntidadesMayorImpactoProblematicas);
+//        context.render("incidentes/rankings.hbs", model);
+//    }
 
     public void incidentesCercanos(Context context) {
         Map<String, Object> model = new HashMap<>();
@@ -255,4 +255,5 @@ public class IncidentesController {
         this.repoIncidente.modificar(incidente);
         context.redirect("/incidentes/" + incidente.getId());
     }
+
 }
