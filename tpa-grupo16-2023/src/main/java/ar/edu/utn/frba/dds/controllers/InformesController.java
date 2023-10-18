@@ -17,7 +17,7 @@ public class InformesController {
     }
 
     public void mostrar_informe_reciente(Context context){
-        InformeSemanal ultimoInforme = this.repoInforme.buscarUltimo();
+        InformeSemanal ultimoInforme = this.repoInforme.buscarTodos().get(0);
         Map<String, Object> model = new HashMap<>();
 
         List<String> rankingMayorPromedioCierre = ultimoInforme.generarListaDeStrings(ultimoInforme.getRankingMayorPromedioCierreString());
@@ -29,6 +29,6 @@ public class InformesController {
         model.put("rankingMayorIncidentesReportados", rankingMayorIncidentesReportados);
         model.put("rankingMayorImpactoProblematicas", rankingMayorImpactoProblematicas);
 
-        context.redirect("/rankings");
+        context.render("/rankings/rankings.hbs", model);
     }
 }

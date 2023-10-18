@@ -447,6 +447,9 @@ public class RankingTest {
         initRankingMayorIncidentesReportados();
         InformeSemanal informeSemanal = new InformeSemanal(LocalDateTime.of(2023, 7, 25, 12, 0));
 
+        RepoInforme repoInforme = new RepoInforme();
+        repoInforme.guardar(informeSemanal);
+
         System.out.println(informeSemanal.getRankingMayorImpactoProblematicasString());
         System.out.println(informeSemanal.getRankingMayorIncidentesReportadosString());
         System.out.println(informeSemanal.getRankingMayorPromedioCierreString());

@@ -83,17 +83,6 @@ public class IncidentesController {
         context.redirect("/comunidades/" + perfilApertura.getComunidad().getId() + "/incidentes");
     }
 
-    public void save(Context context){
-        // TODO
-    }
-
-    public void edit(Context context) {
-        // TODO
-    }
-
-    public void delete(Context context){
-        // TODO
-    }
 
     public void cerrar(Context context){
         Incidente incidenteACerrar = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
