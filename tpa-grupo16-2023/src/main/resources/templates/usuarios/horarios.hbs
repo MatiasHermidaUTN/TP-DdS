@@ -1,0 +1,34 @@
+{{#partial "contenido"}}
+    <h1 class="text-center mt-4">Horarios de notificación</h1>
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr class="d-flex">
+                <th class="col-5">Día</th>
+                <th class="col-5">Hora</th>
+                <th class="col-2">Quitar horario</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each usuario.horarios}}
+                <tr class="d-flex">
+                    <td class="col-5">{{this.getDia}}</td>
+                    <td class="col-5">{{this.getHora}}</td>
+                    <td class="col-2">
+                        <a class="btn btn-danger" href="/usuarios/usuario/notificaciones/horarios/{{this.getId}}/quitar">
+                            <i class="fas fa-times"></i> Borrar
+                        </a>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-4">
+        <a class="btn btn-primary" href="/usuarios/usuario/notificaciones/horarios/agregar">
+            <i class="fas fa-plus"></i> Agregar horario
+        </a>
+        <a class="btn btn-secondary" href="/usuarios/usuario/notificaciones">Atrás</a>
+    </div>
+{{/partial}}
+{{> templates/base }}

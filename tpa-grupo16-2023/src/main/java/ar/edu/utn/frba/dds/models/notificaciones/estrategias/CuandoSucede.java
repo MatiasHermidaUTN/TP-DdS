@@ -8,11 +8,14 @@ import java.util.List;
 
 public class CuandoSucede implements ConfiguracionNotificacion{
 
-
     public CuandoSucede() {
 
     }
 
+    @Override
+    public Boolean apuro() {
+        return true;
+    }
     @Override
     public void notificarIncidenteNuevo(Incidente incidente, Usuario usuario) {
         usuario.getNotificador().mandarNotificacionDeIncidenteNuevo(incidente, usuario);

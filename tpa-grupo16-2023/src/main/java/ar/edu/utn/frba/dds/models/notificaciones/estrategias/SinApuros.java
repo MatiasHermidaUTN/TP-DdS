@@ -14,6 +14,11 @@ public class SinApuros implements ConfiguracionNotificacion{
 
     }
 
+    @Override
+    public Boolean apuro() {
+        return false;
+    }
+
     /* deprecado
     public void agregarHorario(DiaSemana diaDeLaSemana, String hora, String minuto){
         Cron cron = new Cron();

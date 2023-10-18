@@ -15,6 +15,8 @@ public interface ConfiguracionNotificacion {
     public List<Incidente> getIncidentesNuevos();
     public List<Incidente> getIncidentesConcluidos();*/
 
+    public Boolean apuro();
+
     //Estos son los metodos para notificar:
     public void notificarIncidenteNuevo(Incidente incidente, Usuario usuario);
 

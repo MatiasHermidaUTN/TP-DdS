@@ -15,7 +15,6 @@ import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class Usuario extends Persistente {
     @Column
     private Notificador notificador;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.ALL})
     List<Horario> horarios = new ArrayList<Horario>();
 
     @ManyToMany
@@ -96,6 +95,21 @@ public class Usuario extends Persistente {
         this.entidadesInteres = new ArrayList<>();
         this.serviciosInteres = new ArrayList<>();
         //RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
+    }
+
+    public Usuario(String mail, String usuario, String contrasenia, TipoUsuario tipoUsuario) {
+        this.email = mail;
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+        this.perfiles = new ArrayList<>();
+        this.entidadesInteres = new ArrayList<>();
+        this.serviciosInteres = new ArrayList<>();
+        this.tipoUsuario = tipoUsuario;
+        //RepoUsuarioDeprecado.getInstancia().agregarUsuario(this);
+    }
+
+    public Boolean tieneApuro() {
+        return configuracionNotificacion.apuro();
     }
 
     public void agregarIncidenteNuevo(Incidente incidente) {

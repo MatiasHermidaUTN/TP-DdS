@@ -11,6 +11,15 @@
                                 <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario">
                             </div>
                             <div class="mb-3">
+                                <label for="tipoUsuario" class="form-label">Tipo</label>
+                                <select class="form-select" id="tipoUsuario" name="tipoUsuario">
+                                    <option disabled selected value="">Tipo de usuario</option>
+                                    {{#each tipoUsuarios}}
+                                        <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su correo electrónico">
                             </div>

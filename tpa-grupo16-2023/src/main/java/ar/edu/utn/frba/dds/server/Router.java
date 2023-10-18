@@ -39,6 +39,19 @@ public class Router {
             post("/usuarios/perfiles/crear", ((UsuariosController) FactoryController.controller("usuario"))::procesar_creacion_perfil);
             get("/usuarios/perfiles/{perfil_id}", ((UsuariosController) FactoryController.controller("usuario"))::mostrar_perfil);
 
+            // Usuarios (configuración)
+            get("/usuarios/usuario", ((UsuariosController) FactoryController.controller("usuario"))::configuracion_de_usuario);
+            get("/usuarios/usuario/editar", ((UsuariosController) FactoryController.controller("usuario"))::editar_datos);
+            post("/usuarios/usuario/editar", ((UsuariosController) FactoryController.controller("usuario"))::procesar_edicion_datos);
+            get("/usuarios/usuario/password", ((UsuariosController) FactoryController.controller("usuario"))::cambiar_contrasenia);
+            post("/usuarios/usuario/password", ((UsuariosController) FactoryController.controller("usuario"))::procesar_cambio_contrasenia);
+            get("/usuarios/usuario/notificaciones", ((UsuariosController) FactoryController.controller("usuario"))::configurar_envio_notificaciones);
+            post("/usuarios/usuario/notificaciones", ((UsuariosController) FactoryController.controller("usuario"))::procesar_configuracion_notificaciones);
+            get("/usuarios/usuario/notificaciones/horarios", ((UsuariosController) FactoryController.controller("usuario"))::horarios);
+            get("/usuarios/usuario/notificaciones/horarios/agregar", ((UsuariosController) FactoryController.controller("usuario"))::agregar_horario);
+            post("/usuarios/usuario/notificaciones/horarios/agregar", ((UsuariosController) FactoryController.controller("usuario"))::procesar_horario);
+            get("/usuarios/usuario/notificaciones/horarios/{id}/quitar", ((UsuariosController) FactoryController.controller("usuario"))::quitar_horario);
+
             // Comunidades
             get("/comunidades/{comunidad_id}", ((ComunidadController) FactoryController.controller("comunidad"))::show);
 
@@ -56,6 +69,14 @@ public class Router {
             get("/establecimientos", ((EntidadesController) FactoryController.controller("entidades"))::establecimientos); // Pueden filtrarse por entidad con query param
             get("/servicios", ((EntidadesController) FactoryController.controller("entidades"))::servicios); // Pueden filtrarse por establecimiento con query param
 
+        });
+
+        Server.app().error(404, ctx -> {
+            ctx.redirect("https://http.dog/404.jpg");
+        });
+
+        Server.app().error(500, ctx -> {
+            ctx.redirect("https://http.garden/500.jpg");
         });
     }
 }

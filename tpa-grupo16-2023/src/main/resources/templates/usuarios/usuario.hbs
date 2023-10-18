@@ -1,0 +1,31 @@
+{{#partial "contenido"}}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h1>Detalles de Usuario</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> {{usuario.usuario}}</p>
+            <p><strong>Tipo:</strong> {{usuario.tipoUsuario}}</p>
+            <p><strong>Email:</strong> {{usuario.email}}</p>
+            <p><strong>Telefono:</strong> {{usuario.telefono}}</p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="/usuarios/usuario/editar">
+                <i class="fas fa-edit"></i> Editar datos
+            </a>
+            <a class="btn btn-primary" href="/usuarios/usuario/password">
+                <i class="fas fa-edit"></i> Cambiar contraseña
+            </a>
+            <a class="btn btn-primary" href="/usuarios/usuario/notificaciones">
+                <i class="fas fa-edit"></i> Configurar envío de notificaciones
+            </a>
+            <a class="btn btn-primary" href="/usuarios/usuario/intereses">
+                <i class="fas fa-edit"></i> Configurar entidades y servicios de interés
+            </a>
+            <a class="btn btn-secondary" href="/usuarios/perfiles">
+                <i class="fas fa-list"></i> Volver
+            </a>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}
