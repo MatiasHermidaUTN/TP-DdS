@@ -45,10 +45,10 @@ public class Usuario extends Persistente {
     @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     private Localizacion localizacion;
 
-    @Transient
+    @ManyToMany(cascade = { CascadeType.ALL})
     private List<Entidad> entidadesInteres;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.ALL})
     private List<Servicio> serviciosInteres;
 
     @Enumerated(EnumType.STRING)

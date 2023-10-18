@@ -41,10 +41,17 @@ public class Router {
 
             // Usuarios (configuración)
             get("/usuarios/usuario", ((UsuariosController) FactoryController.controller("usuario"))::configuracion_de_usuario);
+
             get("/usuarios/usuario/editar", ((UsuariosController) FactoryController.controller("usuario"))::editar_datos);
             post("/usuarios/usuario/editar", ((UsuariosController) FactoryController.controller("usuario"))::procesar_edicion_datos);
+
             get("/usuarios/usuario/password", ((UsuariosController) FactoryController.controller("usuario"))::cambiar_contrasenia);
             post("/usuarios/usuario/password", ((UsuariosController) FactoryController.controller("usuario"))::procesar_cambio_contrasenia);
+
+            get("/usuarios/usuario/intereses", ((UsuariosController) FactoryController.controller("usuario"))::cargar_intereses);
+            post("/usuarios/usuario/entidad_interes", ((UsuariosController) FactoryController.controller("usuario"))::agregar_entidad_interes);
+            post("/usuarios/usuario/servicio_interes", ((UsuariosController) FactoryController.controller("usuario"))::agregar_servicio_interes);
+
             get("/usuarios/usuario/notificaciones", ((UsuariosController) FactoryController.controller("usuario"))::configurar_envio_notificaciones);
             post("/usuarios/usuario/notificaciones", ((UsuariosController) FactoryController.controller("usuario"))::procesar_configuracion_notificaciones);
             get("/usuarios/usuario/notificaciones/horarios", ((UsuariosController) FactoryController.controller("usuario"))::horarios);

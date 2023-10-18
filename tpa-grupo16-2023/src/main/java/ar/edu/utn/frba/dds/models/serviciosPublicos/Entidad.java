@@ -36,7 +36,7 @@ public class Entidad extends Persistente {
     @ManyToMany
     private List<AtributoVariable> atributosVariables;
 
-    @ManyToMany
+    @Transient
     private List<Usuario> usuariosAsignados;
 
 

@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.models.notificaciones.Horario;
 import ar.edu.utn.frba.dds.models.notificaciones.cron.DiaSemana;
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.ConfiguracionNotificacion;
 import ar.edu.utn.frba.dds.models.repositorios.*;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import ar.edu.utn.frba.dds.models.validador.Resultado;
@@ -28,12 +29,14 @@ public class UsuariosController {
     private RepoComunidad repoComunidad;
     private RepoPerfil repoPerfil;
     private RepoProvincia repoProvincia;
+    private RepoServicio repoServicio;
 
     private RepoHorario repoHorario;
+    private RepoEntidad repoEntidad;
     private AdapterGeoref adapterGeoref;
     private Validador validador;
 
-    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, RepoComunidad repoComunidad, RepoPerfil repoPerfil, RepoHorario repoHorario, AdapterGeoref adapterGeoref, Validador validador, RepoProvincia repoProvincia) {
+    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, RepoComunidad repoComunidad, RepoPerfil repoPerfil, RepoHorario repoHorario, AdapterGeoref adapterGeoref, Validador validador, RepoProvincia repoProvincia, RepoEntidad repoEntidad, RepoServicio repoServicio) {
         this.repoUsuario = repoUsuario;
         this.validador = validador;
         this.repoLocalidad = repoLocalidad;
@@ -42,12 +45,9 @@ public class UsuariosController {
         this.repoPerfil = repoPerfil;
         this.repoHorario = repoHorario;
         this.repoProvincia = repoProvincia;
+        this.repoEntidad = repoEntidad;
+        this.repoServicio = repoServicio;
     }
-
-    public void index(Context context){
-        // TODO
-    }
-
 
     public void registrar(Context context){
         Map<String, Object> model = new HashMap<>();
@@ -235,29 +235,25 @@ public class UsuariosController {
             usuario.setEmail(context.formParam("email"));
             usuario.setTelefono(Integer.valueOf(context.formParam("telefono")));
 
-            // agregar localizacion al usuario
-            Integer provincia = Integer.valueOf(context.formParam("provincia"));
-            Integer departamento = Integer.valueOf(context.formParam("departamento"));
-            Long localidad = Long.valueOf(context.formParam("localidad"));
-            String direccion = context.formParam("direccion");
+            if(!Objects.equals(context.formParam("direccion"), "")){
+                // agregar localizacion al usuario
+                Integer provincia = Integer.valueOf(context.formParam("provincia"));
+                Integer departamento = Integer.valueOf(context.formParam("departamento"));
+                Long localidad = Long.valueOf(context.formParam("localidad"));
+                String direccion = context.formParam("direccion");
 
-            String stringLocalidad = repoLocalidad.buscarPorId(localidad).nombre;
+                String stringLocalidad = repoLocalidad.buscarPorId(localidad).nombre;
 
-            System.out.println(provincia);
-            System.out.println(departamento);
-            System.out.println(localidad);
-            System.out.println(direccion);
+                Localizacion localizacion = null;
 
-
-            Localizacion localizacion = null;
-
-            try {
-                agregarLocalizacionUsuario(usuario.getId(), direccion, stringLocalidad);
+                try {
+                    agregarLocalizacionUsuario(usuario.getId(), direccion, stringLocalidad);
 //                localizacion = adapterGeoref.obtenerLocalizacionIds(provincia, departamento, localidad, direccion);
-            } catch(RuntimeException | IOException e){
-                String poneBienLaDirec = "<script> window.alert(\"Coloque una direccion Valida.\");"
-                        + "setTimeout(function() { window.location.href = '/usuarios/usuario/editar'; }, 0); </script>";
-                context.html(poneBienLaDirec);
+                } catch(RuntimeException | IOException e){
+                    String poneBienLaDirec = "<script> window.alert(\"Coloque una direccion Valida.\");"
+                            + "setTimeout(function() { window.location.href = '/usuarios/usuario/editar'; }, 0); </script>";
+                    context.html(poneBienLaDirec);
+                }
             }
 
 //            usuario.setLocalizacion(localizacion);
@@ -358,5 +354,42 @@ public class UsuariosController {
 
             context.redirect("/usuarios/usuario/notificaciones/horarios");
         }
+    }
+
+    public void cargar_intereses(Context context){
+        if(this.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
+
+            model.put("entidadesInteres", usuario.getEntidadesInteres());
+            model.put("serviciosInteres", usuario.getServiciosInteres());
+            model.put("todasLasEntidades", this.repoEntidad.buscarTodos());
+            model.put("todosLosServicios", this.repoServicio.buscarTodos());
+            model.put("usuario", usuario);
+
+            context.render("usuarios/intereses.hbs", model);
+        }
+    }
+
+    public void agregar_entidad_interes(Context context){
+        Entidad entidadNueva = this.repoEntidad.buscarPorId(Integer.valueOf(context.formParam("entidad")));
+        Usuario usuario = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
+
+        usuario.agregarEntidadInteres(entidadNueva);
+
+        this.repoUsuario.guardar(usuario);
+
+        context.redirect("/usuarios/usuario");
+    }
+
+    public void agregar_servicio_interes(Context context){
+        Servicio servicioNuevo = this.repoServicio.buscarPorId(Integer.valueOf(context.formParam("servicio")));
+        Usuario usuario = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
+
+        usuario.agregarServicioInteres(servicioNuevo);
+
+        this.repoUsuario.guardar(usuario);
+
+        context.redirect("/usuarios/usuario");
     }
 }
