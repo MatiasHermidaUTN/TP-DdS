@@ -44,7 +44,7 @@ public class RepoLocalidad implements WithSimplePersistenceUnit {
         return  (Localidad) entityManager()
                 .createQuery("from " + Localidad.class.getName() + " where localidad_nombre = :nombre")
                 .setParameter("nombre", nombre)
-                .getSingleResult();
+                .getResultList().get(0);
     }
     public Localidad buscarPorId(Integer id) {
         return entityManager().find(Localidad.class, id);

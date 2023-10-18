@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.models.repositorios;
 
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
@@ -30,6 +31,13 @@ public class RepoOrganismoDeControl implements WithSimplePersistenceUnit {
 
     public OrganismoDeControl buscarPorId(Integer id) {
         return entityManager().find(OrganismoDeControl.class, id);
+    }
+
+    public OrganismoDeControl buscarPorNombre(String nombre) {
+        return  (OrganismoDeControl) entityManager()
+                .createQuery("from " + OrganismoDeControl.class.getName() + " where nombre = :nombre")
+                .setParameter("nombre", nombre)
+                .getResultList().get(0);
     }
 
     public List<OrganismoDeControl> buscarTodos() {

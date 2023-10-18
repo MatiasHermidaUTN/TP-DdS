@@ -16,7 +16,7 @@ public class Departamento {
     @Embedded
     public Ubicacion centroide;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "provincia_id", referencedColumnName = "provincia_id")
     public Provincia provincia;
 

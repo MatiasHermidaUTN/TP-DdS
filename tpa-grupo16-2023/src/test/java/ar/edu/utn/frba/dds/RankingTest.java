@@ -268,10 +268,10 @@ public class RankingTest {
         this.servicioA1.setNombre("Baño");
         this.servicioA2.setNombre("Ascensor");
 
-        this.incidenteA1.setObservaciones("El cubiculo 3 del baño no funciona");
-        this.incidenteA2.setObservaciones("El lavabo del baño no funciona");
-        this.incidenteA3.setObservaciones("El ascensor no frena en el piso 2");
-        this.incidenteA4.setObservaciones("El ascensor no sube hasta el piso 3");
+//        this.incidenteA1.setObservaciones("El cubiculo 3 del baño no funciona");
+//        this.incidenteA2.setObservaciones("El lavabo del baño no funciona");
+//        this.incidenteA3.setObservaciones("El ascensor no frena en el piso 2");
+//        this.incidenteA4.setObservaciones("El ascensor no sube hasta el piso 3");
 
         this.prestacionA1.agregarIncidente(incidenteA1);
         this.prestacionA1.agregarIncidente(incidenteA2);
@@ -300,9 +300,9 @@ public class RankingTest {
         this.servicioB1.setNombre("Rampa");
         this.servicioB2.setNombre("Escalera Mecanica");
 
-        this.incidenteB1.setObservaciones("La rampa no se puede acceder");
-        this.incidenteB2.setObservaciones("La escalera mecanica no funciona");
-        this.incidenteB3.setObservaciones("La escalera mecanica esta parada");
+//        this.incidenteB1.setObservaciones("La rampa no se puede acceder");
+//        this.incidenteB2.setObservaciones("La escalera mecanica no funciona");
+//        this.incidenteB3.setObservaciones("La escalera mecanica esta parada");
 
         this.prestacionB1.agregarIncidente(incidenteB1);
         this.prestacionB2.agregarIncidente(incidenteB2);
@@ -324,8 +324,8 @@ public class RankingTest {
 
         this.servicioC1.setNombre("Puerta Emergencia");
 
-        this.incidenteC1.setObservaciones("La puerta de emergencia no abre");
-        this.incidenteC2.setObservaciones("La puerta de emergencia no cierra");
+//        this.incidenteC1.setObservaciones("La puerta de emergencia no abre");
+//        this.incidenteC2.setObservaciones("La puerta de emergencia no cierra");
 
         this.prestacionC1.agregarIncidente(incidenteC1);
         this.prestacionC1.agregarIncidente(incidenteC2);

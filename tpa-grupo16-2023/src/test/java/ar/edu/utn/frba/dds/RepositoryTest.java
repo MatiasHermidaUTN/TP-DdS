@@ -211,13 +211,5 @@ public class RepositoryTest {
 //        repoIncidente.guardar(nuevoIncidente);
     }
 
-    public void crearEstablecimento(String nombre, Integer idEntidad, Integer idLocalizacion) {
-        Entidad entidadEstablecimiento = repoEntidad.buscarPorId(idEntidad);
-        Localizacion entidadLocalizacion = repoLocalizacion.buscarPorId(idLocalizacion);
-        Establecimiento nuevoEstablecimiento = new Establecimiento(nombre, entidadEstablecimiento, entidadLocalizacion);
-        repoEstablecimiento.guardar(nuevoEstablecimiento);
 
-        //Esto tendria que estar dentro de un Establecimiento controller si es que se utiliza
-
-    }
 }

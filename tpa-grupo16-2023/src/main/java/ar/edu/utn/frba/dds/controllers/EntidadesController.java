@@ -1,5 +1,9 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import ar.edu.utn.frba.dds.models.comunidades.Usuario;
+import ar.edu.utn.frba.dds.models.localizacion.Localidad;
+import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
+import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
 import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.models.repositorios.RepoEstablecimiento;
 import ar.edu.utn.frba.dds.models.repositorios.RepoServicio;
@@ -10,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Context;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
