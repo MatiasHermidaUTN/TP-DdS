@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.models.repositorios;
 
 import ar.edu.utn.frba.dds.models.localizacion.Departamento;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import javax.persistence.EntityTransaction;
@@ -45,4 +46,8 @@ public class RepoDepartamento implements WithSimplePersistenceUnit {
     public List<Departamento> buscarTodos() {
         return entityManager().createQuery("from " + Departamento.class.getName()).getResultList();
     }
+
+     public List<Departamento> buscarPorProvincia(Integer provincia){
+         return entityManager().createQuery("from " + Departamento.class.getName() + " where provincia_id = " + provincia).getResultList();
+     }
 }

@@ -6,13 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Table
+@Getter
 public class Provincia {
 
     @Id
     @Column(name = "provincia_id")
     public Integer id;
 
-    @Getter
     @Column(name = "provincia_nombre")
     public String nombre;
 

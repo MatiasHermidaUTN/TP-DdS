@@ -60,6 +60,16 @@ public class AdapterGeoref {
         return new Localizacion(localidad, ubicacion);
     }
 
+    public Localizacion obtenerLocalizacionIds(Integer provId, Integer depId, Integer locId, String direccion) throws IOException {
+        Provincia prov = georefServiceRetrofit.listadoDeProvincias().provincias.stream().filter(provincia -> provincia.id.equals(provId)).toList().get(0);
+        Departamento dpto = georefServiceRetrofit.listadoDeDepartamentosDeProvincia(prov).departamentos.stream().filter(departamento -> departamento.id.equals(depId)).toList().get(0);
+        dpto.provincia = prov;
+        Localidad localidad = georefServiceRetrofit.listadoDeLocalidadesDeDepartamento(dpto).localidades.stream().filter(localid -> localid.id.equals(locId)).toList().get(0);
+        localidad.departamento = dpto;
+        Ubicacion ubicacion = obtenerUbicacion(direccion, localidad);
+        return new Localizacion(localidad, ubicacion);
+    }
+
     public Ubicacion obtenerUbicacion(String direccion, Localidad localidad) throws IOException {
         return georefServiceRetrofit.listadoDeDirecciones(direccion, localidad).direcciones.get(0).ubicacion;
     }

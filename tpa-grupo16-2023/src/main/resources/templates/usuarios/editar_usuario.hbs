@@ -18,6 +18,38 @@
                                 <label for="telefono" class="form-label">Teléfono</label>
                                 <input type="text" class="form-control" id="telefono" name="telefono" value="{{usuario.telefono}}">
                             </div>
+
+                            <h3>Selecciona tu Localizacion</h3>
+
+                            <div class="mb-3">
+                                <label for="provincia" class="form-label">Provincia</label>
+                                <select class="form-select" type="text" id="provincia" name="provincia" onchange="traerDepartamentos(this, 'departamento', 'localidad')">
+                                    <option disabled selected value="">Provincias</option>
+                                    {{#each provincias}}
+                                        <option value="{{id}}">{{nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="departamento" class="form-label">Departamento</label>
+                                <select class="form-select" type="text" id="departamento" name="departamento" onchange="traerLocalidades(this, 'localidad')">
+                                    <option disabled selected value="">Seleccione un departamento</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="localidad" class="form-label">Localidad</label>
+                                <select class="form-select" type="text" id="localidad" name="localidad">
+                                    <option disabled selected value="">Seleccione una localidad</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Direccion</label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese su direccion">
+                            </div>
+
                             <button type="submit" class="btn btn-primary"><i class="far fa-check-circle"></i> Aceptar</button>
                             <a class="btn btn-danger" href="/usuarios/usuario">
                                 <i class="fa fa-times" aria-hidden="true"></i> Cancelar
@@ -29,5 +61,48 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+        async function traerDepartamentos(provincia, departamentos, localidades) {
+            ocultarLocalidades(localidades);
+            var e = provincia.value;
+            var d = document.getElementById(departamentos);
+            d.options.length = 0;
+            d.options[0] =   new Option("Departamento", "", true);
+            d.options[0].disabled = true;
+            fetch("http://localhost:8080/departamentos?provincia="+e)
+                    .then(response => response.json())
+                    .then(data => {
+                        var d = document.getElementById(departamentos);
+                        for (const departamento of data.departamentos) {
+                            d.options[d.options.length] = new Option(departamento.nombre, departamento.id);
+                        }})
+        }
+
+        async function traerLocalidades(departamento, localidades) {
+            var e = departamento.value;
+            var d = document.getElementById(localidades);
+            d.options.length = 0;
+            d.options[0] =   new Option("Localidad", "", true);
+            d.options[0].disabled = true;
+            fetch("http://localhost:8080/localidades?departamento="+e)
+                    .then(response => response.json())
+                    .then(data => {
+                        var d = document.getElementById(localidades);
+                        for (const localidad of data.localidades) {
+                            d.options[d.options.length] = new Option(localidad.nombre, localidad.id);
+                        }})
+        }
+
+        async function ocultarLocalidades(localidades) {
+            var d = document.getElementById(localidades);
+            d.options.length = 0;
+            d.options[0] =   new Option("Seleccione un departamento", "", true);
+            d.options[0].disabled = true;
+        }
+
+    </script>
+
 {{/partial}}
 {{> templates/base }}

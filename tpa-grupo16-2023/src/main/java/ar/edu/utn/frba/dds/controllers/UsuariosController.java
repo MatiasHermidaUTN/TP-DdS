@@ -5,9 +5,7 @@ import ar.edu.utn.frba.dds.models.converters.*;
 import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Observacion;
-import ar.edu.utn.frba.dds.models.localizacion.Localidad;
-import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
-import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
+import ar.edu.utn.frba.dds.models.localizacion.*;
 import ar.edu.utn.frba.dds.models.notificaciones.Horario;
 import ar.edu.utn.frba.dds.models.notificaciones.cron.DiaSemana;
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.ConfiguracionNotificacion;
@@ -29,12 +27,13 @@ public class UsuariosController {
     private RepoLocalidad repoLocalidad;
     private RepoComunidad repoComunidad;
     private RepoPerfil repoPerfil;
+    private RepoProvincia repoProvincia;
 
     private RepoHorario repoHorario;
     private AdapterGeoref adapterGeoref;
     private Validador validador;
 
-    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, RepoComunidad repoComunidad, RepoPerfil repoPerfil, RepoHorario repoHorario, AdapterGeoref adapterGeoref, Validador validador) {
+    public UsuariosController(RepoUsuario repoUsuario, RepoLocalidad repoLocalidad, RepoComunidad repoComunidad, RepoPerfil repoPerfil, RepoHorario repoHorario, AdapterGeoref adapterGeoref, Validador validador, RepoProvincia repoProvincia) {
         this.repoUsuario = repoUsuario;
         this.validador = validador;
         this.repoLocalidad = repoLocalidad;
@@ -42,6 +41,7 @@ public class UsuariosController {
         this.repoComunidad = repoComunidad;
         this.repoPerfil = repoPerfil;
         this.repoHorario = repoHorario;
+        this.repoProvincia = repoProvincia;
     }
 
     public void index(Context context){
@@ -221,7 +221,9 @@ public class UsuariosController {
         if(this.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
+            List<Provincia> provincias = repoProvincia.buscarTodos();
             model.put("usuario", usuario);
+            model.put("provincias", provincias);
             context.render("usuarios/editar_usuario.hbs", model);
         }
     }
@@ -232,7 +234,35 @@ public class UsuariosController {
             usuario.setUsuario(context.formParam("usuario"));
             usuario.setEmail(context.formParam("email"));
             usuario.setTelefono(Integer.valueOf(context.formParam("telefono")));
-            this.repoUsuario.modificar(usuario);
+
+            // agregar localizacion al usuario
+            Integer provincia = Integer.valueOf(context.formParam("provincia"));
+            Integer departamento = Integer.valueOf(context.formParam("departamento"));
+            Long localidad = Long.valueOf(context.formParam("localidad"));
+            String direccion = context.formParam("direccion");
+
+            String stringLocalidad = repoLocalidad.buscarPorId(localidad).nombre;
+
+            System.out.println(provincia);
+            System.out.println(departamento);
+            System.out.println(localidad);
+            System.out.println(direccion);
+
+
+            Localizacion localizacion = null;
+
+            try {
+                agregarLocalizacionUsuario(usuario.getId(), direccion, stringLocalidad);
+//                localizacion = adapterGeoref.obtenerLocalizacionIds(provincia, departamento, localidad, direccion);
+            } catch(RuntimeException | IOException e){
+                String poneBienLaDirec = "<script> window.alert(\"Coloque una direccion Valida.\");"
+                        + "setTimeout(function() { window.location.href = '/usuarios/usuario/editar'; }, 0); </script>";
+                context.html(poneBienLaDirec);
+            }
+
+//            usuario.setLocalizacion(localizacion);
+
+            repoUsuario.modificar(usuario);
 
             context.redirect("/usuarios/usuario");
         }

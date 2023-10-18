@@ -54,12 +54,14 @@ public class Router {
 
             // Comunidades
             get("/comunidades/{comunidad_id}", ((ComunidadController) FactoryController.controller("comunidad"))::show);
+//            get("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::create);
+//            post("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::procesar_creacion);
+
 
             //rankings
             get("/rankings", ((InformesController) FactoryController.controller("informes"))::mostrar_informe_reciente);
 
             //carga datos
-            //TODO b. Carga masiva de datos de entidades prestadoras y organismos de control
             get("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::index);
             post("/cargarDatos", ((CargadorCSVController) FactoryController.controller("cargadorCSV"))::cargarDatos);
 
@@ -67,6 +69,10 @@ public class Router {
             get("/entidades", ((EntidadesController) FactoryController.controller("entidades"))::entidades); // NO SE USA
             get("/establecimientos", ((EntidadesController) FactoryController.controller("entidades"))::establecimientos); // Pueden filtrarse por entidad con query param
             get("/servicios", ((EntidadesController) FactoryController.controller("entidades"))::servicios); // Pueden filtrarse por establecimiento con query param
+
+            // Departamentos y localidades. Devuelven jsons // NO SE USA
+            get("/departamentos", ((LocalizacionController) FactoryController.controller("localizacion"))::departamentos); // Pueden filtrarse por entidad con query param
+            get("/localidades", ((LocalizacionController) FactoryController.controller("localizacion"))::localidades); // Pueden filtrarse por establecimiento con query param
 
         });
 

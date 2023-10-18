@@ -1,9 +1,12 @@
 package ar.edu.utn.frba.dds.models.localizacion;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
 @Table
+@Getter
 public class Departamento {
 
     @Id

@@ -40,6 +40,9 @@ public class ComunidadController {
         // TODO
     }
 
+    public void procesar_creacion(Context context) {
+        //TODO
+    }
     public void save(Context context){
         // TODO
     }

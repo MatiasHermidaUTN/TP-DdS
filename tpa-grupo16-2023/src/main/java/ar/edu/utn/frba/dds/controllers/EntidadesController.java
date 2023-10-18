@@ -34,16 +34,9 @@ public class EntidadesController {
 
     public void entidades(Context context) {
         List<Entidad> entidad = repoEntidad.buscarTodos();
-        ObjectMapper ow = new ObjectMapper();
-        String entidadesComoJson = null;
-        try {
-            entidadesComoJson = ow.writeValueAsString(entidad);
-        } catch(JsonProcessingException e) {
-            System.out.println("Error al crear el json de entidades");
-        }
-        String jsonEntidades = "{\"entidades\":" + entidadesComoJson + "}";
-        context.json(jsonEntidades);
+        context.json(entidad);
     }
+
     public void establecimientos(Context context) {
         List<Establecimiento> establecimientos = new ArrayList<>();
         if(context.queryParam("entidad") != null) {
@@ -51,14 +44,8 @@ public class EntidadesController {
         } else {
             establecimientos = repoEstablecimiento.buscarTodos();
         }
-        ObjectMapper ow = new ObjectMapper();
-        String establecimientosComoJson = null;
-        try {
-            establecimientosComoJson = ow.writeValueAsString(establecimientos);
-        } catch(JsonProcessingException e) {
-            System.out.println("Error al crear el json de establecimientos");
-        }
-        String jsonEstablecimientos = "{\"establecimientos\":" + establecimientosComoJson + "}";
+
+        String jsonEstablecimientos = "{\"establecimientos\":" + establecimientos + "}";
         context.json(jsonEstablecimientos);
     }
 

@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.models.repositorios;
 
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.localizacion.Localidad;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import net.bytebuddy.asm.Advice;
 
@@ -46,11 +47,15 @@ public class RepoLocalidad implements WithSimplePersistenceUnit {
                 .setParameter("nombre", nombre)
                 .getResultList().get(0);
     }
-    public Localidad buscarPorId(Integer id) {
+    public Localidad buscarPorId(Long id) {
         return entityManager().find(Localidad.class, id);
     }
 
     public List<Localidad> buscarTodos() {
         return entityManager().createQuery("from " + Localidad.class.getName()).getResultList();
+    }
+
+    public List<Localidad> buscarPorDepartamento(Integer departamento) {
+        return entityManager().createQuery("from " + Localidad.class.getName() + " where departamento_id = " + departamento).getResultList();
     }
 }
