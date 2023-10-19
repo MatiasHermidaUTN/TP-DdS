@@ -23,6 +23,8 @@ import java.util.*;
 
 
 public class IncidentesController {
+    private final Integer radioCercaniaMetros = 2000;
+
     private RepoIncidente repoIncidente;
     private RepoPerfil repoPerfil;
     private RepoEntidad repoEntidad;
@@ -47,7 +49,7 @@ public class IncidentesController {
         this.repoComunidad = repoComunidad;
     }
 
-    public void index(Context context){
+    public void index(Context context) {
         Map<String, Object> model = new HashMap<>();
         List<Incidente> incidentes = this.repoIncidente.buscarPorComunidad(Integer.parseInt(context.pathParam("id")));
 
@@ -55,14 +57,14 @@ public class IncidentesController {
         context.render("incidentes/incidentes.hbs", model);
     }
 
-    public void show(Context context){
+    public void show(Context context) {
         Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
         Map<String, Object> model = new HashMap<>();
         model.put("incidente", incidente);
         context.render("incidentes/incidente.hbs", model);
     }
 
-    public void crear(Context context){
+    public void crear(Context context) {
         Map<String, Object> model = new HashMap<>();
         List<Entidad> entidades = this.repoEntidad.buscarTodos();
         List<Establecimiento> establecimientos = this.repoEstablecimiento.buscarTodos();
@@ -73,7 +75,7 @@ public class IncidentesController {
         context.render("incidentes/crear.hbs", model);
     }
 
-    public void procesar_creacion(Context context){
+    public void procesar_creacion(Context context) {
         Perfil perfilApertura = this.repoPerfil.buscarPorId(Integer.valueOf(context.cookie("perfil_id")));
         Usuario usuarioApertura = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
         Establecimiento establecimiento = this.repoEstablecimiento.buscarPorId(Integer.valueOf(context.formParam("establecimiento")));
@@ -86,7 +88,7 @@ public class IncidentesController {
     }
 
 
-    public void cerrar(Context context){
+    public void cerrar(Context context) {
         Incidente incidenteACerrar = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
         Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(context.cookie("perfil_id")));
 
@@ -104,37 +106,35 @@ public class IncidentesController {
         context.redirect("/comunidades/" + incidenteACerrar.getComunidad().getId() + "/incidentes");
     }
 
-    public void asignarParametros(Incidente incidente, Context context){
+    public void asignarParametros(Incidente incidente, Context context) {
         // TODO
     }
 
-    public void crear_o_agregar_prestacion(Establecimiento establecimiento_a_buscar, Servicio servicio_a_buscar, Incidente incidente){
+    public void crear_o_agregar_prestacion(Establecimiento establecimiento_a_buscar, Servicio servicio_a_buscar, Incidente incidente) {
         RepoPrestacion repoPrestacion = new RepoPrestacion();
         List<Prestacion> listaPrestaciones = repoPrestacion.buscarTodos();
 
-        List <Prestacion> listaPrestacionesDelEstablecimiento = listaPrestaciones.stream()
+        List<Prestacion> listaPrestacionesDelEstablecimiento = listaPrestaciones.stream()
                 .filter(prestacion -> prestacion.getEstablecimiento().getNombre() == establecimiento_a_buscar.getNombre())
                 .toList();
 
-        if(listaPrestacionesDelEstablecimiento.isEmpty()){
+        if (listaPrestacionesDelEstablecimiento.isEmpty()) {
             Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
             nuevaPrestacion.agregarIncidente(incidente);
             repoPrestacion.guardar(nuevaPrestacion);
             incidente.setPrestacion(nuevaPrestacion);
-        }
-        else {
-            Prestacion prestacionDelServicioDelEstablecimiento =  listaPrestacionesDelEstablecimiento.stream()
+        } else {
+            Prestacion prestacionDelServicioDelEstablecimiento = listaPrestacionesDelEstablecimiento.stream()
                     .filter(prestacion -> prestacion.getServicio().getNombre() == servicio_a_buscar.getNombre())
                     .findAny()
                     .orElse(null);
 
-            if(prestacionDelServicioDelEstablecimiento == null){
+            if (prestacionDelServicioDelEstablecimiento == null) {
                 Prestacion nuevaPrestacion = new Prestacion(establecimiento_a_buscar, servicio_a_buscar);
                 nuevaPrestacion.agregarIncidente(incidente);
                 incidente.setPrestacion(nuevaPrestacion);
                 repoPrestacion.guardar(nuevaPrestacion);
-            }
-            else {
+            } else {
                 prestacionDelServicioDelEstablecimiento.agregarIncidente(incidente);
                 incidente.setPrestacion(prestacionDelServicioDelEstablecimiento);
             }
@@ -175,7 +175,7 @@ public class IncidentesController {
                 .stream()
                 .map(perfil -> perfil.getComunidad()).toList();
 
-        for(Comunidad unaComunidad : comunidades) {
+        for (Comunidad unaComunidad : comunidades) {
             Incidente incidente = new Incidente(establecimiento, unaComunidad, servicio, usuarioApertura);
             unaComunidad.agregarIncidente(incidente);
             // TODO Esto lo tendria que hacer el prestacion controller (creo)
@@ -225,7 +225,11 @@ public class IncidentesController {
 
         Localizacion locaUsuario = usuario.getLocalizacion();
 
-        List<Incidente> incidenteCercanos = AdapterCercaniaLocalizacion.filtrarIncidentesCercanos(incidentes, locaUsuario.getUbicacion().getLat(), locaUsuario.getUbicacion().getLon(), 2500);
+        List<Incidente> incidenteCercanos = AdapterCercaniaLocalizacion.filtrarIncidentesCercanos(
+                incidentes,
+                locaUsuario.getUbicacion().getLat(),
+                locaUsuario.getUbicacion().getLon(),
+                radioCercaniaMetros);
 
         model.put("incidentes", incidenteCercanos);
         context.render("incidentes/incidentesCercanos.hbs", model);
@@ -254,10 +258,10 @@ public class IncidentesController {
         repoIncidente.modificar(incidenteACerrar);
 
         String redirectScript = """
-                    <script>
-                    setTimeout(function() { window.location.href = '/incidentesCercanos'; }, 500);
-                    </script>
-                    """;
+                <script>
+                setTimeout(function() { window.location.href = '/incidentesCercanos'; }, 500);
+                </script>
+                """;
 
         context.html(redirectScript);
     }
