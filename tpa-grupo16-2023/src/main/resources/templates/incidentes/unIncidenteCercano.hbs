@@ -1,0 +1,39 @@
+{{#partial "contenido"}}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h1>Detalle del Incidente</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>ID del Incidente:</strong> {{incidente.id}}</p>
+            <p><strong>Observaciones:</strong> {{incidente.primeraObservacion}}
+            <a class="btn btn-primary" href="/incidentes/{{incidente.id}}/observaciones">
+                <i class="fas fa-plus"></i> Más
+            </a>
+            </p>
+            <p><strong>Comunidad Asociada:</strong> {{incidente.comunidad.nombre}}</p>
+            <p><strong>Usuario de Apertura:</strong> {{incidente.usuarioApertura.usuario}}</p>
+            {{#if incidente.usuarioCierre}}
+                <p><strong>Usuario de Cierre:</strong> {{incidente.usuarioCierre.usuario}}</p>
+            {{/if}}
+            <p><strong>Horario de Apertura:</strong> {{incidente.horarioApertura}}</p>
+            {{#if incidente.horarioCierre}}
+                <p><strong>Horario de Cierre:</strong> {{incidente.horarioCierre}}</p>
+            {{/if}}
+            <p><strong>Estado del Incidente:</strong> {{incidente.estado}}</p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="/incidentes/{{incidente.id}}/comentar">
+                <i class="fas fa-edit"></i> Agregar observacion
+            </a>
+            {{#unless incidente.estaResuelto}}
+                <a class="btn btn-danger" href="/incidentes/{{incidente.id}}/cerrar">
+                    <i class="fas fa-times"></i> Cerrar
+                </a>
+            {{/unless}}
+            <a class="btn btn-secondary" href="/incidentesCercanos">
+                <i class="fas fa-list"></i> Volver a la Lista de Incidentes Cercanos
+            </a>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

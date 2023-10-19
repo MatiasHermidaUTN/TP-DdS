@@ -23,8 +23,12 @@ public class Router {
             get("incidentes/{id}/observaciones", ((IncidentesController) FactoryController.controller("incidente"))::observaciones);
             get("incidentes/{id}/comentar", ((IncidentesController) FactoryController.controller("incidente"))::agregar_observacion);
             post("incidentes/{id}/comentar", ((IncidentesController) FactoryController.controller("incidente"))::procesar_observacion);
+
             //TODO f. Sugerencia de revisión de incidentes
-            get("/incidentesCercanos", ((IncidentesController) FactoryController.controller("incidente"))::incidentesCercanos);
+            get("incidentesCercanos", ((IncidentesController) FactoryController.controller("incidente"))::incidentesCercanos);
+            get("incidenteCercano/{id}", ((IncidentesController) FactoryController.controller("incidente"))::incidenteCercano);
+            get("incidenteCercano/{id}/cerrar", ((IncidentesController) FactoryController.controller("incidente"))::incidenteCercanoCerrar);
+
 
             // Registro y Login
             get("register", ((UsuariosController) FactoryController.controller("usuario"))::registrar);

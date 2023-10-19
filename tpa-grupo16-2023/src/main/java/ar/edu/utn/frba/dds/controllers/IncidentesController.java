@@ -7,6 +7,8 @@ import ar.edu.utn.frba.dds.models.incidentes.EstadoIncidente;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Observacion;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.models.localizacion.AdapterCercaniaLocalizacion;
+import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.models.ranking.MayorImpactoProblematicas;
 import ar.edu.utn.frba.dds.models.ranking.MayorIncidentesReportados;
 import ar.edu.utn.frba.dds.models.ranking.MayorPromedioCierre;
@@ -216,8 +218,48 @@ public class IncidentesController {
     public void incidentesCercanos(Context context) {
         Map<String, Object> model = new HashMap<>();
         List<Incidente> incidentes = this.repoIncidente.buscarTodos();
-        model.put("incidentes", incidentes);
+
+        RepoUsuario repoUsuario = new RepoUsuario();
+
+        Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(Objects.requireNonNull(context.cookie("usuario_id"))));
+
+        Localizacion locaUsuario = usuario.getLocalizacion();
+
+        List<Incidente> incidenteCercanos = AdapterCercaniaLocalizacion.filtrarIncidentesCercanos(incidentes, locaUsuario.getUbicacion().getLat(), locaUsuario.getUbicacion().getLon(), 2500);
+
+        model.put("incidentes", incidenteCercanos);
         context.render("incidentes/incidentesCercanos.hbs", model);
+    }
+
+    public void incidenteCercano(Context context) {
+        Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+        Map<String, Object> model = new HashMap<>();
+        model.put("incidente", incidente);
+        context.render("incidentes/unIncidenteCercano.hbs", model);
+    }
+
+    public void incidenteCercanoCerrar(Context context) {
+        Incidente incidenteACerrar = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+        Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(context.cookie("perfil_id")));
+
+        incidenteACerrar.setUsuarioCierre(this.repoUsuario.buscarPorId(perfil.getUsuario().getId()));
+        incidenteACerrar.setHorarioCierre(LocalDateTime.now());
+        incidenteACerrar.setEstado(EstadoIncidente.RESUELTO);
+
+        // notificar a cada miembro
+        perfil.getComunidad().getMiembros()
+                .forEach(miembro -> miembro.getUsuario().recibirNotificacionDeCierreDeIncidente(incidenteACerrar));
+
+
+        repoIncidente.modificar(incidenteACerrar);
+
+        String redirectScript = """
+                    <script>
+                    setTimeout(function() { window.location.href = '/incidentesCercanos'; }, 500);
+                    </script>
+                    """;
+
+        context.html(redirectScript);
     }
 
     public void observaciones(Context context) {
@@ -244,5 +286,4 @@ public class IncidentesController {
         this.repoIncidente.modificar(incidente);
         context.redirect("/incidentes/" + incidente.getId());
     }
-
 }

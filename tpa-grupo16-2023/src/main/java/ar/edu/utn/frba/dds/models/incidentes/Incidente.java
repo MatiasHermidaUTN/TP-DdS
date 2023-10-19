@@ -173,6 +173,8 @@ public class Incidente extends Persistente {
         return this.prestacion.getServicio().getNombre();
     }
 
+    public String getComunidadNombre(){ return this.comunidad.getNombre(); }
+
     public Establecimiento getEstablecimiento() {
         return this.prestacion.getEstablecimiento();
     }
