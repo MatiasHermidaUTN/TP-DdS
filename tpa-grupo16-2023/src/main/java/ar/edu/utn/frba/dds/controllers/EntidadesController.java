@@ -45,7 +45,15 @@ public class EntidadesController {
             establecimientos = repoEstablecimiento.buscarTodos();
         }
 
-        String jsonEstablecimientos = "{\"establecimientos\":" + establecimientos + "}";
+        ObjectMapper ow = new ObjectMapper();
+        String establecimientosComoJson = null;
+        try {
+            establecimientosComoJson = ow.writeValueAsString(establecimientos);
+        } catch(JsonProcessingException e) {
+            System.out.println("Error al crear el json de establecimientos");
+        }
+
+        String jsonEstablecimientos = "{\"establecimientos\":" + establecimientosComoJson + "}";
         context.json(jsonEstablecimientos);
     }
 
