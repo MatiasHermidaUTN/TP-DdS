@@ -5,9 +5,7 @@ import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Observacion;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
-import ar.edu.utn.frba.dds.models.localizacion.Departamento;
-import ar.edu.utn.frba.dds.models.localizacion.Localidad;
-import ar.edu.utn.frba.dds.models.localizacion.Provincia;
+import ar.edu.utn.frba.dds.models.localizacion.*;
 import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
@@ -17,48 +15,57 @@ import java.io.IOException;
 import java.util.List;
 
 public class DatosPrueba {
-    static RepoIncidente repoIncidente = new RepoIncidente();
-    static RepoPrestacion repoPrestacion = new RepoPrestacion();
-    static RepoComunidad repoComunidad = new RepoComunidad();
-    static RepoPerfil repoPerfil = new RepoPerfil();
-    static RepoUsuario repoUsuario = new RepoUsuario();
-    static RepoEntidad repoEntidad = new RepoEntidad();
-    static RepoEstablecimiento repoEstablecimiento = new RepoEstablecimiento();
-    static RepoServicio repoServicio = new RepoServicio();
+    private RepoIncidente repoIncidente = new RepoIncidente();
+    private RepoPrestacion repoPrestacion = new RepoPrestacion();
+    private RepoComunidad repoComunidad = new RepoComunidad();
+    private RepoPerfil repoPerfil = new RepoPerfil();
+    private RepoUsuario repoUsuario = new RepoUsuario();
+    private RepoEntidad repoEntidad = new RepoEntidad();
+    private RepoEstablecimiento repoEstablecimiento = new RepoEstablecimiento();
+    private RepoServicio repoServicio = new RepoServicio();
 
     private AdapterGeoref adapterGeoref = AdapterGeoref.instancia();
     private RepoProvincia repoProvincia = new RepoProvincia();
     private RepoDepartamento repoDepartamento = new RepoDepartamento();
     private RepoLocalidad repoLocalidad = new RepoLocalidad();
-    public static void cargarDatos() {
+
+    public void cargarDatos() {
         //usuarios
-        Usuario usr1 = new Usuario("usr1@mail.com", "Usuario1", "passUsr1!");
+        /*Usuario usr1 = new Usuario("usr1@mail.com", "Usuario1", "passUsr1!");
         repoUsuario.guardar(usr1);
 
         Usuario usr2 = new Usuario("usr2@mail.com", "Usuario2", "passUsr2!");
         repoUsuario.guardar(usr2);
 
         Usuario usr3 = new Usuario("usr3@mail.com", "Usuario3", "passUsr3!");
-        repoUsuario.guardar(usr3);
+        repoUsuario.guardar(usr3);*/
 
         //comunidades
+        List<Comunidad> comunidadesPersistidas = repoComunidad.buscarTodos();
+
         Comunidad comu1 = new Comunidad("Comunidad1");
         comu1.setActiva(true);
         comu1.setGradoDeConfianza(GradoDeConfianza.CONFIABLE_NIVEL_2);
-        repoComunidad.guardar(comu1);
+        if (!comunidadesPersistidas.stream().anyMatch(comunidad -> comunidad.getNombre().equals(comu1.getNombre()))) {
+            repoComunidad.guardar(comu1);
+        }
 
         Comunidad comu2 = new Comunidad("Comunidad2");
         comu2.setActiva(true);
         comu2.setGradoDeConfianza(GradoDeConfianza.CONFIABLE_NIVEL_1);
-        repoComunidad.guardar(comu2);
+        if (!comunidadesPersistidas.stream().anyMatch(comunidad -> comunidad.getNombre().equals(comu2.getNombre()))) {
+            repoComunidad.guardar(comu2);
+        }
 
         Comunidad comu3 = new Comunidad("Comunidad3");
         comu3.setActiva(true);
         comu3.setGradoDeConfianza(GradoDeConfianza.CON_RESERVAS);
-        repoComunidad.guardar(comu3);
+        if (!comunidadesPersistidas.stream().anyMatch(comunidad -> comunidad.getNombre().equals(comu3.getNombre()))) {
+            repoComunidad.guardar(comu3);
+        }
 
         //perfiles
-        Perfil prf1 = new Perfil("Perfil1", comu1, TipoPerfil.NORMAL);
+        /*Perfil prf1 = new Perfil("Perfil1", comu1, TipoPerfil.NORMAL);
         prf1.setTipoMiembro(TipoMiembro.AFECTADO);
         prf1.setUsuario(usr1);
         usr1.agregarPerfil(prf1);
@@ -77,62 +84,100 @@ public class DatosPrueba {
         prf3.setUsuario(usr3);
         usr3.agregarPerfil(prf3);
         comu3.agregarMiembros(prf3);
-        repoPerfil.guardar(prf3);
+        repoPerfil.guardar(prf3);*/
 
         //entidades
-        Entidad ent1 = new Entidad("Entidad1");
-        repoEntidad.guardar(ent1);
+        List<Entidad> entidadesPersistidas = repoEntidad.buscarTodos();
 
-        Entidad ent2 = new Entidad("Entidad2");
-        repoEntidad.guardar(ent2);
+        Localidad floresta = repoLocalidad.buscarPorNombre("FLORESTA");
+        Localidad flores = repoLocalidad.buscarPorNombre("FLORES");
+        Localidad caballito = repoLocalidad.buscarPorNombre("CABALLITO");
 
-        Entidad ent3 = new Entidad("Entidad3");
-        repoEntidad.guardar(ent3);
+        Entidad ent1 = new Entidad("BNA_Prueba");
+        ent1.setLocalizacion(new Localizacion(floresta, floresta.getCentroide()));
+        if (!entidadesPersistidas.stream().anyMatch(entidad -> entidad.getNombre().equals(ent1.getNombre()))) {
+            repoEntidad.guardar(ent1);
+        }
+
+        Entidad ent2 = new Entidad("BBVA_Prueba");
+        ent2.setLocalizacion(new Localizacion(caballito, caballito.getCentroide()));
+        if (!entidadesPersistidas.stream().anyMatch(entidad -> entidad.getNombre().equals(ent2.getNombre()))) {
+            repoEntidad.guardar(ent2);
+        }
+
+        Entidad ent3 = new Entidad("SubteA_Prueba");
+        ent3.setLocalizacion(new Localizacion(flores, flores.getCentroide()));
+        if (!entidadesPersistidas.stream().anyMatch(entidad -> entidad.getNombre().equals(ent3.getNombre()))) {
+            repoEntidad.guardar(ent3);
+        }
 
         //establecimientos
-        Establecimiento est1 = new Establecimiento("Establecimiento1");
+        List<Establecimiento> establecimientosPersistidos = repoEstablecimiento.buscarTodos();
+
+        Establecimiento est1 = new Establecimiento("SucursalFloresta_Prueba");
         est1.setEntidad(ent1);
+        est1.setLocalizacion(new Localizacion(floresta, floresta.getCentroide()));
         ent1.agregarEstablecimientos(est1);
-        repoEstablecimiento.guardar(est1);
+        if (!establecimientosPersistidos.stream().anyMatch(establecimiento -> establecimiento.getNombre().equals(est1.getNombre()))) {
+            repoEstablecimiento.guardar(est1);
+        }
 
-        Establecimiento est2 = new Establecimiento("Establecimiento2");
+        Establecimiento est2 = new Establecimiento("SucursalCaballito_Prueba");
         est2.setEntidad(ent2);
+        est2.setLocalizacion(new Localizacion(caballito, caballito.getCentroide()));
         ent2.agregarEstablecimientos(est2);
-        repoEstablecimiento.guardar(est2);
+        if (!establecimientosPersistidos.stream().anyMatch(establecimiento -> establecimiento.getNombre().equals(est2.getNombre()))) {
+            repoEstablecimiento.guardar(est2);
+        }
 
-        Establecimiento est3 = new Establecimiento("Establecimiento3");
+        Establecimiento est3 = new Establecimiento("EstacionSanPedrito_Prueba");
         est3.setEntidad(ent3);
+        est3.setLocalizacion(new Localizacion(flores, flores.getCentroide()));
         ent3.agregarEstablecimientos(est3);
-        repoEstablecimiento.guardar(est3);
+        if (!establecimientosPersistidos.stream().anyMatch(establecimiento -> establecimiento.getNombre().equals(est3.getNombre()))) {
+            repoEstablecimiento.guardar(est3);
+        }
 
         //servicios
-        Servicio serv1 = new Servicio("Servicio1");
+        List<Servicio> serviciosPersistidos = repoServicio.buscarTodos();
+
+        Servicio serv1 = new Servicio("Rampa_Prueba");
         serv1.setEstablecimiento(est1);
         est1.agregarServicios(serv1);
-        repoServicio.guardar(serv1);
+        if (!serviciosPersistidos.stream().anyMatch(servicio -> servicio.getNombre().equals(serv1.getNombre()))) {
+            repoServicio.guardar(serv1);
+        }
 
-        Servicio serv2 = new Servicio("Servicio2");
+        Servicio serv2 = new Servicio("PuertaAutomatica_Prueba");
         serv2.setEstablecimiento(est2);
         est2.agregarServicios(serv2);
-        repoServicio.guardar(serv2);
+        if (!serviciosPersistidos.stream().anyMatch(servicio -> servicio.getNombre().equals(serv2.getNombre()))) {
+            repoServicio.guardar(serv2);
+        }
 
-        Servicio serv3 = new Servicio("Servicio3");
+        Servicio serv3 = new Servicio("Ascensor_Prueba");
         serv3.setEstablecimiento(est3);
         est3.agregarServicios(serv3);
-        repoServicio.guardar(serv3);
+        if (!serviciosPersistidos.stream().anyMatch(servicio -> servicio.getNombre().equals(serv3.getNombre()))) {
+            repoServicio.guardar(serv3);
+        }
 
-        Servicio serv4 = new Servicio("Servicio4");
+        Servicio serv4 = new Servicio("Ascensor_Prueba");
         serv4.setEstablecimiento(est1);
         est1.agregarServicios(serv4);
-        repoServicio.guardar(serv4);
+        if (!serviciosPersistidos.stream().anyMatch(servicio -> servicio.getNombre().equals(serv4.getNombre()))) {
+            repoServicio.guardar(serv4);
+        }
 
-        Servicio serv5 = new Servicio("Servicio5");
+        Servicio serv5 = new Servicio("Escalera_Prueba");
         serv5.setEstablecimiento(est2);
         est2.agregarServicios(serv5);
-        repoServicio.guardar(serv5);
+        if (!serviciosPersistidos.stream().anyMatch(servicio -> servicio.getNombre().equals(serv5.getNombre()))) {
+            repoServicio.guardar(serv5);
+        }
 
         //prestaciones
-        Prestacion prestacion1 = new Prestacion(est1, serv1);
+        /*Prestacion prestacion1 = new Prestacion(est1, serv1);
         repoPrestacion.guardar(prestacion1);
 
         Prestacion prestacion2 = new Prestacion(est2, serv2);
@@ -145,10 +190,10 @@ public class DatosPrueba {
         repoPrestacion.guardar(prestacion4);
 
         Prestacion prestacion5 = new Prestacion(est2, serv5);
-        repoPrestacion.guardar(prestacion5);
+        repoPrestacion.guardar(prestacion5);*/
 
         //incidentes
-        Incidente incidente1 = new Incidente(comu1, usr1, prestacion1);
+        /*Incidente incidente1 = new Incidente(comu1, usr1, prestacion1);
         incidente1.agregarObservacion(new Observacion(usr1, "Incidente1"));
         prestacion1.agregarIncidente(incidente1);
         repoIncidente.guardar(incidente1);
@@ -191,7 +236,7 @@ public class DatosPrueba {
         Incidente incidente9 = new Incidente(comu3, usr2, prestacion4);
         incidente9.agregarObservacion(new Observacion(usr2, "Incidente9"));
         prestacion4.agregarIncidente(incidente9);
-        repoIncidente.guardar(incidente9);
+        repoIncidente.guardar(incidente9);*/
     }
 
     public void cargaDatosGeoref() throws IOException {
