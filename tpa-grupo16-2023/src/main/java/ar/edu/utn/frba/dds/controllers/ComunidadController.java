@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
+import ar.edu.utn.frba.dds.models.comunidades.GradoDeConfianza;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
 import io.javalin.http.Context;
@@ -44,6 +45,7 @@ public class ComunidadController {
     public void procesar_creacion(Context context) {
         String comunidad = context.formParam("comunidad");
         crearNuevaComunidad(comunidad);
+
         String redirectScript = "<script> window.alert(\"Comunidad creada correctamente.\"); " +
                 "setTimeout(function() { window.location.href = '/usuarios/perfiles'; }, 0); </script>";
         context.html(redirectScript);
@@ -66,6 +68,8 @@ public class ComunidadController {
 
     public void crearNuevaComunidad (String nombreComunidad) {
         Comunidad nuevaComunidad = new Comunidad(nombreComunidad);
+        nuevaComunidad.setActiva(true);
+        nuevaComunidad.setGradoDeConfianza(GradoDeConfianza.CONFIABLE_NIVEL_1);
         repoComunidad.guardar(nuevaComunidad);
     }
 }

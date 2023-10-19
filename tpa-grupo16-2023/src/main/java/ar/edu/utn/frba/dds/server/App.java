@@ -10,7 +10,7 @@ public class App {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }*/
-        new DatosPrueba().cargarDatos();
+        //new DatosPrueba().cargarDatos();
 
         Server.init();
     }

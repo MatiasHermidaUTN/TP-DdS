@@ -14,20 +14,6 @@
                 {{/each}}
             </ul>
 
-            <h3>Servicios de la Comunidad:</h3>
-            <ul>
-                {{#each comunidad.serviciosDeComunidad}}
-                    <li>{{this.nombre}}</li>
-                {{/each}}
-            </ul>
-
-            <h3>Establecimientos de la Comunidad:</h3>
-            <ul>
-                {{#each comunidad.establecimientosDeComunidad}}
-                    <li>{{this.nombre}}</li>
-                {{/each}}
-            </ul>
-
             <div class="text-center mt-4">
                 <a class="btn btn-primary" href="/comunidades/{{comunidad.id}}/incidentes">
                     <i class="fas fa-arrow-right"></i> Incidentes
