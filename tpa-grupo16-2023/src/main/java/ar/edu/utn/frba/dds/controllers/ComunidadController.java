@@ -37,11 +37,16 @@ public class ComunidadController {
     }
 
     public void create(Context context){
-        // TODO
+        Map<String, Object> model = new HashMap<>();
+        context.render("comunidades/comunidad_crear.hbs", model);
     }
 
     public void procesar_creacion(Context context) {
-        //TODO
+        String comunidad = context.formParam("comunidad");
+        crearNuevaComunidad(comunidad);
+        String redirectScript = "<script> window.alert(\"Comunidad creada correctamente.\"); " +
+                "setTimeout(function() { window.location.href = '/usuarios/perfiles'; }, 0); </script>";
+        context.html(redirectScript);
     }
     public void save(Context context){
         // TODO
@@ -59,4 +64,8 @@ public class ComunidadController {
         // TODO
     }
 
+    public void crearNuevaComunidad (String nombreComunidad) {
+        Comunidad nuevaComunidad = new Comunidad(nombreComunidad);
+        repoComunidad.guardar(nuevaComunidad);
+    }
 }

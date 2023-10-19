@@ -60,9 +60,10 @@ public class Router {
             get("/usuarios/usuario/notificaciones/horarios/{id}/quitar", ((UsuariosController) FactoryController.controller("usuario"))::quitar_horario);
 
             // Comunidades
+
+            get("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::create);
+            post("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::procesar_creacion);
             get("/comunidades/{comunidad_id}", ((ComunidadController) FactoryController.controller("comunidad"))::show);
-//            get("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::create);
-//            post("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::procesar_creacion);
 
 
             //rankings
