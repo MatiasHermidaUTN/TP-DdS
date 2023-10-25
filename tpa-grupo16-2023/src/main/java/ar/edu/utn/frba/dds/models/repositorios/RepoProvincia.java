@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.models.repositorios;
 
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.localizacion.Provincia;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import javax.persistence.EntityTransaction;
@@ -45,5 +46,16 @@ public class RepoProvincia implements WithSimplePersistenceUnit {
 
     public List<Provincia> buscarTodos() {
         return entityManager().createQuery("from " + Provincia.class.getName()).getResultList();
+    }
+
+    public Provincia buscarPorNombre(String nombre) {
+        return  (Provincia) entityManager()
+                .createQuery("from " + Provincia.class.getName() + " where nombre = :nombre")
+                .setParameter("nombre", nombre)
+                .getResultList().get(0);
+    }
+
+    public boolean existeElemento(Provincia provincia) {
+        return entityManager().contains(provincia);
     }
 }

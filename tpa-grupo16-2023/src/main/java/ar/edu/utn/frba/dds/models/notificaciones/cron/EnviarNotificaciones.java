@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.models.notificaciones.cron;
 
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 
-import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoUsuarioDeprecado;
+import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
 
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.SinApuros;
 
@@ -17,13 +17,15 @@ import java.util.stream.Collectors;
 
 public class EnviarNotificaciones  implements Job {
 
+    private RepoUsuario repoUsuario = new RepoUsuario();
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
         System.out.print(LocalDateTime.now());
 
         List<Usuario> usuariosSinApuros =
-                RepoUsuarioDeprecado.buscarTodos().stream()
+                repoUsuario.buscarTodos().stream()
                         .filter(u -> u.getConfiguracionNotificacion() instanceof SinApuros)
                         .collect(Collectors.toList());
 

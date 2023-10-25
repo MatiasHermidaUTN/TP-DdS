@@ -25,7 +25,7 @@ public class CronGlobal {
             .withSchedule(CronScheduleBuilder.cronSchedule("0 0 * * * ?"))
             .build();
 
-    public void enviarConfigurable() {
+    public void iniciar() {
         try {
             scheduler.start();
             scheduler.scheduleJob(job, trigger);

@@ -251,7 +251,7 @@ public class UsuariosController {
 //                localizacion = adapterGeoref.obtenerLocalizacionIds(provincia, departamento, localidad, direccion);
                 } catch(RuntimeException | IOException e){
                     String poneBienLaDirec = "<script> window.alert(\"Coloque una direccion Valida.\");"
-                            + "setTimeout(function() { window.location.href = '/usuarios/usuario/editar'; }, 0); </script>";
+                            + "setTimeout(function() { window.location.href = '/usuarios/usuario/editar'; }, 500); </script>";
                     context.html(poneBienLaDirec);
                 }
             }
@@ -282,7 +282,7 @@ public class UsuariosController {
             String redirectScript = """
                     <script>
                     window.alert(\"La contraseña se cambio exitosamente.\");
-                    setTimeout(function() { window.location.href = '/usuarios/usuario'; }, 0);
+                    setTimeout(function() { window.location.href = '/usuarios/usuario'; }, 500);
                     </script>
                     """;
 
@@ -291,7 +291,7 @@ public class UsuariosController {
         else {
             String redirectScript =
                     "<script> window.alert(\"" + resultado.getMensajeError() + ".\");" +
-                            "setTimeout(function() { window.location.href = '/usuarios/usuario/password'; }, 0); </script>";
+                            "setTimeout(function() { window.location.href = '/usuarios/usuario/password'; }, 500); </script>";
             context.html(redirectScript);
         }
     }

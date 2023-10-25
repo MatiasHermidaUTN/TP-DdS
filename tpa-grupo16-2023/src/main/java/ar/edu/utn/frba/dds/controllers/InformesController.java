@@ -17,18 +17,25 @@ public class InformesController {
     }
 
     public void mostrar_informe_reciente(Context context){
-        InformeSemanal ultimoInforme = this.repoInforme.buscarTodos().get(0);
-        Map<String, Object> model = new HashMap<>();
+        try {
+            InformeSemanal ultimoInforme = this.repoInforme.buscarTodos().get(0);
+            Map<String, Object> model = new HashMap<>();
 
-        List<String> rankingMayorPromedioCierre = ultimoInforme.generarListaDeStrings(ultimoInforme.getRankingMayorPromedioCierreString());
-        List<String> rankingMayorIncidentesReportados = ultimoInforme.generarListaDeStrings(ultimoInforme.getRankingMayorIncidentesReportadosString());
-        List<String> rankingMayorImpactoProblematicas = ultimoInforme.generarListaDeStrings(ultimoInforme.getRankingMayorImpactoProblematicasString());
+            List<String> rankingMayorPromedioCierre = ultimoInforme.generarListaDeStrings(ultimoInforme.getRankingMayorPromedioCierreString());
+            List<String> rankingMayorIncidentesReportados = ultimoInforme.generarListaDeStrings(ultimoInforme.getRankingMayorIncidentesReportadosString());
+            List<String> rankingMayorImpactoProblematicas = ultimoInforme.generarListaDeStrings(ultimoInforme.getRankingMayorImpactoProblematicasString());
 
-        model.put("fecha", ultimoInforme.getFechaCreacion());
-        model.put("rankingMayorPromedioCierre", rankingMayorPromedioCierre);
-        model.put("rankingMayorIncidentesReportados", rankingMayorIncidentesReportados);
-        model.put("rankingMayorImpactoProblematicas", rankingMayorImpactoProblematicas);
+            model.put("fecha", ultimoInforme.getFechaCreacion());
+            model.put("rankingMayorPromedioCierre", rankingMayorPromedioCierre);
+            model.put("rankingMayorIncidentesReportados", rankingMayorIncidentesReportados);
+            model.put("rankingMayorImpactoProblematicas", rankingMayorImpactoProblematicas);
 
-        context.render("/rankings/rankings.hbs", model);
+            context.render("/rankings/rankings.hbs", model);
+        } catch (IndexOutOfBoundsException e){
+            String redirect = "<script> window.alert(\"No hay rankings generados.\");"
+                    + "setTimeout(function() { window.location.href = '/usuarios/perfiles'; }, 0); </script>";
+            context.html(redirect);
+        }
+
     }
 }

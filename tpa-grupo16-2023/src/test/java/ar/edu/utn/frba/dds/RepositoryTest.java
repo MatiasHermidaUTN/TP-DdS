@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import ar.edu.utn.frba.dds.controllers.UsuariosController;
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
+import ar.edu.utn.frba.dds.models.comunidades.TipoUsuario;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
 import ar.edu.utn.frba.dds.models.incidentes.EstadoIncidente;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RepositoryTest {
     RepoComunidad repoComunidad = new RepoComunidad();
@@ -176,6 +178,17 @@ public class RepositoryTest {
         }
     }
     @Test
+    public void probarProv() throws IOException {
+        List<Provincia> provincias = adapterGeoref.obtenerListadoProvincias();
+        for (Provincia unaProvincia: provincias) {
+            if (repoProvincia.buscarPorId(unaProvincia.getId()) != null){
+                System.out.println("Existe en la base de datos la provincia: " + unaProvincia.getNombre());
+            } else {
+                System.out.println("No");
+            }
+        }
+    }
+    @Test
     public void cargarDatos() throws IOException{
 //        Localidad unaLocalidad = repoLocalidad.buscarPorNombre("almagro");
 //        Ubicacion unaUbicacion = adapterGeoref.obtenerUbicacion("av corrientes 4600", unaLocalidad);
@@ -211,5 +224,12 @@ public class RepositoryTest {
 //        repoIncidente.guardar(nuevoIncidente);
     }
 
+    @Test
+    public void incidentesCercanosDatos() throws IOException{
+        String usuario = "Cerquita";
+        String contrasenia  = "Cerca1@";
+        repoUsuario.guardar(new Usuario("emailcercano@gmail.com", usuario, contrasenia, TipoUsuario.NORMAL));
+        usuariosController.agregarLocalizacionUsuario(repoUsuario.buscarPorUsuarioYContrasenia(usuario, contrasenia).getId(), "av corrientes 4600", "ALMAGRO");
 
+    }
 }
