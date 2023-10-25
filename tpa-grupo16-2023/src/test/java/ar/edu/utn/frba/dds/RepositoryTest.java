@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RepositoryTest {
     RepoComunidad repoComunidad = new RepoComunidad();
@@ -172,6 +173,17 @@ public class RepositoryTest {
             for (Departamento unDepartamento : departamentos) {
                 List<Localidad> localidades = adapterGeoref.obtenerListadoLocalidades(unDepartamento);
                 repoLocalidad.guardarMuchas(localidades);
+            }
+        }
+    }
+    @Test
+    public void probarProv() throws IOException {
+        List<Provincia> provincias = adapterGeoref.obtenerListadoProvincias();
+        for (Provincia unaProvincia: provincias) {
+            if (repoProvincia.buscarPorId(unaProvincia.getId()) != null){
+                System.out.println("Existe en la base de datos la provincia: " + unaProvincia.getNombre());
+            } else {
+                System.out.println("No");
             }
         }
     }

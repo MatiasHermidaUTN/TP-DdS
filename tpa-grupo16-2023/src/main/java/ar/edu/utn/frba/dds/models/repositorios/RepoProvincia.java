@@ -46,4 +46,8 @@ public class RepoProvincia implements WithSimplePersistenceUnit {
     public List<Provincia> buscarTodos() {
         return entityManager().createQuery("from " + Provincia.class.getName()).getResultList();
     }
+
+    public boolean existeElemento(Provincia provincia) {
+        return entityManager().contains(provincia);
+    }
 }
