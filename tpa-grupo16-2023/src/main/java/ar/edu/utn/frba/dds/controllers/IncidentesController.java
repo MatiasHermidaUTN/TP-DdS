@@ -251,14 +251,14 @@ public class IncidentesController {
 
     public void incidenteCercanoCerrar(Context context) {
         Incidente incidenteACerrar = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
-        Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(context.cookie("perfil_id")));
+        Usuario usuario = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
 
-        incidenteACerrar.setUsuarioCierre(this.repoUsuario.buscarPorId(perfil.getUsuario().getId()));
+        incidenteACerrar.setUsuarioCierre(this.repoUsuario.buscarPorId(usuario.getId()));
         incidenteACerrar.setHorarioCierre(LocalDateTime.now());
         incidenteACerrar.setEstado(EstadoIncidente.RESUELTO);
 
         // notificar a cada miembro
-        perfil.getComunidad().getMiembros()
+        incidenteACerrar.getComunidad().getMiembros()
                 .forEach(miembro -> miembro.getUsuario().recibirNotificacionDeCierreDeIncidente(incidenteACerrar));
 
 
