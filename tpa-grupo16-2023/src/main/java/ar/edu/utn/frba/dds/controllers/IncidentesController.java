@@ -223,16 +223,23 @@ public class IncidentesController {
 
         Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(Objects.requireNonNull(context.cookie("usuario_id"))));
 
-        Localizacion locaUsuario = usuario.getLocalizacion();
+        try {
+            Localizacion locaUsuario = usuario.getLocalizacion();
+            List<Incidente> incidenteCercanos = AdapterCercaniaLocalizacion.filtrarIncidentesCercanos(
+                    incidentes,
+                    locaUsuario.getUbicacion().getLat(),
+                    locaUsuario.getUbicacion().getLon(),
+                    radioCercaniaMetros);
 
-        List<Incidente> incidenteCercanos = AdapterCercaniaLocalizacion.filtrarIncidentesCercanos(
-                incidentes,
-                locaUsuario.getUbicacion().getLat(),
-                locaUsuario.getUbicacion().getLon(),
-                radioCercaniaMetros);
+            model.put("incidentes", incidenteCercanos);
+            context.render("incidentes/incidentesCercanos.hbs", model);
+        } catch (NullPointerException e) {
+            String redirect = "<script> window.alert(\"El usuario no tiene localizacion, asignela en la seccion 'editar datos'.\");"
+                    + "setTimeout(function() { window.location.href = '/usuarios/perfiles'; }, 0); </script>";
+            context.html(redirect);
+        }
 
-        model.put("incidentes", incidenteCercanos);
-        context.render("incidentes/incidentesCercanos.hbs", model);
+
     }
 
     public void incidenteCercano(Context context) {

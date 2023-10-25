@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import ar.edu.utn.frba.dds.controllers.UsuariosController;
 import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
+import ar.edu.utn.frba.dds.models.comunidades.TipoUsuario;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
 import ar.edu.utn.frba.dds.models.incidentes.EstadoIncidente;
@@ -223,5 +224,12 @@ public class RepositoryTest {
 //        repoIncidente.guardar(nuevoIncidente);
     }
 
+    @Test
+    public void incidentesCercanosDatos() throws IOException{
+        String usuario = "Cerquita";
+        String contrasenia  = "Cerca1@";
+        repoUsuario.guardar(new Usuario("emailcercano@gmail.com", usuario, contrasenia, TipoUsuario.NORMAL));
+        usuariosController.agregarLocalizacionUsuario(repoUsuario.buscarPorUsuarioYContrasenia(usuario, contrasenia).getId(), "av corrientes 4600", "ALMAGRO");
 
+    }
 }
