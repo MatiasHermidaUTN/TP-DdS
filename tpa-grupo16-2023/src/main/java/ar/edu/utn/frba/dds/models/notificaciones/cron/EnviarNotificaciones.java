@@ -2,7 +2,6 @@ package ar.edu.utn.frba.dds.models.notificaciones.cron;
 
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 
-import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoUsuarioDeprecado;
 import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
 
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.SinApuros;

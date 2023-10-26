@@ -1,8 +1,10 @@
 package ar.edu.utn.frba.dds.models.lectorCSV;
 
 import ar.edu.utn.frba.dds.controllers.EstablecimientoController;
+import ar.edu.utn.frba.dds.models.localizacion.Localizacion;
 import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.models.repositorios.RepoOrganismoDeControl;
+import ar.edu.utn.frba.dds.models.repositorios.RepoProvincia;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.OrganismoDeControl;
 
@@ -18,6 +20,7 @@ public class LectorCSV {
     private String entidadesControladas;
     private DatosCSV datosCSV;
     private RepoEntidad repoEntidad = new RepoEntidad();
+    private RepoProvincia repoProvincia = new RepoProvincia();
     private RepoOrganismoDeControl repoOrganismoDeControl = new RepoOrganismoDeControl();
     private EstablecimientoController establecimientoController = new EstablecimientoController();
 
@@ -93,6 +96,7 @@ public class LectorCSV {
 
                 // mapea todos los atributos a las variables temporales
                 nombre = celdas[1];
+                String provincia = celdas[2];
                 establecimientos = celdas[3];
                 String[] arrayEstablecimientos = establecimientos.split(";");
                 entidadesControladas = celdas[5];
@@ -100,7 +104,9 @@ public class LectorCSV {
 
                 // instancia la clase correspondiente
                 if(Objects.equals(celdas[0], "entidad")){
-                    repoEntidad.guardar(new Entidad(nombre));
+                    Entidad entidad = new Entidad(nombre);
+                    entidad.setLocalizacion(new Localizacion(repoProvincia.buscarPorNombre(provincia).getCentroide()));
+                    repoEntidad.guardar(entidad);
 //                    datosCSV.agregarEntidad(new Entidad(nombre));
                     if (!Objects.equals(arrayEstablecimientos[0], "NULL")){
                         arrayEstablecimientos[0] = arrayEstablecimientos[0].replace("[", "");
