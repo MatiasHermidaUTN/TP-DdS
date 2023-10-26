@@ -163,7 +163,7 @@ public class IncidentesController {
         unaComunidad.getMiembros()
                 .forEach(miembro -> miembro.getUsuario().recibirNotificacionDeAperturaDeIncidente(incidente));
 
-        List<Usuario> usuarioList = new RepoUsuario().buscarTodos(); // no se si esta bien
+        List<Usuario> usuarioList = this.repoUsuario.buscarTodos();
         usuarioList.stream()
                 .filter(
                         unUsuario -> unUsuario.getServiciosInteres().contains(servicio) &&
@@ -176,52 +176,6 @@ public class IncidentesController {
 
         return incidente;
     }
-
-    public void crearIncidente(Establecimiento establecimiento, Servicio servicio, Usuario usuarioApertura) {
-
-        List<Comunidad> comunidades = usuarioApertura.getPerfiles()
-                .stream()
-                .map(perfil -> perfil.getComunidad()).toList();
-
-        for (Comunidad unaComunidad : comunidades) {
-            Incidente incidente = new Incidente(establecimiento, unaComunidad, servicio, usuarioApertura);
-            unaComunidad.agregarIncidente(incidente);
-            // TODO Esto lo tendria que hacer el prestacion controller (creo)
-            crear_o_agregar_prestacion(establecimiento, servicio, incidente);
-
-            // notificar a cada miembro
-            unaComunidad.getMiembros()
-                    .forEach(perfil -> perfil.getUsuario().recibirNotificacionDeAperturaDeIncidente(incidente));
-        }
-
-        List<Usuario> usuarioList = new RepoUsuario().buscarTodos(); // no se si esta bien
-        usuarioList.stream()
-                .filter(
-                        unUsuario -> unUsuario.getServiciosInteres().contains(servicio) &&
-                                unUsuario.getEntidadesInteres()
-                                        .contains(establecimiento.getEntidad())
-                )
-                // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
-                .forEach(usuario -> usuario.
-                        recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, new Comunidad("Servicio Interes Particular"), servicio, usuarioApertura)));
-    }
-
-//    public void rankings(Context context) {
-//        MayorPromedioCierre mayorPromedioCierre = new MayorPromedioCierre();
-//        MayorIncidentesReportados mayorIncidentesReportados = new MayorIncidentesReportados();
-//        MayorImpactoProblematicas mayorImpactoProblematicas = new MayorImpactoProblematicas();
-//
-//        List<Entidad> rankingEntidadesMayorPromedioCierre = mayorPromedioCierre.generarRanking(LocalDateTime.now());
-//        List<Entidad> rankingEntidadesMayorIncidentesReportados = mayorIncidentesReportados.generarRanking(LocalDateTime.now());
-//        List<Entidad> rankingEntidadesMayorImpactoProblematicas = mayorImpactoProblematicas.generarRanking(LocalDateTime.now());
-//
-//
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("rankingEntidadesMayorPromedioCierre", rankingEntidadesMayorPromedioCierre);
-//        model.put("rankingEntidadesMayorIncidentesReportados", rankingEntidadesMayorIncidentesReportados);
-//        model.put("rankingEntidadesMayorImpactoProblematicas", rankingEntidadesMayorImpactoProblematicas);
-//        context.render("incidentes/rankings.hbs", model);
-//    }
 
     public void incidentesCercanos(Context context) {
         Map<String, Object> model = new HashMap<>();

@@ -226,7 +226,9 @@ public class UsuariosController {
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
             usuario.setUsuario(context.formParam("usuario"));
             usuario.setEmail(context.formParam("email"));
-            usuario.setTelefono(Integer.valueOf(context.formParam("telefono")));
+
+            if(!Objects.equals(context.formParam("telefono"), ""))
+                usuario.setTelefono(Integer.valueOf(context.formParam("telefono")));
 
             if(!Objects.equals(context.formParam("direccion"), "")){
                 // agregar localizacion al usuario
@@ -248,8 +250,6 @@ public class UsuariosController {
                     context.html(poneBienLaDirec);
                 }
             }
-
-//            usuario.setLocalizacion(localizacion);
 
             repoUsuario.modificar(usuario);
 

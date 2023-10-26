@@ -164,19 +164,23 @@ public class Usuario extends Persistente {
 
     //Estos son los metodos para notificar:
     public void recibirNotificacionDeAperturaDeIncidente(Incidente incidente) {
-        configuracionNotificacion.notificarIncidenteNuevo(incidente, this);
+        if(configuracionNotificacion != null)
+            configuracionNotificacion.notificarIncidenteNuevo(incidente, this);
     }
 
     public void recibirNotificacionDeCierreDeIncidente(Incidente incidente) {
-        configuracionNotificacion.notificarConclusionDeIncidente(incidente, this);
+        if(configuracionNotificacion != null)
+            configuracionNotificacion.notificarConclusionDeIncidente(incidente, this);
     }
 
     public void recibirNotificacionDeIncidentesCercanos(List<Incidente> incidentes) {
-        configuracionNotificacion.notificarIncidentesCercanos(incidentes, this);
+        if(configuracionNotificacion != null)
+            configuracionNotificacion.notificarIncidentesCercanos(incidentes, this);
     }
 
     public void recibirInformeSemanal(String msjInformeSemanal) {
-        configuracionNotificacion.notificarInformeSemanal(msjInformeSemanal, this);
+        if(configuracionNotificacion != null)
+            configuracionNotificacion.notificarInformeSemanal(msjInformeSemanal, this);
     }
 
     @Override
