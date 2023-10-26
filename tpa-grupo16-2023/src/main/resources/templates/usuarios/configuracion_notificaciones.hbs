@@ -7,6 +7,24 @@
                     <div class="card-body">
                         <form method="POST" action="/usuarios/usuario/notificaciones">
                             <div class="mb-3">
+                                <label for="medio" class="form-label">Medio</label>
+                                <select class="form-select" id="medio" name="medio" autofocus>
+                                        {{#unless usuario.notificador}}
+                                        <option disabled selected value="">Medio de notificación</option>
+                                        <option value="mail">Mail</option>
+                                        <option value="wpp">Whatsapp</option>
+                                        {{else}}
+                                        {{#if usuario.notificarPorMail}}
+                                        <option selected value="mail">Mail</option>
+                                        <option value="wpp">Whatsapp</option>
+                                        {{else}}
+                                        <option selected value="wpp">Whatsapp</option>
+                                        <option value="mail">Mail</option>
+                                        {{/if}}
+                                        {{/unless}}
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="configuracion" class="form-label">Configuracion</label>
                                 <select class="form-select" id="configuracion" name="configuracion" onchange="ocultarOMostrarHorario()" onfocus="ocultarOMostrarHorario()" autofocus>
                                         {{#unless usuario.configuracionNotificacion}}
@@ -34,9 +52,8 @@
                                 <i class="fas fa-times" aria-hidden="true"></i> Cancelar
                             </a>
                         </form>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>

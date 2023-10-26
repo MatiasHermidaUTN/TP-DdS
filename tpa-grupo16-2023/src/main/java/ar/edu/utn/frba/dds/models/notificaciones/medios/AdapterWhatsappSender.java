@@ -16,6 +16,11 @@ public class AdapterWhatsappSender implements Notificador {
     private WhatsappSender whatsappSender;
 
     @Override
+    public Boolean porMail() {
+        return false;
+    }
+
+    @Override
     public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Usuario usuario) {
         Notificacion notificacion = FactoryNotificacion.crearNotificacionDeIncidenteNuevo(incidente);
         return whatsappSender.mandarNotificacion(notificacion, usuario.getTelefono());

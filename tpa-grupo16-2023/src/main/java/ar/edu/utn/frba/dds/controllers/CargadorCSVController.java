@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.controllers;
 import ar.edu.utn.frba.dds.models.lectorCSV.LectorCSV;
 import ar.edu.utn.frba.dds.models.repositorios.RepoEntidad;
 import ar.edu.utn.frba.dds.models.repositorios.RepoOrganismoDeControl;
+import ar.edu.utn.frba.dds.utils.Logueo;
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
 import io.javalin.util.FileUtil;
@@ -21,7 +22,9 @@ public class CargadorCSVController {
     }
 
     public void index(Context context) {
-        context.render("cargaDatos/cargaDatos.hbs");
+        if(Logueo.comprobarLogueo(context)) {
+            context.render("cargaDatos/cargaDatos.hbs");
+        }
     }
     public void cargarDatos(Context context) throws Exception{
         String redirectScript;

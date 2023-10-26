@@ -67,9 +67,11 @@ public class Usuario extends Persistente {
     List<Horario> horarios = new ArrayList<Horario>();
 
     @ManyToMany
+    @JoinTable(name="usuario_incidentes_nuevos")
     List<Incidente> incidentesNuevos = new ArrayList<Incidente>();
 
     @ManyToMany
+    @JoinTable(name="usuario_incidentes_concluidos")
     List<Incidente> incidentesConcluidos = new ArrayList<Incidente>();
 
     public Usuario(String email, String usuario, String contrasenia, Localizacion localizacion) {
@@ -112,6 +114,10 @@ public class Usuario extends Persistente {
         return configuracionNotificacion.apuro();
     }
 
+    public Boolean notificarPorMail() {
+        return notificador.porMail();
+    }
+
     public void agregarIncidenteNuevo(Incidente incidente) {
         this.incidentesNuevos.add(incidente);
     }
@@ -131,6 +137,9 @@ public class Usuario extends Persistente {
 
     public void agregarHorario(Horario horario) {
         this.horarios.add(horario);
+    }
+    public void eliminarHorario(Horario horario) {
+        this.horarios.remove(horario);
     }
 
     public void agregarPerfil(Perfil perfil){

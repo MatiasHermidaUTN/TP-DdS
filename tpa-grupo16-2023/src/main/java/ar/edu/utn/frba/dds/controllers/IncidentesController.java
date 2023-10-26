@@ -16,6 +16,7 @@ import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+import ar.edu.utn.frba.dds.utils.Logueo;
 import io.javalin.http.Context;
 
 import java.time.LocalDateTime;
@@ -50,29 +51,35 @@ public class IncidentesController {
     }
 
     public void index(Context context) {
-        Map<String, Object> model = new HashMap<>();
-        List<Incidente> incidentes = this.repoIncidente.buscarPorComunidad(Integer.parseInt(context.pathParam("id")));
+        if(Logueo.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            List<Incidente> incidentes = this.repoIncidente.buscarPorComunidad(Integer.parseInt(context.pathParam("id")));
 
-        model.put("incidentes", incidentes);
-        context.render("incidentes/incidentes.hbs", model);
+            model.put("incidentes", incidentes);
+            context.render("incidentes/incidentes.hbs", model);
+        }
     }
 
     public void show(Context context) {
-        Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
-        Map<String, Object> model = new HashMap<>();
-        model.put("incidente", incidente);
-        context.render("incidentes/incidente.hbs", model);
+        if(Logueo.comprobarLogueo(context)) {
+            Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+            Map<String, Object> model = new HashMap<>();
+            model.put("incidente", incidente);
+            context.render("incidentes/incidente.hbs", model);
+        }
     }
 
     public void crear(Context context) {
-        Map<String, Object> model = new HashMap<>();
-        List<Entidad> entidades = this.repoEntidad.buscarTodos();
-        List<Establecimiento> establecimientos = this.repoEstablecimiento.buscarTodos();
-        List<Servicio> servicios = this.repoServicio.buscarTodos();
-        model.put("entidades", entidades);
-        model.put("establecimientos", establecimientos);
-        model.put("servicios", servicios);
-        context.render("incidentes/crear.hbs", model);
+        if(Logueo.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            List<Entidad> entidades = this.repoEntidad.buscarTodos();
+            List<Establecimiento> establecimientos = this.repoEstablecimiento.buscarTodos();
+            List<Servicio> servicios = this.repoServicio.buscarTodos();
+            model.put("entidades", entidades);
+            model.put("establecimientos", establecimientos);
+            model.put("servicios", servicios);
+            context.render("incidentes/crear.hbs", model);
+        }
     }
 
     public void procesar_creacion(Context context) {
@@ -152,6 +159,7 @@ public class IncidentesController {
         crear_o_agregar_prestacion(establecimiento, servicio, incidente);
 
         // notificar a cada miembro
+        System.out.println("Está por notificar a los miembros de la comunidad");
         unaComunidad.getMiembros()
                 .forEach(miembro -> miembro.getUsuario().recibirNotificacionDeAperturaDeIncidente(incidente));
 
@@ -243,10 +251,12 @@ public class IncidentesController {
     }
 
     public void incidenteCercano(Context context) {
-        Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
-        Map<String, Object> model = new HashMap<>();
-        model.put("incidente", incidente);
-        context.render("incidentes/unIncidenteCercano.hbs", model);
+        if(Logueo.comprobarLogueo(context)) {
+            Incidente incidente = this.repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+            Map<String, Object> model = new HashMap<>();
+            model.put("incidente", incidente);
+            context.render("incidentes/unIncidenteCercano.hbs", model);
+        }
     }
 
     public void incidenteCercanoCerrar(Context context) {
@@ -274,19 +284,23 @@ public class IncidentesController {
     }
 
     public void observaciones(Context context) {
-        Map<String, Object> model = new HashMap<>();
-        Incidente incidente = repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
-        List<Observacion> observaciones = incidente.getObservaciones();
-        model.put("incidente", incidente);
-        model.put("observaciones", observaciones);
-        context.render("incidentes/observaciones.hbs", model);
+        if(Logueo.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            Incidente incidente = repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+            List<Observacion> observaciones = incidente.getObservaciones();
+            model.put("incidente", incidente);
+            model.put("observaciones", observaciones);
+            context.render("incidentes/observaciones.hbs", model);
+        }
     }
 
     public void agregar_observacion(Context context) {
-        Map<String, Object> model = new HashMap<>();
-        Incidente incidente = repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
-        model.put("incidente", incidente);
-        context.render("incidentes/agregar_observacion.hbs", model);
+        if(Logueo.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            Incidente incidente = repoIncidente.buscarPorId(Integer.valueOf(context.pathParam("id")));
+            model.put("incidente", incidente);
+            context.render("incidentes/agregar_observacion.hbs", model);
+        }
     }
 
     public void procesar_observacion(Context context) {

@@ -14,6 +14,11 @@ public class AdapterMailSender implements Notificador {
     MailSenderJavax mailSender = new MailSenderJavax();
 
     @Override
+    public Boolean porMail() {
+        return true;
+    }
+
+    @Override
     public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Usuario usuario) {
         Notificacion notificacion = FactoryNotificacion.crearNotificacionDeIncidenteNuevo(incidente);
         return mailSender.mandarNotificacion(notificacion, usuario.getEmail());

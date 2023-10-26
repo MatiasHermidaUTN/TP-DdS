@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.models.notificaciones.cron;
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoUsuarioDeprecado;
+import ar.edu.utn.frba.dds.models.repositorios.RepoUsuario;
 
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.SinApuros;
 
@@ -20,13 +21,17 @@ public class EnviarNotificaciones  implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
+        RepoUsuario repoUsuario = new RepoUsuario();
+
         System.out.print(LocalDateTime.now());
 
+        // Solo aquellos usuarios que tengan la configuración SinApuros
         List<Usuario> usuariosSinApuros =
-                RepoUsuarioDeprecado.buscarTodos().stream()
+                repoUsuario.buscarTodos().stream()
                         .filter(u -> u.getConfiguracionNotificacion() instanceof SinApuros)
                         .collect(Collectors.toList());
 
+        // Solo aquellos usuarios que tengan un horario que coincida con el actual, tanto día como hora
         List<Usuario> usuariosANotificar =
                 usuariosSinApuros.stream()
                         .filter(u -> !(u.getHorarios().stream()
@@ -36,11 +41,13 @@ public class EnviarNotificaciones  implements Job {
                                 .isEmpty()))
                         .collect(Collectors.toList());
 
+        // Solo aquellos usuarios que tengan notificaciones pendientes
         List<Usuario> usuariosConNotificacionesPendientes = usuariosANotificar.stream()
                 .filter(u -> !(u.getIncidentesNuevos().isEmpty()
                 && u.getIncidentesConcluidos().isEmpty()))
                 .collect(Collectors.toList());
 
+        // Notificar
         usuariosConNotificacionesPendientes.stream()
                 .forEach(u -> u.getNotificador()
                 .mandarResumenDeIncidentes(
@@ -50,6 +57,7 @@ public class EnviarNotificaciones  implements Job {
                         u.getIncidentesConcluidos(),
                         u));
 
+        // Limpiar los incidentes notificados
         usuariosConNotificacionesPendientes.stream()
                 .forEach(u -> u.incidentesNotificados());
     }

@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.models.comunidades.Comunidad;
 import ar.edu.utn.frba.dds.models.comunidades.GradoDeConfianza;
 import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.repositorios.RepoComunidad;
+import ar.edu.utn.frba.dds.utils.Logueo;
 import io.javalin.http.Context;
 
 import java.util.HashMap;
@@ -22,24 +23,28 @@ public class ComunidadController {
     }
 
     public void show(Context context){
-        Comunidad comunidad = this.repoComunidad.buscarPorId(Integer.valueOf(context.pathParam("comunidad_id")));
-        Map<String, Object> model = new HashMap<>();
-        model.put("comunidad", comunidad);
+        if(Logueo.comprobarLogueo(context)) {
+            Comunidad comunidad = this.repoComunidad.buscarPorId(Integer.valueOf(context.pathParam("comunidad_id")));
+            Map<String, Object> model = new HashMap<>();
+            model.put("comunidad", comunidad);
 
-        Boolean activa = comunidad.getActiva();
-        String estadoComunidad = "";
-        if(activa != null && activa)
-            estadoComunidad = "ACTIVA";
-        else if(activa != null)
-            estadoComunidad = "NO ACTIVA";
-        model.put("estadoComunidad", estadoComunidad);
+            Boolean activa = comunidad.getActiva();
+            String estadoComunidad = "";
+            if (activa != null && activa)
+                estadoComunidad = "ACTIVA";
+            else if (activa != null)
+                estadoComunidad = "NO ACTIVA";
+            model.put("estadoComunidad", estadoComunidad);
 
-        context.render("comunidades/comunidad.hbs", model);
+            context.render("comunidades/comunidad.hbs", model);
+        }
     }
 
     public void create(Context context){
-        Map<String, Object> model = new HashMap<>();
-        context.render("comunidades/comunidad_crear.hbs", model);
+        if(Logueo.comprobarLogueo(context)) {
+            Map<String, Object> model = new HashMap<>();
+            context.render("comunidades/comunidad_crear.hbs", model);
+        }
     }
 
     public void procesar_creacion(Context context) {

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface Notificador {
 
+    public Boolean porMail();
     public Boolean mandarNotificacionDeIncidenteNuevo(Incidente incidente, Usuario usuario);
 
     public Boolean mandarNotificacionDeConclusionDeIncidente(Incidente incidente, Usuario usuario);
@@ -16,4 +17,5 @@ public interface Notificador {
     public Boolean mandarNotificacionRevisionDeIncidentesCercano(List<Incidente> incidentesCercanos, Usuario usuario);
 
     public Boolean mandarNotificacionInformeSemanal(String msjInformeSemanal, Usuario usuario);
+
 }

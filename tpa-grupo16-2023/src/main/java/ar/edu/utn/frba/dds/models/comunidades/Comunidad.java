@@ -21,7 +21,7 @@ public class Comunidad extends Persistente {
     @Column(name = "comunidad_nombre")
     private String nombre;
 
-    @Transient
+    @OneToMany(mappedBy = "comunidad", fetch = FetchType.EAGER)
     private List<Perfil> miembros;
 
     @ManyToMany

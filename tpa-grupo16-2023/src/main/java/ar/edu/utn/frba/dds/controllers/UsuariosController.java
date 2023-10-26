@@ -9,12 +9,14 @@ import ar.edu.utn.frba.dds.models.localizacion.*;
 import ar.edu.utn.frba.dds.models.notificaciones.Horario;
 import ar.edu.utn.frba.dds.models.notificaciones.cron.DiaSemana;
 import ar.edu.utn.frba.dds.models.notificaciones.estrategias.ConfiguracionNotificacion;
+import ar.edu.utn.frba.dds.models.notificaciones.medios.Notificador;
 import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
 import ar.edu.utn.frba.dds.models.validador.Resultado;
 import ar.edu.utn.frba.dds.models.validador.Validador;
+import ar.edu.utn.frba.dds.utils.Logueo;
 import io.javalin.http.Context;
 
 import java.io.IOException;
@@ -22,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static java.lang.Thread.sleep;
 
 public class UsuariosController {
     private RepoUsuario repoUsuario;
@@ -120,7 +124,7 @@ public class UsuariosController {
     }
 
     public void mostrar_perfiles(Context context){
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             List<Perfil> perfiles = this.repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id"))).getPerfiles();
             model.put("perfiles", perfiles);
@@ -130,7 +134,7 @@ public class UsuariosController {
     }
 
     public void mostrar_perfil(Context context){
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             String perfil_id = context.pathParam("perfil_id");
             context.cookie("perfil_id", perfil_id);
             Perfil perfil = this.repoPerfil.buscarPorId(Integer.valueOf(perfil_id));
@@ -142,7 +146,7 @@ public class UsuariosController {
     }
 
     public void crear_perfil(Context context){
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             model.put("usuario_id", context.cookie("usuario_id"));
             model.put("comunidades", this.repoComunidad.buscarTodos());
@@ -197,19 +201,8 @@ public class UsuariosController {
         context.redirect("/login");
     }
 
-    public Boolean comprobarLogueo(Context context) {
-        if(context.cookie("usuario_id") == null) {
-            String hayQueLoguearse = "<script> window.alert(\"Por favor, logueese primero.\");"
-                    + "setTimeout(function() { window.location.href = '/login'; }, 0); </script>";
-            context.html(hayQueLoguearse);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public void configuracion_de_usuario(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
             model.put("usuario", usuario);
@@ -218,7 +211,7 @@ public class UsuariosController {
     }
 
     public void editar_datos(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
             List<Provincia> provincias = repoProvincia.buscarTodos();
@@ -229,7 +222,7 @@ public class UsuariosController {
     }
 
     public void procesar_edicion_datos(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
             usuario.setUsuario(context.formParam("usuario"));
             usuario.setEmail(context.formParam("email"));
@@ -265,7 +258,7 @@ public class UsuariosController {
     }
 
     public void cambiar_contrasenia(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             context.render("usuarios/cambiar_contrasenia.hbs", model);
         }
@@ -297,7 +290,7 @@ public class UsuariosController {
     }
 
     public void configurar_envio_notificaciones(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
             model.put("usuario", usuario);
@@ -306,12 +299,16 @@ public class UsuariosController {
     }
 
     public void procesar_configuracion_notificaciones(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             ConfiguracionNotificacionConverter converterConfigNotific = new ConfiguracionNotificacionConverter();
+            NotificadorConverter converterNotificacion = new NotificadorConverter();
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
             String configNotific = context.formParam("configuracion");
+            String medioNotific = context.formParam("medio");
             ConfiguracionNotificacion configuracion = converterConfigNotific.convertToEntityAttribute(configNotific);
+            Notificador notificador = converterNotificacion.convertToEntityAttribute((medioNotific));
             usuario.setConfiguracionNotificacion(configuracion);
+            usuario.setNotificador(notificador);
             this.repoUsuario.modificar(usuario);
 
             context.redirect("/usuarios/usuario");
@@ -319,7 +316,7 @@ public class UsuariosController {
     }
 
     public void horarios(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
             model.put("usuario", usuario);
@@ -328,23 +325,26 @@ public class UsuariosController {
     }
 
     public void quitar_horario(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Horario horario = repoHorario.buscarPorId(Integer.valueOf(context.pathParam("id")));
-            repoHorario.eliminar(horario);
+            Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
+            usuario.eliminarHorario(horario);
+            this.repoUsuario.modificar(usuario);
+            this.repoHorario.eliminar(horario);
 
-            context.redirect("/usuarios/usuario/notificaciones/horarios");
+            context.html("<script> setTimeout(function() { window.location.href = '/usuarios/usuario/notificaciones/horarios'; }, 500); </script>");
         }
     }
 
     public void agregar_horario(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             context.render("usuarios/agregar_horario.hbs", model);
         }
     }
 
     public void procesar_horario(Context context) {
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             DiaSemanaConverter diaConverter = new DiaSemanaConverter();
             DiaSemana dia = diaConverter.convertToEntityAttribute(context.formParam("dia"));
             Horario horario = new Horario(dia, Integer.valueOf(context.formParam("hora")));
@@ -357,7 +357,7 @@ public class UsuariosController {
     }
 
     public void cargar_intereses(Context context){
-        if(this.comprobarLogueo(context)) {
+        if(Logueo.comprobarLogueo(context)) {
             Map<String, Object> model = new HashMap<>();
             Usuario usuario = repoUsuario.buscarPorId(Integer.valueOf(context.cookie("usuario_id")));
 
