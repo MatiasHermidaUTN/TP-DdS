@@ -1,0 +1,19 @@
+{% assign perfiles = perfiles | default: [] %}
+
+<!-- Esta es la pantalla principal del usuario (adonde redirige el home) -->
+<h1 class="text-center mt-4">Tus Perfiles</h1>
+
+<ul class="list-group mt-4">
+    {% for perfil in perfiles %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-1"><strong>Nickname:</strong> {{ perfil.nickname }}</h5>
+            </div>
+            <div>
+                <a class="btn btn-primary" href="/usuarios/perfiles/{{ perfil.id }}">
+                    <i class="fas fa-arrow-right"></i> Acceder
+                </a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

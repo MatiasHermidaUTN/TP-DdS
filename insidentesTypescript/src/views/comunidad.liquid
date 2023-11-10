@@ -1,0 +1,24 @@
+{% assign comunidad = comunidad | default: {} %}
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h1>Comunidad {{ comunidad.nombre }}</h1>
+    </div>
+    <div class="card-body">
+        <h3><strong>Grado de Confianza:</strong> {{ comunidad.gradoDeConfianza }}</h3>
+        <h3><strong>Estado de la Comunidad:</strong> {{ estadoComunidad }}</h3>
+
+        <h3>Miembros de la Comunidad:</h3>
+        <ul>
+            {% for miembro in comunidad.miembros %}
+                <li>{{ miembro.nickname }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="text-center mt-4">
+            <a class="btn btn-primary" href="/comunidades/{{ comunidad.id }}/incidentes">
+                <i class="fas fa-arrow-right"></i> Incidentes
+            </a>
+        </div>
+    </div>
+</div>
