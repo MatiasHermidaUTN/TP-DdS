@@ -7,14 +7,14 @@ import {
     JoinTable,
   } from "typeorm";
   import { Perfil } from "./Perfil"; // Asegúrate de importar la clase Perfil correcta
-  import { Servicio } from "./Servicio"; // Asegúrate de importar la clase Servicio correcta
-  import { Establecimiento } from "./Establecimiento"; // Asegúrate de importar la clase Establecimiento correcta
-  import { Incidente } from "./Incidente"; // Asegúrate de importar la clase Incidente correcta
+  import { Servicio } from "../ServiciosPublicos/Servicio"; // Asegúrate de importar la clase Servicio correcta
+  import { Establecimiento } from "../ServiciosPublicos/Establecimiento"; // Asegúrate de importar la clase Establecimiento correcta
+  import { Incidente } from "../Incidentes/Incidente"; // Asegúrate de importar la clase Incidente correcta
   
   @Entity()
   export class Comunidad {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
   
     @Column({ name: "comunidad_nombre" })
     nombre: string;
@@ -32,11 +32,8 @@ import {
   
     incidentes: Incidente[]; // No se necesita la anotación @Transient en TypeScript
   
-    @Column({ name: "grado_de_confianza" })
-    gradoDeConfianza: string; // Asegúrate de que GradoDeConfianza tenga un tipo adecuado en TypeScript
-  
     @Column()
-    activa: boolean;
+    activa!: boolean;
   
     constructor(nombre: string) {
       this.nombre = nombre;
@@ -88,7 +85,6 @@ import {
         serviciosDeComunidad: this.serviciosDeComunidad,
         establecimientosDeComunidad: this.establecimientosDeComunidad,
         incidentes: this.incidentes,
-        gradoDeConfianza: this.gradoDeConfianza,
         activa: this.activa,
       });
     }

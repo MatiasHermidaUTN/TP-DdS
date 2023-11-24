@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToMany, JoinColumn, JoinTable } from "typeorm";
-import { Establecimiento } from "./Establecimiento"; // Asegúrate de importar la clase Establecimiento correcta
-import { Servicio } from "./Servicio"; // Asegúrate de importar la clase Servicio correcta
+import { Establecimiento } from "../ServiciosPublicos/Establecimiento"; // Asegúrate de importar la clase Establecimiento correcta
+import { Servicio } from "../ServiciosPublicos/Servicio"; // Asegúrate de importar la clase Servicio correcta
 import { Incidente } from "./Incidente"; // Asegúrate de importar la clase Incidente correcta
 
 @Entity()
 export class Prestacion {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @OneToOne(() => Establecimiento, { eager: true })
   @JoinColumn({ name: "establecimiento_id" })

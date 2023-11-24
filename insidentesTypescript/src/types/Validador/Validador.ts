@@ -1,4 +1,4 @@
-import { Regla } from './reglas'; // Importa las reglas correspondientes
+import { Regla } from './Reglas/*'; // Importa las reglas correspondientes
 import { Resultado } from './resultado'; // Importa la clase Resultado
 
 export class Validador {

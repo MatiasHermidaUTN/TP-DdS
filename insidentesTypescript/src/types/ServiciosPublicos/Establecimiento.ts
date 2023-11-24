@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from "typeorm";
 import { Entidad } from "./Entidad";
-import { Localizacion } from "./Localizacion";
 import { Servicio } from "./Servicio";
+import { EstadoServicio } from './EstadoServicio';
 
 @Entity()
 export class Establecimiento {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
   nombre: string;
@@ -14,12 +14,8 @@ export class Establecimiento {
   @ManyToOne(type => Entidad, entidad => entidad.establecimientos, {
     cascade: true,
   })
-  entidad: Entidad;
+  entidad!: Entidad;
 
-  @OneToOne(type => Localizacion, {
-    cascade: true,
-  })
-  localizacion: Localizacion;
 
   servicios: Servicio[];
 

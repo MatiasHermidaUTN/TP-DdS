@@ -3,13 +3,15 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity()
 export class AtributoVariable {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
   nombre_atributo: string;
 
   @Column()
   valor_atributo: string;
+  
+  entidad: any;
 
   constructor(nombre_atributo: string, valor_atributo: string) {
     this.nombre_atributo = nombre_atributo;

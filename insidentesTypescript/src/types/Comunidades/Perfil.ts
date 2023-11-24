@@ -7,7 +7,7 @@ import TipoMiembro from "./TipoMiembro"; // Importa el enum TipoMiembro adecuado
 @Entity()
 export class Perfil {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
   nickname: string;
@@ -19,10 +19,10 @@ export class Perfil {
   tipoPerfil: TipoPerfil; // Asegúrate de que TipoPerfil sea un tipo adecuado en TypeScript
 
   @Column({ name: "tipo_miembro" })
-  tipoMiembro: TipoMiembro; // Asegúrate de que TipoMiembro sea un tipo adecuado en TypeScript
+  tipoMiembro!: TipoMiembro; // Asegúrate de que TipoMiembro sea un tipo adecuado en TypeScript
 
   @ManyToOne(() => Usuario, { eager: true })
-  usuario: Usuario;
+  usuario!: Usuario;
 
   constructor(nickname: string, comunidad: Comunidad, tipoPerfil: TipoPerfil) {
     this.nickname = nickname;

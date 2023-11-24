@@ -3,8 +3,8 @@
     "host": "localhost", // Cambia esto por la dirección de tu servidor MySQL
     "port": 3306,        // Puerto de tu servidor MySQL
     "username": "root",  // Tu nombre de usuario de MySQL
-    "password": "root", // Tu contraseña de MySQL
-    "database": "mydatabase", // Nombre de tu base de datos MySQL
+    "password": "tpadds16", // Tu contraseña de MySQL
+    "database": "dds2", // Nombre de tu base de datos MySQL
   
     "synchronize": false, // Establece a true solo en entornos de desarrollo para sincronizar la base de datos con los modelos
     "logging": true,      // Activa el registro de consultas SQL en la consola

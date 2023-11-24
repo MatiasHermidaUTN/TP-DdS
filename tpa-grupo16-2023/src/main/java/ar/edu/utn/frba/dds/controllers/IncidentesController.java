@@ -163,16 +163,16 @@ public class IncidentesController {
         unaComunidad.getMiembros()
                 .forEach(miembro -> miembro.getUsuario().recibirNotificacionDeAperturaDeIncidente(incidente));
 
-        List<Usuario> usuarioList = this.repoUsuario.buscarTodos();
-        usuarioList.stream()
-                .filter(
-                        unUsuario -> unUsuario.getServiciosInteres().contains(servicio) &&
-                                unUsuario.getEntidadesInteres()
-                                        .contains(establecimiento.getEntidad())
-                )
-                // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
-                .forEach(usuario -> usuario.
-                        recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, new Comunidad("Servicio Interes Particular"), servicio, perfil.getUsuario())));
+//        List<Usuario> usuarioList = this.repoUsuario.buscarTodos();
+//        usuarioList.stream()
+//                .filter(
+//                        unUsuario -> unUsuario.getServiciosInteres().contains(servicio) &&
+//                                unUsuario.getEntidadesInteres()
+//                                        .contains(establecimiento.getEntidad())
+//                )
+//                // se lo mandamos a un solo perfil de cada usuario para que no reciba notificaciones repetidas (por cada uno de sus perfiles)
+//                .forEach(usuario -> usuario.
+//                        recibirNotificacionDeAperturaDeIncidente(new Incidente(establecimiento, new Comunidad("Servicio Interes Particular"), servicio, perfil.getUsuario())));
 
         return incidente;
     }

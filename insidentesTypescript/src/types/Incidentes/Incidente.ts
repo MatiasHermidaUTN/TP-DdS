@@ -6,25 +6,30 @@ import {
     JoinColumn,
     OneToMany,
   } from "typeorm";
-  import { Comunidad } from "./Comunidad"; // Asegúrate de importar la clase Comunidad correcta
+  import { Comunidad } from "../Comunidades/Comunidad"; // Asegúrate de importar la clase Comunidad correcta
   import { Observacion } from "./Observacion"; // Asegúrate de importar la clase Observacion correcta
-  import { Usuario } from "./Usuario"; // Asegúrate de importar la clase Usuario correcta
+  import { Usuario } from "../Comunidades/Usuario"; // Asegúrate de importar la clase Usuario correcta
+  import { Entidad } from "../ServiciosPublicos/Entidad"; // Asegúrate de importar la clase Entidad correcta
+  import { Establecimiento } from "../ServiciosPublicos/Establecimiento"; // Asegúrate de importar la clase Establecimiento correcta
+  import { Servicio } from "../ServiciosPublicos/Servicio"; // Asegúrate de importar la clase Servicio correcta
+
   import { Prestacion } from "./Prestacion"; // Asegúrate de importar la clase Prestacion correcta
   import EstadoIncidente from "./EstadoIncidente"; // Importa el enum EstadoIncidente adecuado
   
   @Entity()
   export class Incidente {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
   
     @ManyToOne(() => Comunidad, { eager: true })
     @JoinColumn({ name: "comunidad_id" })
     comunidad: Comunidad;
   
     @OneToMany(() => Observacion, (observacion) => observacion.incidente, {
-      cascade: ["persist", "merge"],
+      cascade: true,
     })
     observaciones: Observacion[];
+    
   
     @ManyToOne(() => Usuario, { eager: true })
     @JoinColumn({ name: "usuario_apertura" })
@@ -32,13 +37,13 @@ import {
   
     @ManyToOne(() => Usuario, { eager: true })
     @JoinColumn({ name: "usuario_cierre" })
-    usuarioCierre: Usuario;
+    usuarioCierre!: Usuario;
   
     @Column({ name: "horario_apertura", type: "timestamp" })
     horarioApertura: Date;
   
     @Column({ name: "horario_cierre", type: "timestamp" })
-    horarioCierre: Date;
+    horarioCierre!: Date;
   
     @Column({ name: "estado_incidente" })
     estado: EstadoIncidente; // Asegúrate de que EstadoIncidente tenga un tipo adecuado en TypeScript

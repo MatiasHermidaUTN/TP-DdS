@@ -8,18 +8,14 @@ import {
     JoinTable,
   } from "typeorm";
   import { Perfil } from "./Perfil"; // Asegúrate de importar la clase Perfil correcta
-  import { Localizacion } from "./Localizacion"; // Asegúrate de importar la clase Localizacion correcta
-  import { Entidad } from "./Entidad"; // Asegúrate de importar la clase Entidad correcta
-  import { Servicio } from "./Servicio"; // Asegúrate de importar la clase Servicio correcta
-  import { Incidente } from "./Incidente"; // Asegúrate de importar la clase Incidente correcta
-  import { ConfiguracionNotificacion } from "./ConfiguracionNotificacion"; // Asegúrate de importar la clase ConfiguracionNotificacion correcta
-  import { Notificador } from "./Notificador"; // Asegúrate de importar la clase Notificador correcta
-  import { Horario } from "./Horario"; // Asegúrate de importar la clase Horario correcta
+  import { Entidad } from "../ServiciosPublicos/Entidad"; // Asegúrate de importar la clase Entidad correcta
+  import { Servicio } from "../ServiciosPublicos/Servicio"; // Asegúrate de importar la clase Servicio correcta
+  import { Incidente } from "../Incidentes/Incidente"; // Asegúrate de importar la clase Incidente correcta
   
   @Entity()
   export class Usuario {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
   
     @Column()
     email: string;
@@ -31,13 +27,11 @@ import {
     contrasenia: string;
   
     @Column()
-    telefono: number;
+    telefono!: number;
   
     @ManyToOne(() => Perfil, { eager: true })
     perfiles: Perfil[];
-  
-    @OneToOne(() => Localizacion, { cascade: true })
-    localizacion: Localizacion;
+
   
     @ManyToMany(() => Entidad, { cascade: true })
     @JoinTable()
@@ -48,41 +42,33 @@ import {
     serviciosInteres: Servicio[];
   
     @Column({ name: "tipo_usuario" })
-    tipoUsuario: string; // Asegúrate de que TipoUsuario tenga un tipo adecuado en TypeScript
-  
-    @Column()
-    configuracionNotificacion: ConfiguracionNotificacion;
-  
-    @Column()
-    notificador: Notificador;
-  
-    @ManyToMany(() => Horario, { cascade: true })
-    horarios: Horario[];
+    tipoUsuario!: string; // Asegúrate de que TipoUsuario tenga un tipo adecuado en TypeScript
   
     @ManyToMany(() => Incidente)
     @JoinTable({ name: "usuario_incidentes_nuevos" })
-    incidentesNuevos: Incidente[];
+    incidentesNuevos!: Incidente[];
   
     @ManyToMany(() => Incidente)
     @JoinTable({ name: "usuario_incidentes_concluidos" })
-    incidentesConcluidos: Incidente[];
+    incidentesConcluidos!: Incidente[];
   
-    constructor(email: string, usuario: string, contrasenia: string, localizacion: Localizacion) {
+    constructor(email: string, usuario: string, contrasenia: string) {
       this.email = email;
       this.usuario = usuario;
       this.contrasenia = contrasenia;
       this.perfiles = [];
-      this.localizacion = localizacion;
       this.entidadesInteres = [];
       this.serviciosInteres = [];
     }
-  
-    tieneApuro(): boolean {
-      return this.configuracionNotificacion.apuro();
+
+    setId(id: number) {
+      this.id = id;
     }
-  
-    notificarPorMail(): boolean {
-      return this.notificador.porMail();
+
+    getId() {
+      return JSON.stringify({
+        id: this.id,
+      });
     }
   
     agregarIncidenteNuevo(incidente: Incidente) {
@@ -103,17 +89,6 @@ import {
     incidentesNotificados() {
       this.incidentesNuevos = [];
       this.incidentesConcluidos = [];
-    }
-  
-    agregarHorario(horario: Horario) {
-      this.horarios.push(horario);
-    }
-  
-    eliminarHorario(horario: Horario) {
-      const index = this.horarios.indexOf(horario);
-      if (index !== -1) {
-        this.horarios.splice(index, 1);
-      }
     }
   
     agregarPerfil(perfil: Perfil) {
@@ -139,30 +114,6 @@ import {
       const index = this.serviciosInteres.indexOf(servicio);
       if (index !== -1) {
         this.serviciosInteres.splice(index, 1);
-      }
-    }
-  
-    recibirNotificacionDeAperturaDeIncidente(incidente: Incidente) {
-      if (this.configuracionNotificacion !== null) {
-        this.configuracionNotificacion.notificarIncidenteNuevo(incidente, this);
-      }
-    }
-  
-    recibirNotificacionDeCierreDeIncidente(incidente: Incidente) {
-      if (this.configuracionNotificacion !== null) {
-        this.configuracionNotificacion.notificarConclusionDeIncidente(incidente, this);
-      }
-    }
-  
-    recibirNotificacionDeIncidentesCercanos(incidentes: Incidente[]) {
-      if (this.configuracionNotificacion !== null) {
-        this.configuracionNotificacion.notificarIncidentesCercanos(incidentes, this);
-      }
-    }
-  
-    recibirInformeSemanal(msjInformeSemanal: string) {
-      if (this.configuracionNotificacion !== null) {
-        this.configuracionNotificacion.notificarInformeSemanal(msjInformeSemanal, this);
       }
     }
   

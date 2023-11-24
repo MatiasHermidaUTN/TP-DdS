@@ -5,18 +5,18 @@ import { Servicio } from "./Servicio";
 @Entity()
 export class OrganismoDeControl {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  nombre: string;
+  nombre!: string;
 
   @ManyToMany(() => Entidad)
   @JoinTable()
-  entidadesControladas: Entidad[];
+  entidadesControladas!: Entidad[];
 
   @ManyToMany(() => Servicio)
   @JoinTable()
-  serviciosControlados: Servicio[];
+  serviciosControlados!: Servicio[];
 
   public async agregarEntidadControlada(entidad: Entidad): Promise<void> {
     this.entidadesControladas.push(entidad);

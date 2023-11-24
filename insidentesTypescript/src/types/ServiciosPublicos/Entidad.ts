@@ -1,22 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToMany } from "typeorm";
-import { Localizacion } from "./Localizacion";
 import { Establecimiento } from "./Establecimiento";
 import { AtributoVariable } from "./AtributoVariable";
-import { Usuario } from "./Usuario";
-import { Prestacion } from "./Prestacion";
+import { Usuario } from "../Comunidades/Usuario";
+import { Prestacion } from "../Incidentes/Prestacion";
+import { Servicio } from "../ServiciosPublicos/Servicio";
 
 @Entity()
 export class Entidad {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
   nombre: string;
 
-  @OneToOne(type => Localizacion, {
-    cascade: true,
-  })
-  localizacion: Localizacion;
 
   @ManyToMany(type => Establecimiento, establecimiento => establecimiento.entidad, {
     cascade: true,
