@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "liquidjs": "^10.9.4"
-  }
+    "liquidjs": "^10.9.4",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
+  },
+  "type": "module"
 }
