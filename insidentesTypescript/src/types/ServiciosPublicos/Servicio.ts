@@ -39,7 +39,7 @@ import {
     constructor(nombre: string) {
       super();
       this.nombre = nombre;
-      this.atributosVariables = [];
+      // this.atributosVariables = [];
     }
   
     setEstado(estado: EstadoServicio, usuario: Usuario) {

@@ -37,10 +37,10 @@ import {
   
     constructor(nombre: string) {
       this.nombre = nombre;
-      this.miembros = [];
-      this.serviciosDeComunidad = [];
-      this.establecimientosDeComunidad = [];
-      this.incidentes = [];
+      // this.miembros = [];
+      // this.serviciosDeComunidad = [];
+      // this.establecimientosDeComunidad = [];
+      // this.incidentes = [];
     }
   
     agregarMiembros(...perfiles: Perfil[]) {

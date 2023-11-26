@@ -11,6 +11,7 @@ import {
   import { Entidad } from "../ServiciosPublicos/Entidad"; // Asegúrate de importar la clase Entidad correcta
   import { Servicio } from "../ServiciosPublicos/Servicio"; // Asegúrate de importar la clase Servicio correcta
   import { Incidente } from "../Incidentes/Incidente"; // Asegúrate de importar la clase Incidente correcta
+import TipoUsuario from "./TipoUsuario";
   
   @Entity()
   export class Usuario {
@@ -26,7 +27,7 @@ import {
     @Column()
     contrasenia: string;
   
-    @Column()
+    @Column({nullable:true})
     telefono!: number;
   
     @ManyToOne(() => Perfil, { eager: true })
@@ -56,9 +57,10 @@ import {
       this.email = email;
       this.usuario = usuario;
       this.contrasenia = contrasenia;
-      this.perfiles = [];
-      this.entidadesInteres = [];
-      this.serviciosInteres = [];
+      this.tipoUsuario = TipoUsuario.NORMAL.toString();
+      // this.perfiles = [];
+      // this.entidadesInteres = [];
+      // this.serviciosInteres = [];
     }
 
     setId(id: number) {

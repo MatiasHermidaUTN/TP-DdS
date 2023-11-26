@@ -12,7 +12,7 @@ export class Establecimiento {
   nombre: string;
 
   @ManyToOne(type => Entidad, entidad => entidad.establecimientos, {
-    cascade: true,
+    
   })
   entidad!: Entidad;
 
@@ -21,7 +21,7 @@ export class Establecimiento {
 
   constructor(nombre: string) {
     this.nombre = nombre;
-    this.servicios = [];
+    // this.servicios = [];
   }
 
   public estadoServicio(servicio: Servicio): EstadoServicio {

@@ -15,25 +15,25 @@ export class Entidad {
 
 
   @ManyToMany(type => Establecimiento, establecimiento => establecimiento.entidad, {
-    cascade: true,
+    
   })
   establecimientos: Establecimiento[];
 
   @ManyToMany(type => AtributoVariable, atributoVariable => atributoVariable.entidad, {
-    cascade: true,
+    
   })
   atributosVariables: AtributoVariable[];
 
   @ManyToMany(type => Usuario, usuario => usuario.entidadesInteres, {
-    cascade: true,
+    
   })
   usuariosAsignados: Usuario[];
 
   constructor(nombre: string) {
     this.nombre = nombre;
-    this.establecimientos = [];
-    this.atributosVariables = [];
-    this.usuariosAsignados = [];
+    // this.establecimientos = [];
+    // this.atributosVariables = [];
+    // this.usuariosAsignados = [];
   }
 
   public servicios(): Servicio[] {

@@ -27,7 +27,7 @@ export class Prestacion {
   constructor(establecimiento: Establecimiento, servicio: Servicio) {
     this.establecimiento = establecimiento;
     this.servicio = servicio;
-    this.incidentes = [];
+    // this.incidentes = [];
   }
 
   agregarIncidente(incidente: Incidente) {
