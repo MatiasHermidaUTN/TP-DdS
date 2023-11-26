@@ -1,6 +1,7 @@
 import express from 'express';
 import { createConnection } from 'typeorm';
 import { Liquid } from 'liquidjs';
+import "reflect-metadata";
 
 const app = express();
 const port = 3000;

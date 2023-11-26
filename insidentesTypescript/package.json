@@ -1,8 +1,12 @@
 {
   "dependencies": {
     "liquidjs": "^10.9.4",
+    "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.17"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.10.0"
+  }
 }
