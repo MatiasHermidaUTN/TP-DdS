@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.models.repositorios;
 
 import ar.edu.utn.frba.dds.models.localizacion.Departamento;
+import ar.edu.utn.frba.dds.models.persistencia.EntityManagerHelper;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
@@ -10,44 +11,40 @@ import java.util.List;
 public class RepoDepartamento implements WithSimplePersistenceUnit {
 
     public void guardar(Departamento unDepartamento) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().persist(unDepartamento);
-        tx.commit();
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(unDepartamento);
+        EntityManagerHelper.commit();
     }
 
     public void guardarMuchos(List<Departamento> listaDepartamento) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
+        EntityManagerHelper.beginTransaction();
         for(Departamento unDepartamento : listaDepartamento){
-            entityManager().persist(unDepartamento);
+            EntityManagerHelper.getEntityManager().persist(unDepartamento);
         }
-        tx.commit();
+        EntityManagerHelper.commit();
     }
 
     public void eliminar(Departamento unDepartamento) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().remove(unDepartamento);
-        tx.commit();
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().remove(unDepartamento);
+        EntityManagerHelper.commit();
     }
 
     public void modificar(Departamento unDepartamento) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().merge(unDepartamento);
-        tx.commit();
+        this.guardar(unDepartamento);
     }
 
     public Departamento buscarPorId(Integer id) {
-        return entityManager().find(Departamento.class, id);
+        return EntityManagerHelper
+                .getEntityManager()
+                .find(Departamento.class, id);
     }
 
     public List<Departamento> buscarTodos() {
-        return entityManager().createQuery("from " + Departamento.class.getName()).getResultList();
+        return EntityManagerHelper.createQuery("from " + Departamento.class.getName()).getResultList();
     }
 
      public List<Departamento> buscarPorProvincia(Integer provincia){
-         return entityManager().createQuery("from " + Departamento.class.getName() + " where provincia_id = " + provincia).getResultList();
+         return EntityManagerHelper.createQuery("from " + Departamento.class.getName() + " where provincia_id = " + provincia).getResultList();
      }
 }

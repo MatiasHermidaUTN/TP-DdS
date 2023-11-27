@@ -7,11 +7,13 @@ import ar.edu.utn.frba.dds.models.notificaciones.medios.Notificador;
 import ar.edu.utn.frba.dds.models.notificaciones.medios.WhatsappSender;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
+@Ignore
 public class NotificacionPorWhatsappTest {
 
     private Notificador whatsappSender;

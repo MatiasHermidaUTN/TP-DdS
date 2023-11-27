@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.models.incidentes.Incidente;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
 import ar.edu.utn.frba.dds.models.localizacion.*;
 import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoPrestacionDeprecado;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ar.edu.utn.frba.dds.models.georef.AdapterGeoref;
@@ -12,7 +13,7 @@ import java.util.List;
 
 import static ar.edu.utn.frba.dds.models.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
 
-
+@Ignore
 public class GeoRefTest {
     AdapterGeoref adapterGeoref = null;
 

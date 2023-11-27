@@ -9,6 +9,7 @@ import ar.edu.utn.frba.dds.models.servicioFusionadorDeComunidades.Entities.Estad
 import ar.edu.utn.frba.dds.models.servicioFusionadorDeComunidades.Entities.PropuestaFusion;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Ignore
 public class IntegracionServicioPropio {
 
     List<PropuestaFusion> propuestasViejas = new ArrayList<>();

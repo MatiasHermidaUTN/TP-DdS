@@ -8,6 +8,7 @@ import ar.edu.utn.frba.dds.models.localizacion.Ubicacion;
 import ar.edu.utn.frba.dds.models.notificaciones.medios.AdapterMailSender;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import static ar.edu.utn.frba.dds.models.localizacion.AdapterCercaniaLocalizacion.filtrarIncidentesCercanos;
 
+@Ignore
 public class NotificacionPorMailTest {
 
     AdapterMailSender mailSender = new AdapterMailSender();

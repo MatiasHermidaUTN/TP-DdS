@@ -2,7 +2,9 @@ package ar.edu.utn.frba.dds.models.repositorios;
 
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.localizacion.Provincia;
+import ar.edu.utn.frba.dds.models.persistencia.EntityManagerHelper;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import javax.persistence.EntityTransaction;
@@ -11,45 +13,41 @@ import java.util.List;
 public class RepoProvincia implements WithSimplePersistenceUnit {
 
     public void guardar(Provincia unaProvincia) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().persist(unaProvincia);
-        tx.commit();
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(unaProvincia);
+        EntityManagerHelper.commit();
     }
 
     public void guardarMuchas(List<Provincia> listaProvincia) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
+        EntityManagerHelper.beginTransaction();
         for(Provincia unaProvincia : listaProvincia){
-            entityManager().persist(unaProvincia);
+            EntityManagerHelper.getEntityManager().persist(unaProvincia);
         }
-        tx.commit();
+        EntityManagerHelper.commit();
     }
 
     public void eliminar(Provincia unaProvincia) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().remove(unaProvincia);
-        tx.commit();
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().remove(unaProvincia);
+        EntityManagerHelper.commit();
     }
 
     public void modificar(Provincia unaProvincia) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().merge(unaProvincia);
-        tx.commit();
+        this.guardar(unaProvincia);
     }
 
     public Provincia buscarPorId(Integer id) {
-        return entityManager().find(Provincia.class, id);
+        return EntityManagerHelper
+                .getEntityManager()
+                .find(Provincia.class, id);
     }
 
     public List<Provincia> buscarTodos() {
-        return entityManager().createQuery("from " + Provincia.class.getName()).getResultList();
+        return EntityManagerHelper.createQuery("from " + Provincia.class.getName()).getResultList();
     }
 
     public Provincia buscarPorNombre(String nombre) {
-        return  (Provincia) entityManager()
+        return  (Provincia) EntityManagerHelper
                 .createQuery("from " + Provincia.class.getName() + " where nombre = :nombre")
                 .setParameter("nombre", nombre)
                 .getResultList().get(0);

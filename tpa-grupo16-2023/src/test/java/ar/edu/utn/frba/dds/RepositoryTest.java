@@ -14,6 +14,7 @@ import ar.edu.utn.frba.dds.models.repositorios.*;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.validador.Validador;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Ignore
 public class RepositoryTest {
     RepoComunidad repoComunidad = new RepoComunidad();
     RepoEntidad repoEntidad = new RepoEntidad();

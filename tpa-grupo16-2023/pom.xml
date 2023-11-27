@@ -140,6 +140,12 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>2.13.0</version> <!-- Asegúrate de utilizar la versión más reciente -->
     </dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.13.1</version>
+          <scope>test</scope>
+      </dependency>
 
   </dependencies>
 
@@ -253,6 +259,21 @@
             </manifest>
           </archive>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals><goal>assembly</goal></goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

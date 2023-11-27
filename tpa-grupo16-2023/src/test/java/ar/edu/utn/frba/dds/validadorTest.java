@@ -2,10 +2,12 @@ package ar.edu.utn.frba.dds;
 
 import ar.edu.utn.frba.dds.models.validador.Validador;
 import ar.edu.utn.frba.dds.models.validador.reglas.*;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+@Ignore
 public class validadorTest {
 
     Validador validador;

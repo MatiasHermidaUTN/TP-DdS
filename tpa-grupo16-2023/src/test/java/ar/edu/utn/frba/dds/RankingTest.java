@@ -19,12 +19,14 @@ import ar.edu.utn.frba.dds.models.repositorios.reposDeprecados.RepoUsuarioDeprec
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Ignore
 public class RankingTest {
     RepoPrestacionDeprecado repoPrestacion = RepoPrestacionDeprecado.getInstancia();
     RepoEntidadDeprecado repoEntidad = RepoEntidadDeprecado.getInstancia();

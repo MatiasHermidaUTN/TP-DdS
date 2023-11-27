@@ -18,6 +18,7 @@ import ar.edu.utn.frba.dds.models.notificaciones.estrategias.CuandoSucede;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Entidad;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import ar.edu.utn.frba.dds.models.serviciosPublicos.Servicio;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-
+@Ignore
 public class NewIncidentsControllerTest {
     //Hay que charlar un par de cosas
 

@@ -2,6 +2,8 @@ package ar.edu.utn.frba.dds.models.repositorios;
 
 import ar.edu.utn.frba.dds.models.comunidades.Usuario;
 import ar.edu.utn.frba.dds.models.incidentes.Prestacion;
+import ar.edu.utn.frba.dds.models.persistencia.EntityManagerHelper;
+import ar.edu.utn.frba.dds.models.serviciosPublicos.Establecimiento;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import javax.persistence.EntityTransaction;
@@ -10,31 +12,28 @@ import java.util.List;
 public class RepoPrestacion implements WithSimplePersistenceUnit {
 
     public void guardar(Prestacion unaPrestacion) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().persist(unaPrestacion);
-        tx.commit();
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(unaPrestacion);
+        EntityManagerHelper.commit();
     }
 
     public void eliminar(Prestacion unaPrestacion) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().remove(unaPrestacion);
-        tx.commit();
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().remove(unaPrestacion);
+        EntityManagerHelper.commit();
     }
 
     public void modificar(Prestacion unaPrestacion) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().merge(unaPrestacion);
-        tx.commit();
+        this.guardar(unaPrestacion);
     }
 
     public Prestacion buscarPorId(Integer id) {
-        return entityManager().find(Prestacion.class, id);
+        return EntityManagerHelper
+                .getEntityManager()
+                .find(Prestacion.class, id);
     }
 
     public List<Prestacion> buscarTodos() {
-        return entityManager().createQuery("from " + Prestacion.class.getName()).getResultList();
+        return EntityManagerHelper.createQuery("from " + Prestacion.class.getName()).getResultList();
     }
 }
