@@ -17,10 +17,9 @@ public class RepoComunidad implements WithSimplePersistenceUnit {
     }
 
     public void eliminar(Comunidad unaComunidad) {
-        EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-        entityManager().remove(unaComunidad);
-        tx.commit();
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().remove(unaComunidad);
+        EntityManagerHelper.commit();
     }
 
     public void modificar(Comunidad unaComunidad) {

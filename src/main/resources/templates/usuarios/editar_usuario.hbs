@@ -71,7 +71,7 @@
             d.options.length = 0;
             d.options[0] =   new Option("Departamento", "", true);
             d.options[0].disabled = true;
-            fetch("http://localhost:8080/departamentos?provincia="+e)
+            fetch("http://dds-mi-no-16.dds.disilab.cpci.org.ar/departamentos?provincia="+e)
                     .then(response => response.json())
                     .then(data => {
                         var d = document.getElementById(departamentos);
@@ -86,7 +86,7 @@
             d.options.length = 0;
             d.options[0] =   new Option("Localidad", "", true);
             d.options[0].disabled = true;
-            fetch("http://localhost:8080/localidades?departamento="+e)
+            fetch("http://dds-mi-no-16.dds.disilab.cpci.org.ar/localidades?departamento="+e)
                     .then(response => response.json())
                     .then(data => {
                         var d = document.getElementById(localidades);
