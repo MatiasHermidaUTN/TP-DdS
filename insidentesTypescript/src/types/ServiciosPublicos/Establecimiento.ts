@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from "typeorm";
-import { Entidad } from "./Entidad";
+
 import { Servicio } from "./Servicio";
-import { EstadoServicio } from './EstadoServicio';
+
 
 @Entity()
 export class Establecimiento {
@@ -11,21 +11,11 @@ export class Establecimiento {
   @Column()
   nombre: string;
 
-  @ManyToOne(type => Entidad, entidad => entidad.establecimientos, {
-    
-  })
-  entidad!: Entidad;
-
-
   servicios: Servicio[];
 
   constructor(nombre: string) {
     this.nombre = nombre;
     // this.servicios = [];
-  }
-
-  public estadoServicio(servicio: Servicio): EstadoServicio {
-    return servicio.estado;
   }
 
   public tieneServicio(servicio: Servicio): boolean {

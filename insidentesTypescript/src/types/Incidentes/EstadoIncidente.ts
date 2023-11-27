@@ -1,7 +1,6 @@
 enum EstadoIncidente {
-    ABIERTO,
-    RESUELTO,
-  }
-  
-  export default EstadoIncidente;
-  
+  ABIERTO = 'ABIERTO',
+  RESUELTO = 'RESUELTO',
+}
+
+export default EstadoIncidente;

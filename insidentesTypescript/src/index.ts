@@ -1,5 +1,4 @@
 import { AppDataSource } from "./data-source"
-import { Usuario } from "./types/Comunidades/Usuario";
 import { incidentesController } from "./controllers/incidentesController";
 
 AppDataSource.initialize().then(async () => {
@@ -19,7 +18,11 @@ const app = express();
 const port = 3000;
 
 // LiquidJS configuration
-const engine = new Liquid();
+const engine = new Liquid({
+  root: ['views/'],
+  extname: '.liquid'
+});
+
 app.engine('liquid', engine.express());
 app.set('views', './views');
 app.set('view engine', 'liquid');
