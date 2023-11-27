@@ -14,10 +14,14 @@ public class EMFConVariablesDeBaseDeDatos {
 
         String[] keys = new String[] {
                 "DATABASE_URL",
-                "javax__persistence__jdbc__driver",
-                "javax__persistence__jdbc__password",
-                "javax__persistence__jdbc__url",
-                "javax__persistence__jdbc__user",
+//                "javax__persistence__jdbc__driver",
+//                "javax__persistence__jdbc__password",
+//                "javax__persistence__jdbc__url",
+//                "javax__persistence__jdbc__user",
+                "hibernate__connection__driver",
+                "hibernate__connection__password",
+                "hibernate__connection__url",
+                "hibernate__connection__username",
                 "hibernate__hbm2ddl__auto",
                 "hibernate__connection__pool_size",
                 "hibernate__show_sql" };
@@ -34,10 +38,14 @@ public class EMFConVariablesDeBaseDeDatos {
                     String password = dbUri.getUserInfo().split(":")[1];
                     //javax.persistence.jdbc.url=jdbc:postgresql://localhost/dblibros
                     value = "jdbc:mysql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();// + "?sslmode=require";
-                    configOverrides.put("javax.persistence.jdbc.url", value);
-                    configOverrides.put("javax.persistence.jdbc.user", username);
-                    configOverrides.put("javax.persistence.jdbc.password", password);
-                    configOverrides.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+//                    configOverrides.put("javax.persistence.jdbc.url", value);
+//                    configOverrides.put("javax.persistence.jdbc.user", username);
+//                    configOverrides.put("javax.persistence.jdbc.password", password);
+//                    configOverrides.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+                    configOverrides.put("hibernate.connection.url", value);
+                    configOverrides.put("hibernate.connection.username", username);
+                    configOverrides.put("hibernate.connection.password", password);
+                    configOverrides.put("hibernate.connection.driver", "com.mysql.jdbc.Driver");
 
                     //  configOverrides.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
                 }
