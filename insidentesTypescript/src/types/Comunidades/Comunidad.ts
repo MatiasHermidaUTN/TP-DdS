@@ -2,6 +2,7 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
+    OneToMany,
     ManyToOne,
     ManyToMany,
     JoinTable,
@@ -10,6 +11,7 @@ import {
   import { Servicio } from "../ServiciosPublicos/Servicio"; // Asegúrate de importar la clase Servicio correcta
   import { Establecimiento } from "../ServiciosPublicos/Establecimiento"; // Asegúrate de importar la clase Establecimiento correcta
   import { Incidente } from "../Incidentes/Incidente"; // Asegúrate de importar la clase Incidente correcta
+  import GradoDeConfianza from "../Comunidades/GradoDeConfianza"
   
   @Entity()
   export class Comunidad {
@@ -19,7 +21,7 @@ import {
     @Column({ name: "comunidad_nombre" })
     nombre: string;
   
-    @ManyToOne(() => Perfil, { eager: true })
+    @OneToMany(() => Perfil, perfil => perfil.comunidad)
     miembros: Perfil[];
   
     @ManyToMany(() => Servicio)
@@ -32,6 +34,9 @@ import {
   
     incidentes: Incidente[]; // No se necesita la anotación @Transient en TypeScript
   
+    @Column({ type: 'enum', enum: GradoDeConfianza, name: 'grado_de_confianza' })
+    gradoDeConfianza: GradoDeConfianza;
+
     @Column()
     activa!: boolean;
   
