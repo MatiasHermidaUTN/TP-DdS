@@ -56,7 +56,7 @@
             d.options.length = 0;
             d.options[0] = new Option("Establecimiento", "", true);
             d.options[0].disabled = true;
-            fetch("http://localhost:8080/establecimientos?entidad=" + e)
+            fetch("http://dds-mi-no-16.dds.disilab.cpci.org.ar/establecimientos?entidad=" + e)
                     .then(response => response.json())
                     .then(data => {
                         var d = document.getElementById(establecimientos);
@@ -72,7 +72,7 @@
             d.options.length = 0;
             d.options[0] = new Option("Servicio", "", true);
             d.options[0].disabled = true;
-            fetch("http://localhost:8080/servicios?establecimiento=" + e)
+            fetch("http://dds-mi-no-16.dds.disilab.cpci.org.ar/servicios?establecimiento=" + e)
                     .then(response => response.json())
                     .then(data => {
                         var d = document.getElementById(servicios);
