@@ -1,9 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToMany, JoinColumn, JoinTable } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  ManyToMany,
+  JoinColumn,
+  JoinTable,
+} from "typeorm";
 import { Establecimiento } from "../ServiciosPublicos/Establecimiento"; // Asegúrate de importar la clase Establecimiento correcta
 import { Servicio } from "../ServiciosPublicos/Servicio"; // Asegúrate de importar la clase Servicio correcta
 import { Incidente } from "./Incidente"; // Asegúrate de importar la clase Incidente correcta
 
-@Entity()
+@Entity({ name: "prestacion" })
 export class Prestacion {
   @PrimaryGeneratedColumn()
   id!: number;

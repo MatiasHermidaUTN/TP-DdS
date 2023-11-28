@@ -1,9 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
 
 import { Servicio } from "./Servicio";
 
-
-@Entity()
+@Entity({ name: "establecimiento" })
 export class Establecimiento {
   @PrimaryGeneratedColumn()
   id!: number;
