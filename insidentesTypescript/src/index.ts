@@ -13,9 +13,13 @@ AppDataSource.initialize().then(async () => {
 import express, {Request, Response} from 'express'; 
 import { Liquid } from 'liquidjs';
 import "reflect-metadata";
+import path from "path";
 
 const app = express();
 const port = 3000;
+
+// Configuración para servir archivos estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, 'public')));
 
 // LiquidJS configuration
 const engine = new Liquid({
@@ -24,7 +28,7 @@ const engine = new Liquid({
 });
 
 app.engine('liquid', engine.express());
-app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'liquid');
 
 // Express route
